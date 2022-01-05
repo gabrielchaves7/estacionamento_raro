@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "371843315223",
+    "project_id": "estacionamentorarodev",
+    "storage_bucket": "estacionamentorarodev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371843315223:android:5a43cd3a3ba9b957158e52",
+        "android_client_info": {
+          "package_name": "com.estacionamento.raro.estacionamento_raro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371843315223-so1365944q94dfdip1c7gavr5f643tqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmkCyOSlzBmIKA94X3WoAg6pYsYZkMCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371843315223-so1365944q94dfdip1c7gavr5f643tqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371843315223:android:619f1c49981e27bd158e52",
+        "android_client_info": {
+          "package_name": "com.estacionamento.raro.estacionamento_raro.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371843315223-so1365944q94dfdip1c7gavr5f643tqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmkCyOSlzBmIKA94X3WoAg6pYsYZkMCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371843315223-so1365944q94dfdip1c7gavr5f643tqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
