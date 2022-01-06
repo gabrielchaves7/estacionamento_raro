@@ -34,7 +34,14 @@ jobs:
 
       - name: Analyze project source
         run: dart analyze        
+        
+      - name: Running Domain test
+        run: flutter test    
+        working-directory: packages/domain
       
       - name: Running Flutter test
-        run: flutter test     
+        run: flutter test    
+        
+
+    
     
