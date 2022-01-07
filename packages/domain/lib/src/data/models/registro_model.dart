@@ -14,8 +14,10 @@ class RegistroModel implements Registro {
     return querySnapshot.docs
         .map((doc) => RegistroModel(
               id: doc.id,
-              horarioEntrada: doc['horario_entrada'],
-              horarioSaida: doc['horario_saida'],
+              horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
+                  doc['horario_entrada'].millisecondsSinceEpoch),
+              horarioSaida: DateTime.fromMillisecondsSinceEpoch(
+                  doc['horario_saida'].millisecondsSinceEpoch),
               placa: doc['placa'],
               vagaId: doc['vaga'].id,
             ))
@@ -26,10 +28,10 @@ class RegistroModel implements Registro {
   String id;
 
   @override
-  Timestamp horarioEntrada;
+  DateTime horarioEntrada;
 
   @override
-  Timestamp? horarioSaida;
+  DateTime? horarioSaida;
 
   @override
   String placa;

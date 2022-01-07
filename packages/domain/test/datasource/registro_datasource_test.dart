@@ -13,10 +13,10 @@ Future<void> createVagasCollection(FirebaseFirestore mockedFirestore) async {
 Future<void> createRegistrosCollection(
     FirebaseFirestore mockedFirestore) async {
   await mockedFirestore.collection("registros").doc("id1").set({
-    'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(1641516678),
+    'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(1641516678000),
     'placa': 'ABCDEFG',
     'vaga': mockedFirestore.doc('vagas/123lkmsa'),
-    'horario_saida': Timestamp.fromMillisecondsSinceEpoch(1641516695)
+    'horario_saida': Timestamp.fromMillisecondsSinceEpoch(1641516695000)
   });
 }
 
@@ -39,10 +39,10 @@ void main() {
         expect(result!.length, 1);
 
         expect(result.first.id, 'id1');
-        expect(result.first.horarioEntrada,
-            Timestamp.fromMillisecondsSinceEpoch(1641516678));
-        expect(result.first.horarioSaida,
-            Timestamp.fromMillisecondsSinceEpoch(1641516695));
+        expect(
+            result.first.horarioEntrada.millisecondsSinceEpoch, 1641516678000);
+        expect(
+            result.first.horarioSaida!.millisecondsSinceEpoch, 1641516695000);
         expect(result.first.placa, 'ABCDEFG');
         expect(result.first.vagaId, '123lkmsa');
       });

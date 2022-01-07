@@ -13,12 +13,12 @@ import './get_registros_usecase_test.mocks.dart';
 final List<Registro> mockedRegistros = [
   Registro(
       id: 'id',
-      horarioEntrada: Timestamp.now(),
+      horarioEntrada: DateTime.now(),
       placa: 'ABCDEF',
       vagaId: 'vagas/EALKSM123'),
   Registro(
       id: 'id2',
-      horarioEntrada: Timestamp.now(),
+      horarioEntrada: DateTime.now(),
       placa: 'ABCDEF2',
       vagaId: 'vagas/DSALKJ32'),
 ];

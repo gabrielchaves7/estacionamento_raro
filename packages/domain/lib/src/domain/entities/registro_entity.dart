@@ -10,8 +10,8 @@ class Registro {
   });
 
   String id;
-  Timestamp horarioEntrada;
-  Timestamp? horarioSaida;
+  DateTime horarioEntrada;
+  DateTime? horarioSaida;
   String placa;
   String vagaId;
 }
