@@ -6,12 +6,12 @@ class Registro {
     required this.horarioEntrada,
     this.horarioSaida,
     required this.placa,
-    required this.vaga_id,
+    required this.vagaId,
   });
 
   String id;
   Timestamp horarioEntrada;
   Timestamp? horarioSaida;
   String placa;
-  String vaga_id;
+  String vagaId;
 }

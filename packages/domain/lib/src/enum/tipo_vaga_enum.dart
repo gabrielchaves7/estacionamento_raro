@@ -1,1 +1,1 @@
-enum TipoVagaEnum { Moto, Carro, Caminhao }
+enum TipoVagaEnum { moto, carro, caminhao }

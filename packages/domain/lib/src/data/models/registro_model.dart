@@ -7,7 +7,7 @@ class RegistroModel implements Registro {
     required this.horarioEntrada,
     this.horarioSaida,
     required this.placa,
-    required this.vaga_id,
+    required this.vagaId,
   });
 
   static List<RegistroModel> fromSnapshot(QuerySnapshot querySnapshot) {
@@ -17,7 +17,7 @@ class RegistroModel implements Registro {
               horarioEntrada: doc['horario_entrada'],
               horarioSaida: doc['horario_saida'],
               placa: doc['placa'],
-              vaga_id: doc['vaga'].id,
+              vagaId: doc['vaga'].id,
             ))
         .toList();
   }
@@ -35,5 +35,5 @@ class RegistroModel implements Registro {
   String placa;
 
   @override
-  String vaga_id;
+  String vagaId;
 }

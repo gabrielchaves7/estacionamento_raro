@@ -21,6 +21,7 @@ dev_dependencies:
   mockito: ^5.0.17
   build_runner: ^2.1.7
   equatable: ^2.0.3
+  fake_cloud_firestore: ^1.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

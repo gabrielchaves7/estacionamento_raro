@@ -15,23 +15,23 @@ final List<RegistroModel> mockedRegistros = [
       id: 'id',
       horarioEntrada: Timestamp.now(),
       placa: '1234FGH',
-      vaga_id: 'vagas/FONITY'),
+      vagaId: 'vagas/FONITY'),
   RegistroModel(
       id: 'id2',
       horarioEntrada: Timestamp.now(),
       placa: 'XSAE12',
-      vaga_id: 'vagas/OOFNEO'),
+      vagaId: 'vagas/OOFNEO'),
   RegistroModel(
       id: 'id3',
       horarioEntrada: Timestamp.now(),
       placa: 'LKJASD1',
-      vaga_id: 'vagas/LALALA'),
+      vagaId: 'vagas/LALALA'),
 ];
 
 @GenerateMocks([RegistroDataSource])
 void main() {
   group('RegistroRepository', () {
-    group('When RegistroRepository is called', () {
+    group('When RegistroRepository.all is called', () {
       group('And RegistroDataSource returns an array of RegistroModel', () {
         test('RegistroRepository should return an array of RegistroEntity',
             () async {

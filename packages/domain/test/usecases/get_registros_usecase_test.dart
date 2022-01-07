@@ -15,12 +15,12 @@ final List<Registro> mockedRegistros = [
       id: 'id',
       horarioEntrada: Timestamp.now(),
       placa: 'ABCDEF',
-      vaga_id: 'vagas/EALKSM123'),
+      vagaId: 'vagas/EALKSM123'),
   Registro(
       id: 'id2',
       horarioEntrada: Timestamp.now(),
       placa: 'ABCDEF2',
-      vaga_id: 'vagas/DSALKJ32'),
+      vagaId: 'vagas/DSALKJ32'),
 ];
 
 @GenerateMocks([RegistroRepository])

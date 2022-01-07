@@ -28,9 +28,8 @@ class MockRegistroDataSource extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.RegistroModel>> all() =>
+  _i3.Future<List<_i4.RegistroModel>?> all() =>
       (super.noSuchMethod(Invocation.method(#all, []),
-              returnValue:
-                  Future<List<_i4.RegistroModel>>.value(<_i4.RegistroModel>[]))
-          as _i3.Future<List<_i4.RegistroModel>>);
+              returnValue: Future<List<_i4.RegistroModel>?>.value())
+          as _i3.Future<List<_i4.RegistroModel>?>);
 }
