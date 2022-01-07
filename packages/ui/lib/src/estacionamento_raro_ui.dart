@@ -5,7 +5,7 @@ import 'package:ui/src/pages/home_page.dart';
 import 'injection.dart';
 
 class EstacionamentoRaroUiModule extends StatefulWidget {
-  EstacionamentoRaroUiModule() : super();
+  const EstacionamentoRaroUiModule({Key? key}) : super(key: key);
 
   @override
   _EstacionamentoRaroUiModuleState createState() =>
