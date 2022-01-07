@@ -29,6 +29,10 @@ jobs:
       - name: Running Flutter pub get      
         run: flutter pub get
         
+      - name: Running Flutter pub get at domain package  
+        run: flutter pub get
+        working-directory: packages/domain
+        
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
