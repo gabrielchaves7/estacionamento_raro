@@ -3,8 +3,7 @@ import 'package:domain/src/data/models/registro/registro_model.dart';
 
 abstract class RegistroDataSource {
   Future<List<RegistroModel>?> all();
-  Future<RegistroModel> create(
-      {required DateTime horarioEntrada, required String placa});
+  Future<RegistroModel> create({required String placa});
 }
 
 class RegistroDataSourceImpl implements RegistroDataSource {
@@ -21,13 +20,12 @@ class RegistroDataSourceImpl implements RegistroDataSource {
   }
 
   @override
-  Future<RegistroModel> create(
-      {required DateTime horarioEntrada, required String placa}) async {
+  Future<RegistroModel> create({required String placa}) async {
     CollectionReference registros = firestore.collection('registros');
 
     DocumentReference documentReference = await registros.add({
       'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(
-          horarioEntrada.millisecondsSinceEpoch), // John Doe
+          DateTime.now().millisecondsSinceEpoch), // John Doe
       'horario_saida': null, // Stokes and Sons
       'placa': placa // 42
     });

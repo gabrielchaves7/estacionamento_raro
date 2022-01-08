@@ -10,9 +10,7 @@ class CreateRegistroUseCase {
 
   final RegistroRepository registroRepository;
 
-  Future<Either<Failure, Registro>> call(
-      {required DateTime horarioEntrada, required String placa}) async {
-    return await registroRepository.create(
-        horarioEntrada: horarioEntrada, placa: placa);
+  Future<Either<Failure, Registro>> call({required String placa}) async {
+    return await registroRepository.create(placa: placa);
   }
 }

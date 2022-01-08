@@ -51,21 +51,15 @@ void main() {
     });
 
     group('When RegistroDataSource.create is called', () {
-      //Horario entrada: 08/01/2022 17:13
-      final DateTime horarioEntrada =
-          DateTime.fromMillisecondsSinceEpoch(1641672790000);
       test(
           'RegistroDataSource should call FirebaseFirestore.collection("registros").add(), create the new doc and return the result properly',
           () async {
         final RegistroDataSource registroDataSource =
             RegistroDataSourceImpl(firestore: mockedFirestore);
 
-        final result = await registroDataSource.create(
-            horarioEntrada: horarioEntrada, placa: 'ABCDEFG');
+        final result = await registroDataSource.create(placa: 'ABCDEFG');
 
         expect(result.placa, 'ABCDEFG');
-        expect(result.horarioEntrada.millisecondsSinceEpoch,
-            horarioEntrada.millisecondsSinceEpoch);
       });
     });
   });

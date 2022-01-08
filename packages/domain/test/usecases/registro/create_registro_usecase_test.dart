@@ -25,20 +25,17 @@ void main() {
               MockRegistroRepository();
 
           when(
-            mockedRegistroRepository.create(
-                horarioEntrada: horarioEntrada, placa: 'ABCDEFG'),
+            mockedRegistroRepository.create(placa: 'ABCDEFG'),
           ).thenAnswer((_) async => Right(Registro(
-              id: 'id1', horarioEntrada: horarioEntrada, placa: 'ABCDEFG')));
+              id: 'id1', placa: 'ABCDEFG', horarioEntrada: horarioEntrada)));
 
           final CreateRegistroUseCase createRegistroUseCase =
               CreateRegistroUseCase(
                   registroRepository: mockedRegistroRepository);
 
-          final result = await createRegistroUseCase(
-              horarioEntrada: horarioEntrada, placa: 'ABCDEFG');
+          final result = await createRegistroUseCase(placa: 'ABCDEFG');
 
-          verify(mockedRegistroRepository.create(
-              horarioEntrada: horarioEntrada, placa: 'ABCDEFG'));
+          verify(mockedRegistroRepository.create(placa: 'ABCDEFG'));
           expect(result.isRight(), true);
           result.fold((exception) => {},
               (registro) => {expect(registro.placa, 'ABCDEFG')});
@@ -51,19 +48,16 @@ void main() {
               MockRegistroRepository();
 
           when(
-            mockedRegistroRepository.create(
-                horarioEntrada: horarioEntrada, placa: 'ABDEFG'),
+            mockedRegistroRepository.create(placa: 'ABDEFG'),
           ).thenAnswer((_) async => Left(UnexpectedFailure()));
 
           final CreateRegistroUseCase createRegistroUseCase =
               CreateRegistroUseCase(
                   registroRepository: mockedRegistroRepository);
 
-          final result = await createRegistroUseCase(
-              horarioEntrada: horarioEntrada, placa: 'ABDEFG');
+          final result = await createRegistroUseCase(placa: 'ABDEFG');
 
-          verify(mockedRegistroRepository.create(
-              horarioEntrada: horarioEntrada, placa: 'ABDEFG'));
+          verify(mockedRegistroRepository.create(placa: 'ABDEFG'));
           expect(result.isLeft(), true);
         });
       });

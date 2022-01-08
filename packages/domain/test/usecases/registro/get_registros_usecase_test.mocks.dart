@@ -40,12 +40,9 @@ class MockRegistroRepository extends _i1.Mock
                       _FakeEither_0<_i5.Failure, List<_i6.Registro>>()))
           as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Registro>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Registro>> create(
-          {DateTime? horarioEntrada, String? placa}) =>
-      (super.noSuchMethod(
-          Invocation.method(
-              #create, [], {#horarioEntrada: horarioEntrada, #placa: placa}),
-          returnValue: Future<_i2.Either<_i5.Failure, _i6.Registro>>.value(
-              _FakeEither_0<_i5.Failure, _i6.Registro>())) as _i4
-          .Future<_i2.Either<_i5.Failure, _i6.Registro>>);
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Registro>> create({String? placa}) =>
+      (super.noSuchMethod(Invocation.method(#create, [], {#placa: placa}),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Registro>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Registro>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Registro>>);
 }

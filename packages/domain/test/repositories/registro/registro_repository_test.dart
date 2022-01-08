@@ -118,19 +118,16 @@ void main() {
               MockRegistroDataSource();
 
           when(
-            mockedRegistroDataSource.create(
-                horarioEntrada: horarioEntrada, placa: 'ABC123'),
+            mockedRegistroDataSource.create(placa: 'ABC123'),
           ).thenAnswer((_) async => RegistroModel(
               id: 'id1', horarioEntrada: horarioEntrada, placa: 'ABC123'));
 
           final RegistroRepository registroRepository = RegistroRepositoryImpl(
               registroDataSource: mockedRegistroDataSource);
 
-          final result = await registroRepository.create(
-              horarioEntrada: horarioEntrada, placa: 'ABC123');
+          final result = await registroRepository.create(placa: 'ABC123');
 
-          verify(mockedRegistroDataSource.create(
-              horarioEntrada: horarioEntrada, placa: 'ABC123'));
+          verify(mockedRegistroDataSource.create(placa: 'ABC123'));
           expect(result.isRight(), true);
         });
       });
@@ -143,18 +140,15 @@ void main() {
               MockRegistroDataSource();
 
           when(
-            mockedRegistroDataSource.create(
-                horarioEntrada: horarioEntrada, placa: 'ABC123'),
+            mockedRegistroDataSource.create(placa: 'ABC123'),
           ).thenThrow((_) async => Exception());
 
           final RegistroRepository registroRepository = RegistroRepositoryImpl(
               registroDataSource: mockedRegistroDataSource);
 
-          final result = await registroRepository.create(
-              horarioEntrada: horarioEntrada, placa: 'ABC123');
+          final result = await registroRepository.create(placa: 'ABC123');
 
-          verify(mockedRegistroDataSource.create(
-              horarioEntrada: horarioEntrada, placa: 'ABC123'));
+          verify(mockedRegistroDataSource.create(placa: 'ABC123'));
           expect(result.isLeft(), true);
           result.fold(
               (exception) => {expect(exception is UnexpectedFailure, true)},

@@ -35,12 +35,8 @@ class MockRegistroDataSource extends _i1.Mock
               returnValue: Future<List<_i2.RegistroModel>?>.value())
           as _i4.Future<List<_i2.RegistroModel>?>);
   @override
-  _i4.Future<_i2.RegistroModel> create(
-          {DateTime? horarioEntrada, String? placa}) =>
-      (super.noSuchMethod(
-          Invocation.method(
-              #create, [], {#horarioEntrada: horarioEntrada, #placa: placa}),
-          returnValue:
-              Future<_i2.RegistroModel>.value(_FakeRegistroModel_0())) as _i4
-          .Future<_i2.RegistroModel>);
+  _i4.Future<_i2.RegistroModel> create({String? placa}) => (super.noSuchMethod(
+          Invocation.method(#create, [], {#placa: placa}),
+          returnValue: Future<_i2.RegistroModel>.value(_FakeRegistroModel_0()))
+      as _i4.Future<_i2.RegistroModel>);
 }

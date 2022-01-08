@@ -27,11 +27,9 @@ class RegistroRepositoryImpl implements RegistroRepository {
   }
 
   @override
-  Future<Either<Failure, Registro>> create(
-      {required DateTime horarioEntrada, required String placa}) async {
+  Future<Either<Failure, Registro>> create({required String placa}) async {
     try {
-      final Registro registro = await registroDataSource.create(
-          horarioEntrada: horarioEntrada, placa: placa);
+      final Registro registro = await registroDataSource.create(placa: placa);
 
       return Right(registro);
     } catch (e) {
