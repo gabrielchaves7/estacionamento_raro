@@ -8,7 +8,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ui/src/bloc/registro_cubit.dart';
 
-import './registro_cubit_test.mocks.dart';
+import 'registro_cubit_test.mocks.dart';
 
 final List<Registro> mockedRegistros = [
   Registro(

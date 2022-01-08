@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import './registro_repository_test.mocks.dart';
+import 'registro_repository_test.mocks.dart';
 
 final List<RegistroModel> mockedRegistros = [
   RegistroModel(
