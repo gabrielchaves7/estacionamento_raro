@@ -57,7 +57,7 @@ List<Registro> registros = [
 
 @GenerateMocks([GetRegistrosUseCase])
 void main() {
-  setUpAll(() async => await initializeDateFormatting('pt_BR', ''));
+  setUpAll(() async => await initializeDateFormatting('pt_BR', null));
 
   tearDown(() async {
     _getItUnregisterCubit();

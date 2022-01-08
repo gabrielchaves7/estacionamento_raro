@@ -11,9 +11,11 @@ import 'package:mockito/mockito.dart';
 import './vaga_repository_test.mocks.dart';
 
 final List<VagaModel> mockedVagas = [
-  VagaModel(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto),
-  VagaModel(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro),
-  VagaModel(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao),
+  VagaModel(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
+  VagaModel(
+      id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
+  VagaModel(
+      id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
 @GenerateMocks([VagaDataSource])

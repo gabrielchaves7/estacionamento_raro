@@ -17,7 +17,7 @@ Future<void> _initWidget(tester, {required Registro registro}) async {
 }
 
 void main() {
-  setUpAll(() => initializeDateFormatting('pt_BR', ''));
+  setUpAll(() => initializeDateFormatting('pt_BR', null));
 
   group('RegistroCardWidget', () {
     group('When RegistroCardWidget is called', () {

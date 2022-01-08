@@ -11,9 +11,9 @@ import 'package:mockito/mockito.dart';
 import './get_vagas_usecase_test.mocks.dart';
 
 final List<Vaga> vagas = [
-  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto),
-  Vaga(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro),
-  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao),
+  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
+  Vaga(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
+  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
 @GenerateMocks([VagaRepository])

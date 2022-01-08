@@ -8,12 +8,12 @@ Future<void> createVagasCollection(FirebaseFirestore mockedFirestore) async {
   await mockedFirestore
       .collection("vagas")
       .doc("id1")
-      .set({'disponivel': true, 'tipo_vaga': 'moto'});
+      .set({'disponivel': true, 'tipo_vaga': 'moto', 'numero': 1});
 
   await mockedFirestore
       .collection("vagas")
       .doc("id2")
-      .set({'disponivel': false, 'tipo_vaga': 'carro'});
+      .set({'disponivel': false, 'tipo_vaga': 'carro', 'numero': 2});
 }
 
 void main() {
@@ -36,10 +36,12 @@ void main() {
         expect(result.first.id, 'id1');
         expect(result.first.disponivel, true);
         expect(result.first.tipoVaga, TipoVagaEnum.moto);
+        expect(result.first.numero, 1);
 
         expect(result.last.id, 'id2');
         expect(result.last.disponivel, false);
         expect(result.last.tipoVaga, TipoVagaEnum.carro);
+        expect(result.last.numero, 2);
       });
     });
   });

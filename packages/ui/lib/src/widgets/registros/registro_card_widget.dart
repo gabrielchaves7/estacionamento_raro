@@ -13,33 +13,37 @@ class RegistroCardWidget extends StatelessWidget {
     return Card(
       elevation: 3,
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, top: 8, bottom: 0, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 8, bottom: 0),
         child: Row(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _cardInfo("Placa", registro.placa),
-                _cardInfo(
-                    "Entrada",
-                    DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
-                        .format(registro.horarioEntrada)),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _cardInfo("Placa", registro.placa),
+                  _cardInfo(
+                      "Entrada",
+                      DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
+                          .format(registro.horarioEntrada)),
+                ],
+              ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _cardInfo(
-                    "Permanência",
-                    _calcularTempoDePermanencia(
-                        registro.horarioEntrada, registro.horarioSaida)),
-                _cardInfo(
-                    "Saída",
-                    registro.horarioSaida != null
-                        ? DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
-                            .format(registro.horarioSaida!)
-                        : "Aguardando"),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _cardInfo(
+                      "Permanência",
+                      _calcularTempoDePermanencia(
+                          registro.horarioEntrada, registro.horarioSaida)),
+                  _cardInfo(
+                      "Saída",
+                      registro.horarioSaida != null
+                          ? DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
+                              .format(registro.horarioSaida!)
+                          : "Aguardando"),
+                ],
+              ),
             )
           ],
         ),

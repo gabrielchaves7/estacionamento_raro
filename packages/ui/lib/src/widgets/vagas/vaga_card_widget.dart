@@ -1,4 +1,5 @@
 import 'package:domain/estacionamento_raro_entities.dart';
+import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:flutter/material.dart';
 
 class VagaCardWidget extends StatelessWidget {
@@ -13,10 +14,27 @@ class VagaCardWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 16, top: 8, bottom: 0, right: 16),
         child: Column(
-          children: const [Icon(Icons.directions_car)],
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              vaga.numero.toString(),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Icon(_vagaIcon(vaga.tipoVaga)),
+          ],
         ),
       ),
     );
+  }
+
+  IconData _vagaIcon(TipoVagaEnum tipoVaga) {
+    if (tipoVaga == TipoVagaEnum.moto) {
+      return Icons.motorcycle;
+    } else if (tipoVaga == TipoVagaEnum.carro) {
+      return Icons.directions_car;
+    } else {
+      return Icons.directions_subway;
+    }
   }
 }
 

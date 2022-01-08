@@ -21,7 +21,7 @@ class RegistroModel implements Registro {
                       doc['horario_saida'].millisecondsSinceEpoch)
                   : null,
               placa: doc['placa'],
-              vagaId: doc['vagas'].id,
+              vagaId: doc['vaga'].id,
             ))
         .toList();
   }

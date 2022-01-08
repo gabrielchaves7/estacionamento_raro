@@ -44,9 +44,8 @@ class _VagasWidgetState extends State<VagasWidget> {
 
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 20,
+                  maxCrossAxisExtent: 160,
+                  crossAxisSpacing: 8,
                   mainAxisSpacing: 20,
                 ),
                 itemCount: isLoading ? 4 : vagas.length,

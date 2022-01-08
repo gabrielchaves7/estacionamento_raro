@@ -1,6 +1,6 @@
 import 'package:domain/estacionamento_raro_domain.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:ui/src/pages/home_page.dart';
 
 import 'injection.dart';
@@ -18,7 +18,7 @@ class _EstacionamentoRaroUiModuleState
   @override
   void initState() {
     super.initState();
-    initializeDateFormatting('pt_BR', '');
+    initializeDateFormatting('pt_BR', null);
     configureDependencies();
     EstacionamentoRaroDomain.init();
   }
