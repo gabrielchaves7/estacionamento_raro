@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'data/repositories/registro/registro_repository_impl.dart';
 import 'data/repositories/vaga/vaga_repository_impl.dart';
 import 'domain/repositories/registro/registro_repository.dart';
+import 'domain/usecases/registro/create_registro_usecase.dart';
 
 final getIt = GetIt.instance;
 
@@ -56,6 +57,12 @@ void configureDependencies() {
   if (!getIt.isRegistered<GetVagasUseCase>()) {
     getIt.registerLazySingleton<GetVagasUseCase>(
       () => GetVagasUseCase(vagaRepository: getIt()),
+    );
+  }
+
+  if (!getIt.isRegistered<CreateRegistroUseCase>()) {
+    getIt.registerLazySingleton<CreateRegistroUseCase>(
+      () => CreateRegistroUseCase(registroRepository: getIt()),
     );
   }
 }

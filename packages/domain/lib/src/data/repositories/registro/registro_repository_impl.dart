@@ -25,4 +25,17 @@ class RegistroRepositoryImpl implements RegistroRepository {
       return Left(UnexpectedFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Registro>> create(
+      {required DateTime horarioEntrada, required String placa}) async {
+    try {
+      final Registro registro = await registroDataSource.create(
+          horarioEntrada: horarioEntrada, placa: placa);
+
+      return Right(registro);
+    } catch (e) {
+      return Left(UnexpectedFailure());
+    }
+  }
 }

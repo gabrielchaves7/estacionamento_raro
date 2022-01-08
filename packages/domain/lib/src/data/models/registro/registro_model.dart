@@ -11,17 +11,21 @@ class RegistroModel implements Registro {
 
   static List<RegistroModel> fromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.docs
-        .map((doc) => RegistroModel(
-              id: doc.id,
-              horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
-                  doc['horario_entrada'].millisecondsSinceEpoch),
-              horarioSaida: doc['horario_saida'] != null
-                  ? DateTime.fromMillisecondsSinceEpoch(
-                      doc['horario_saida'].millisecondsSinceEpoch)
-                  : null,
-              placa: doc['placa'],
-            ))
+        .map((doc) => RegistroModel.fromDocumentSnapshot(doc))
         .toList();
+  }
+
+  static RegistroModel fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    return RegistroModel(
+      id: documentSnapshot.id,
+      horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
+          documentSnapshot['horario_entrada'].millisecondsSinceEpoch),
+      horarioSaida: documentSnapshot['horario_saida'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              documentSnapshot['horario_saida'].millisecondsSinceEpoch)
+          : null,
+      placa: documentSnapshot['placa'],
+    );
   }
 
   @override

@@ -105,5 +105,62 @@ void main() {
         });
       });
     });
+
+    group('When RegistroRepository.create is called', () {
+      //Horario entrada: 08/01/2022 17:13
+      final DateTime horarioEntrada =
+          DateTime.fromMillisecondsSinceEpoch(1641672790000);
+      group('And RegistroDataSource returns a RegistroModel', () {
+        test(
+            'RegistroRepository should call registroDataSource.create and return the right value',
+            () async {
+          final RegistroDataSource mockedRegistroDataSource =
+              MockRegistroDataSource();
+
+          when(
+            mockedRegistroDataSource.create(
+                horarioEntrada: horarioEntrada, placa: 'ABC123'),
+          ).thenAnswer((_) async => RegistroModel(
+              id: 'id1', horarioEntrada: horarioEntrada, placa: 'ABC123'));
+
+          final RegistroRepository registroRepository = RegistroRepositoryImpl(
+              registroDataSource: mockedRegistroDataSource);
+
+          final result = await registroRepository.create(
+              horarioEntrada: horarioEntrada, placa: 'ABC123');
+
+          verify(mockedRegistroDataSource.create(
+              horarioEntrada: horarioEntrada, placa: 'ABC123'));
+          expect(result.isRight(), true);
+        });
+      });
+
+      group('And RegistroDataSource throws an exception', () {
+        test(
+            'RegistroRepository should return the left value with UnexpectedFailure',
+            () async {
+          final RegistroDataSource mockedRegistroDataSource =
+              MockRegistroDataSource();
+
+          when(
+            mockedRegistroDataSource.create(
+                horarioEntrada: horarioEntrada, placa: 'ABC123'),
+          ).thenThrow((_) async => Exception());
+
+          final RegistroRepository registroRepository = RegistroRepositoryImpl(
+              registroDataSource: mockedRegistroDataSource);
+
+          final result = await registroRepository.create(
+              horarioEntrada: horarioEntrada, placa: 'ABC123');
+
+          verify(mockedRegistroDataSource.create(
+              horarioEntrada: horarioEntrada, placa: 'ABC123'));
+          expect(result.isLeft(), true);
+          result.fold(
+              (exception) => {expect(exception is UnexpectedFailure, true)},
+              (registros) => {});
+        });
+      });
+    });
   });
 }
