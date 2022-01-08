@@ -15,7 +15,7 @@ Future<void> createRegistrosCollection(
   await mockedFirestore.collection("registros").doc("id1").set({
     'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(1641516678000),
     'placa': 'ABCDEFG',
-    'vaga': mockedFirestore.doc('vagas/123lkmsa'),
+    'vagas': mockedFirestore.doc('vagas/123lkmsa'),
     'horario_saida': Timestamp.fromMillisecondsSinceEpoch(1641516695000)
   });
 }

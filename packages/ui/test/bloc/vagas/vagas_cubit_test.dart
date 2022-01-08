@@ -26,10 +26,13 @@ void main() {
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
+      final VagasCubit vagasCubit =
+          VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+
       blocTest(
         'should emit VagasLoadingState and then VagasLoadedState',
         build: () {
-          return VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+          return vagasCubit;
         },
         act: (VagasCubit cubit) {
           cubit.getVagas();
@@ -37,6 +40,8 @@ void main() {
         expect: () => [isA<VagasLoadingState>(), isA<VagasLoadedState>()],
         verify: (_) {
           verify(mockedGetVagasUseCase.call());
+
+          expect(vagasCubit.vagasDisponiveis.length, 2);
         },
       );
     });

@@ -13,6 +13,11 @@ class VagasCubit extends Cubit<VagasState> {
 
   final GetVagasUseCase getVagasUseCase;
 
+  List<Vaga> _vagas = [];
+
+  List<Vaga> get vagasDisponiveis =>
+      _vagas.where((vaga) => vaga.disponivel == true).toList();
+
   Future<void> getVagas() async {
     emit(VagasLoadingState());
 
@@ -20,6 +25,9 @@ class VagasCubit extends Cubit<VagasState> {
 
     vagas.fold((error) {
       emit(VagasErrorState());
-    }, (vagas) => emit(VagasLoadedState(vagas: vagas)));
+    }, (vagas) {
+      _vagas = vagas;
+      emit(VagasLoadedState(vagas: vagas));
+    });
   }
 }

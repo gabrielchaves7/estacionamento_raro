@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
+import 'package:ui/src/widgets/vagas/vagas_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -19,10 +20,7 @@ class _HomePageState extends State<HomePage> {
       'Index 0: Home',
       style: optionStyle,
     ),
-    const Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    const VagasWidget(),
     const RegistrosWidget()
   ];
 

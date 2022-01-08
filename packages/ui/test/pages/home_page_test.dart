@@ -2,24 +2,30 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:domain/estacionamento_raro_entities.dart';
+import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:domain/estacionamento_raro_usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ui/src/bloc/registro_cubit.dart';
+import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/pages/home_page.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
+import 'package:ui/src/widgets/vagas/vagas_widget.dart';
 
 import './home_page_test.mocks.dart';
 
-void _getItRegisterCubit({required RegistroCubit registroCubit}) {
+void _getItRegisterCubit(
+    {required RegistroCubit registroCubit, required VagasCubit vagasCubit}) {
   getIt.registerFactory(() => registroCubit);
+  getIt.registerFactory(() => vagasCubit);
 }
 
 void _getItUnregisterCubit() {
   getIt.unregister<RegistroCubit>();
+  getIt.unregister<VagasCubit>();
 }
 
 Future<void> _initWidget(WidgetTester tester) async {
@@ -36,24 +42,30 @@ List<Registro> registros = [
   Registro(
       horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641560814000),
       id: '1',
-      vagaId: 'vaga/klmxaskl11',
+      vagaId: 'vagas/klmxaskl11',
       placa: 'PLACAA',
       horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641564414000)),
   Registro(
       horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
       id: '2',
-      vagaId: 'vaga/klmxaskl12',
+      vagaId: 'vagas/klmxaskl12',
       placa: 'PLACAB',
       horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641480714000)),
   Registro(
       horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
       id: '3',
-      vagaId: 'vaga/klmxaskl13',
+      vagaId: 'vagas/klmxaskl13',
       placa: 'PLACAC',
       horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641480714000))
 ];
 
-@GenerateMocks([GetRegistrosUseCase])
+final List<Vaga> vagas = [
+  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto),
+  Vaga(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro),
+  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao),
+];
+
+@GenerateMocks([GetRegistrosUseCase, GetVagasUseCase])
 void main() {
   tearDown(() async {
     _getItUnregisterCubit();
@@ -63,6 +75,7 @@ void main() {
     testWidgets('it should display Home, Vagas and Registros at bottom menu',
         (WidgetTester tester) async {
       final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
 
       when(mockedGetRegistrosUseCase.call())
           .thenAnswer((_) async => Right(registros));
@@ -70,9 +83,10 @@ void main() {
       final RegistroCubit registroCubit =
           RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);
 
-      _getItRegisterCubit(
-        registroCubit: registroCubit,
-      );
+      final VagasCubit vagasCubit =
+          VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+
+      _getItRegisterCubit(registroCubit: registroCubit, vagasCubit: vagasCubit);
 
       await _initWidget(tester);
       await tester.pump(const Duration(milliseconds: 1));
@@ -86,6 +100,7 @@ void main() {
       testWidgets('it should display RegistrosWidget',
           (WidgetTester tester) async {
         final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
+        final mockedGetVagasUseCase = MockGetVagasUseCase();
 
         when(mockedGetRegistrosUseCase.call())
             .thenAnswer((_) async => Right(registros));
@@ -93,9 +108,11 @@ void main() {
         final RegistroCubit registroCubit =
             RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);
 
+        final VagasCubit vagasCubit =
+            VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+
         _getItRegisterCubit(
-          registroCubit: registroCubit,
-        );
+            registroCubit: registroCubit, vagasCubit: vagasCubit);
 
         await _initWidget(tester);
         await tester.pump(const Duration(milliseconds: 1));
@@ -106,6 +123,35 @@ void main() {
         await tester.pump();
 
         expect(find.byType(RegistrosWidget), findsOneWidget);
+      });
+    });
+
+    group('When Vagas option at menu is clicked', () {
+      testWidgets('it should display VagasWidget', (WidgetTester tester) async {
+        final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
+        final mockedGetVagasUseCase = MockGetVagasUseCase();
+
+        when(mockedGetVagasUseCase.call())
+            .thenAnswer((_) async => Right(vagas));
+
+        final RegistroCubit registroCubit =
+            RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);
+
+        final VagasCubit vagasCubit =
+            VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+
+        _getItRegisterCubit(
+            registroCubit: registroCubit, vagasCubit: vagasCubit);
+
+        await _initWidget(tester);
+        await tester.pump(const Duration(milliseconds: 1));
+
+        expect(find.byType(VagasWidget), findsNothing);
+
+        await tester.tap(find.text('Vagas'));
+        await tester.pump();
+
+        expect(find.byType(VagasWidget), findsOneWidget);
       });
     });
   });
