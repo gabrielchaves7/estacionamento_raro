@@ -12,23 +12,23 @@ import 'registro_repository_test.mocks.dart';
 
 final List<RegistroModel> mockedRegistros = [
   RegistroModel(
-      id: 'id',
-      horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
-          Timestamp.now().millisecondsSinceEpoch),
-      placa: '1234FGH',
-      vagaId: 'vagas/FONITY'),
+    id: 'id',
+    horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
+        Timestamp.now().millisecondsSinceEpoch),
+    placa: '1234FGH',
+  ),
   RegistroModel(
-      id: 'id2',
-      horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
-          Timestamp.now().millisecondsSinceEpoch),
-      placa: 'XSAE12',
-      vagaId: 'vagas/OOFNEO'),
+    id: 'id2',
+    horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
+        Timestamp.now().millisecondsSinceEpoch),
+    placa: 'XSAE12',
+  ),
   RegistroModel(
-      id: 'id3',
-      horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
-          Timestamp.now().millisecondsSinceEpoch),
-      placa: 'LKJASD1',
-      vagaId: 'vagas/LALALA'),
+    id: 'id3',
+    horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
+        Timestamp.now().millisecondsSinceEpoch),
+    placa: 'LKJASD1',
+  ),
 ];
 
 @GenerateMocks([RegistroDataSource])

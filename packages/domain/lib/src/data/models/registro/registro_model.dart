@@ -7,7 +7,6 @@ class RegistroModel implements Registro {
     required this.horarioEntrada,
     this.horarioSaida,
     required this.placa,
-    required this.vagaId,
   });
 
   static List<RegistroModel> fromSnapshot(QuerySnapshot querySnapshot) {
@@ -21,7 +20,6 @@ class RegistroModel implements Registro {
                       doc['horario_saida'].millisecondsSinceEpoch)
                   : null,
               placa: doc['placa'],
-              vagaId: doc['vaga'].id,
             ))
         .toList();
   }
@@ -37,7 +35,4 @@ class RegistroModel implements Registro {
 
   @override
   String placa;
-
-  @override
-  String vagaId;
 }

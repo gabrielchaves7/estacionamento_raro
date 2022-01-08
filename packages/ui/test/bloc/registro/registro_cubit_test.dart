@@ -12,15 +12,15 @@ import 'registro_cubit_test.mocks.dart';
 
 final List<Registro> mockedRegistros = [
   Registro(
-      id: 'id',
-      horarioEntrada: DateTime.now(),
-      placa: 'ABCDEF',
-      vagaId: 'vagas/EALKSM123'),
+    id: 'id',
+    horarioEntrada: DateTime.now(),
+    placa: 'ABCDEF',
+  ),
   Registro(
-      id: 'id2',
-      horarioEntrada: DateTime.now(),
-      placa: 'ABCDEF2',
-      vagaId: 'vagas/DSALKJ32'),
+    id: 'id2',
+    horarioEntrada: DateTime.now(),
+    placa: 'ABCDEF2',
+  ),
 ];
 
 @GenerateMocks([GetRegistrosUseCase])

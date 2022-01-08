@@ -30,7 +30,6 @@ void main() {
         final Registro registro = Registro(
             horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641560814000),
             id: '1',
-            vagaId: 'vagas/klmxaskl12',
             placa: 'PLACAA',
             horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641564414000));
 
@@ -58,7 +57,6 @@ void main() {
         final Registro registro = Registro(
             horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
             id: '1',
-            vagaId: 'vagas/klmxaskl12',
             placa: 'PLACAA',
             horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641568014000));
 
@@ -77,7 +75,6 @@ void main() {
         final Registro registro = Registro(
             horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
             id: '1',
-            vagaId: 'vagas/klmxaskl12',
             placa: 'PLACAA',
             horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641480714000));
 
@@ -95,7 +92,6 @@ void main() {
         final Registro registro = Registro(
             horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
             id: '1',
-            vagaId: 'vagas/klmxaskl12',
             placa: 'PLACAA',
             horarioSaida: null);
 

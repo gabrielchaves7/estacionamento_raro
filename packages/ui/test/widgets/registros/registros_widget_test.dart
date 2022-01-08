@@ -38,19 +38,16 @@ List<Registro> registros = [
   Registro(
       horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641560814000),
       id: '1',
-      vagaId: 'vagas/klmxaskl11',
       placa: 'PLACAA',
       horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641564414000)),
   Registro(
       horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
       id: '2',
-      vagaId: 'vagas/klmxaskl12',
       placa: 'PLACAB',
       horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641480714000)),
   Registro(
       horarioEntrada: DateTime.fromMillisecondsSinceEpoch(1641478014000),
       id: '3',
-      vagaId: 'vagas/klmxaskl13',
       placa: 'PLACAC',
       horarioSaida: DateTime.fromMillisecondsSinceEpoch(1641480714000))
 ];
