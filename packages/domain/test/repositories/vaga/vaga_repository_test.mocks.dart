@@ -2,11 +2,11 @@
 // in domain/test/repositories/vaga/vaga_repository_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:domain/src/data/datasource/vaga/vaga_datasource_impl.dart'
-    as _i2;
-import 'package:domain/src/data/models/vaga/vaga_model.dart' as _i4;
+    as _i3;
+import 'package:domain/src/data/models/vaga/vaga_model.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -18,17 +18,25 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
+class _FakeVagaModel_0 extends _i1.Fake implements _i2.VagaModel {}
+
 /// A class which mocks [VagaDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockVagaDataSource extends _i1.Mock implements _i2.VagaDataSource {
+class MockVagaDataSource extends _i1.Mock implements _i3.VagaDataSource {
   MockVagaDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<_i4.VagaModel>?> all() =>
+  _i4.Future<List<_i2.VagaModel>?> all() =>
       (super.noSuchMethod(Invocation.method(#all, []),
-              returnValue: Future<List<_i4.VagaModel>?>.value())
-          as _i3.Future<List<_i4.VagaModel>?>);
+              returnValue: Future<List<_i2.VagaModel>?>.value())
+          as _i4.Future<List<_i2.VagaModel>?>);
+  @override
+  _i4.Future<_i2.VagaModel> update({String? id, bool? disponivel}) => (super
+      .noSuchMethod(
+          Invocation.method(#update, [], {#id: id, #disponivel: disponivel}),
+          returnValue: Future<_i2.VagaModel>.value(_FakeVagaModel_0())) as _i4
+      .Future<_i2.VagaModel>);
 }

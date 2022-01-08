@@ -16,7 +16,9 @@ class VagaCardWidget extends StatelessWidget {
           context: context,
           barrierDismissible: false, // user must tap button!
           builder: (BuildContext context) {
-            return const OcuparVagaDialog();
+            return OcuparVagaDialog(
+              vaga: vaga,
+            );
           },
         );
       },
@@ -30,7 +32,8 @@ class VagaCardWidget extends StatelessWidget {
             children: [
               Text(
                 vaga.numero.toString(),
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Icon(_vagaIcon(vaga.tipoVaga)),
             ],

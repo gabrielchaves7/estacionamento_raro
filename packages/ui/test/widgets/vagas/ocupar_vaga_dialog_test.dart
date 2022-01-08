@@ -1,3 +1,5 @@
+import 'package:domain/estacionamento_raro_entities.dart';
+import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
@@ -15,7 +17,13 @@ Future<void> _initWidget(tester) async {
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
-                    return const OcuparVagaDialog();
+                    return OcuparVagaDialog(
+                      vaga: Vaga(
+                          id: 'id',
+                          disponivel: true,
+                          tipoVaga: TipoVagaEnum.moto,
+                          numero: 1),
+                    );
                   },
                 );
               },

@@ -11,11 +11,12 @@ import 'package:mockito/mockito.dart';
 import './vaga_repository_test.mocks.dart';
 
 final List<VagaModel> mockedVagas = [
-  VagaModel(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
   VagaModel(
-      id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
+      id: 'id1', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
   VagaModel(
-      id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
+      id: 'id2', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
+  VagaModel(
+      id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
 @GenerateMocks([VagaDataSource])
@@ -85,6 +86,50 @@ void main() {
               (exception) => {expect(exception is UnexpectedFailure, true)},
               (registros) => {});
         });
+      });
+    });
+
+    group('When VagaReposoritory.update is called', () {
+      test(
+          'And VagaDataSource returns a VagaModel, VagaReposoritory should return a VagaEntity',
+          () async {
+        final VagaDataSource mockedVagaDataSource = MockVagaDataSource();
+
+        when(
+          mockedVagaDataSource.update(disponivel: false, id: 'id1'),
+        ).thenAnswer((_) async => mockedVagas.first);
+
+        final VagaRepository vagaRepository =
+            VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
+
+        final result =
+            await vagaRepository.update(disponivel: false, id: 'id1');
+
+        verify(mockedVagaDataSource.update(disponivel: false, id: 'id1'));
+        expect(result.isRight(), true);
+        result.fold((exception) => {}, (vaga) => {expect(vaga.id, 'id1')});
+      });
+
+      test(
+          'And VagaDataSource throws an exception VagaReposoritory should return the left value with UnexpectedFailure',
+          () async {
+        final VagaDataSource mockedVagaDataSource = MockVagaDataSource();
+
+        when(
+          mockedVagaDataSource.update(disponivel: false, id: 'id1'),
+        ).thenThrow((_) async => Exception());
+
+        final VagaRepository vagaRepository =
+            VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
+
+        final result =
+            await vagaRepository.update(disponivel: false, id: 'id1');
+
+        verify(mockedVagaDataSource.update(disponivel: false, id: 'id1'));
+        expect(result.isLeft(), true);
+        result.fold(
+            (exception) => {expect(exception is UnexpectedFailure, true)},
+            (registros) => {});
       });
     });
   });

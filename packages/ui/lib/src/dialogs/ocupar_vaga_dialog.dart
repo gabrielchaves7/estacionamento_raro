@@ -1,8 +1,11 @@
+import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OcuparVagaDialog extends StatefulWidget {
-  const OcuparVagaDialog({Key? key}) : super(key: key);
+  const OcuparVagaDialog({Key? key, required this.vaga}) : super(key: key);
+
+  final Vaga vaga;
 
   @override
   OcuparVagaDialogState createState() {

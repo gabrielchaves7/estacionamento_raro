@@ -11,13 +11,18 @@ class VagaModel implements Vaga {
 
   static List<VagaModel> fromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.docs
-        .map((doc) => VagaModel(
-            id: doc.id,
-            disponivel: doc['disponivel'],
-            tipoVaga: TipoVagaEnum.values.firstWhere(
-                (e) => e.toString().split('.').last == doc['tipo_vaga']),
-            numero: doc['numero']))
+        .map((doc) => VagaModel.fromDocumentSnapshot(doc))
         .toList();
+  }
+
+  static VagaModel fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    print("a");
+    return VagaModel(
+        id: documentSnapshot.id,
+        disponivel: documentSnapshot['disponivel'],
+        tipoVaga: TipoVagaEnum.values.firstWhere((e) =>
+            e.toString().split('.').last == documentSnapshot['tipo_vaga']),
+        numero: documentSnapshot['numero']);
   }
 
   @override

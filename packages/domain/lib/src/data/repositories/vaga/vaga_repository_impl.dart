@@ -25,4 +25,16 @@ class VagaRepositoryImpl implements VagaRepository {
       return Left(UnexpectedFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Vaga>> update(
+      {required String id, required bool disponivel}) async {
+    try {
+      Vaga vaga = await vagaDataSource.update(disponivel: disponivel, id: id);
+
+      return Right(vaga);
+    } catch (e) {
+      return Left(UnexpectedFailure());
+    }
+  }
 }
