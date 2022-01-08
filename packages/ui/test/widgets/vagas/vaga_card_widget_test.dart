@@ -2,6 +2,7 @@ import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
 import 'package:ui/src/widgets/vagas/vaga_card_widget.dart';
 
 Future<void> _initWidget(tester, {required Vaga vaga}) async {
@@ -58,6 +59,20 @@ void main() {
 
         expect(find.text('3'), findsOneWidget);
         find.byIcon(Icons.directions_subway);
+      });
+    });
+
+    group('When VagaCardWidget is clicked', () {
+      testWidgets('Should open OcuparVagaDialog', (WidgetTester tester) async {
+        final Vaga vaga = Vaga(
+            id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1);
+
+        await _initWidget(tester, vaga: vaga);
+
+        await tester.tap(find.text('1'));
+        await tester.pump();
+
+        find.byType(OcuparVagaDialog);
       });
     });
   });

@@ -1,6 +1,7 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
 
 class VagaCardWidget extends StatelessWidget {
   const VagaCardWidget({Key? key, required this.vaga}) : super(key: key);
@@ -9,19 +10,31 @@ class VagaCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16, top: 8, bottom: 0, right: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              vaga.numero.toString(),
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Icon(_vagaIcon(vaga.tipoVaga)),
-          ],
+    return GestureDetector(
+      onTap: () {
+        showDialog<void>(
+          context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+            return const OcuparVagaDialog();
+          },
+        );
+      },
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, top: 8, bottom: 0, right: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                vaga.numero.toString(),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              Icon(_vagaIcon(vaga.tipoVaga)),
+            ],
+          ),
         ),
       ),
     );
