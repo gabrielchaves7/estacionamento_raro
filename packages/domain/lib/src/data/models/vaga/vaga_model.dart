@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/src/domain/entities/vaga/vaga_entity.dart';
 import 'package:domain/src/enum/tipo_vaga_enum.dart';
 
@@ -8,11 +9,16 @@ class VagaModel implements Vaga {
     required this.tipoVaga,
   });
 
-  VagaModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        disponivel = json['disponivel'],
-        tipoVaga = TipoVagaEnum.values
-            .firstWhere((e) => e.toString() == json['tipoVaga']);
+  static List<VagaModel> fromSnapshot(QuerySnapshot querySnapshot) {
+    return querySnapshot.docs
+        .map((doc) => VagaModel(
+              id: doc.id,
+              disponivel: doc['disponivel'],
+              tipoVaga: TipoVagaEnum.values.firstWhere(
+                  (e) => e.toString().split('.').last == doc['tipo_vaga']),
+            ))
+        .toList();
+  }
 
   @override
   String id;
