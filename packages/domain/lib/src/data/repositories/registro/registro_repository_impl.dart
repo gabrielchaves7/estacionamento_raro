@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:domain/src/data/datasource/registro_datasource_impl.dart';
-import 'package:domain/src/domain/entities/registro_entity.dart';
+import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dart';
+import 'package:domain/src/domain/entities/registro/registro_entity.dart';
 import 'package:domain/src/domain/errors/failure.dart';
-import 'package:domain/src/domain/repositories/registro_repository.dart';
+import 'package:domain/src/domain/repositories/registro/registro_repository.dart';
 
 class RegistroRepositoryImpl implements RegistroRepository {
   RegistroRepositoryImpl({

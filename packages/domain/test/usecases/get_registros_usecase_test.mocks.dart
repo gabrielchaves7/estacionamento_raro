@@ -5,9 +5,11 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:domain/src/domain/entities/registro_entity.dart' as _i6;
+import 'package:domain/src/domain/entities/registro/registro_entity.dart'
+    as _i6;
 import 'package:domain/src/domain/errors/failure.dart' as _i5;
-import 'package:domain/src/domain/repositories/registro_repository.dart' as _i3;
+import 'package:domain/src/domain/repositories/registro/registro_repository.dart'
+    as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values

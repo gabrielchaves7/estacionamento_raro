@@ -1,8 +1,7 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/date_symbol_data_file.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:ui/src/widgets/registros/registro_card_widget.dart';
 
 Future<void> _initWidget(tester, {required Registro registro}) async {
@@ -18,6 +17,8 @@ Future<void> _initWidget(tester, {required Registro registro}) async {
 }
 
 void main() {
+  setUpAll(() => initializeDateFormatting('pt_BR', ''));
+
   group('RegistroCardWidget', () {
     group('When RegistroCardWidget is called', () {
       testWidgets(

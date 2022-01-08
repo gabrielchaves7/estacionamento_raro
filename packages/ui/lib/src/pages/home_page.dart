@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ui/src/bloc/registro_cubit.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       'Index 1: Business',
       style: optionStyle,
     ),
-    RegistrosWidget()
+    const RegistrosWidget()
   ];
 
   void _onItemTapped(int index) {

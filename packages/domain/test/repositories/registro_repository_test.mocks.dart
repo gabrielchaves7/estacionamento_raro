@@ -4,9 +4,9 @@
 
 import 'dart:async' as _i3;
 
-import 'package:domain/src/data/datasource/registro_datasource_impl.dart'
+import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dart'
     as _i2;
-import 'package:domain/src/data/models/registro_model.dart' as _i4;
+import 'package:domain/src/data/models/registro/registro_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values

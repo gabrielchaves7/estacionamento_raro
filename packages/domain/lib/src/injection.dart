@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/src/data/datasource/registro_datasource_impl.dart';
-import 'package:domain/src/domain/usecases/get_registros_usecase.dart';
+import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dart';
+import 'package:domain/src/domain/usecases/registro/get_registros_usecase.dart';
 import 'package:get_it/get_it.dart';
 
-import 'data/repositories/registro_repository_impl.dart';
-import 'domain/repositories/registro_repository.dart';
+import 'data/repositories/registro/registro_repository_impl.dart';
+import 'domain/repositories/registro/registro_repository.dart';
 
 final getIt = GetIt.instance;
 

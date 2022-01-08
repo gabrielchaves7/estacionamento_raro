@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/src/data/models/registro_model.dart';
+import 'package:domain/src/data/models/registro/registro_model.dart';
 
 abstract class RegistroDataSource {
   Future<List<RegistroModel>?> all();

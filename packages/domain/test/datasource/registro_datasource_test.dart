@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/src/data/datasource/registro_datasource_impl.dart';
+import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 

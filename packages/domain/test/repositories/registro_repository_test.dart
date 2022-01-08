@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/src/data/datasource/registro_datasource_impl.dart';
-import 'package:domain/src/data/models/registro_model.dart';
-import 'package:domain/src/data/repositories/registro_repository_impl.dart';
+import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dart';
+import 'package:domain/src/data/models/registro/registro_model.dart';
+import 'package:domain/src/data/repositories/registro/registro_repository_impl.dart';
 import 'package:domain/src/domain/errors/failure.dart';
-import 'package:domain/src/domain/repositories/registro_repository.dart';
+import 'package:domain/src/domain/repositories/registro/registro_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

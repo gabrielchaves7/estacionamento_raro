@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/estacionamento_raro_usecases.dart';
 import 'package:domain/src/domain/errors/failure.dart';
-import 'package:domain/src/domain/repositories/registro_repository.dart';
+import 'package:domain/src/domain/repositories/registro/registro_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

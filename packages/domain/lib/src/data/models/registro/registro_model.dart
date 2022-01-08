@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/src/domain/entities/registro_entity.dart';
+import 'package:domain/src/domain/entities/registro/registro_entity.dart';
 
 class RegistroModel implements Registro {
   RegistroModel({

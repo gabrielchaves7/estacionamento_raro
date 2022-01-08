@@ -1,4 +1,4 @@
-import 'package:domain/src/domain/entities/vaga_entity.dart';
+import 'package:domain/src/domain/entities/vaga/vaga_entity.dart';
 import 'package:domain/src/enum/tipo_vaga_enum.dart';
 
 class VagaModel implements Vaga {

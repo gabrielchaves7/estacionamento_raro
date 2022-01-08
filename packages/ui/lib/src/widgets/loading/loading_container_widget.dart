@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingContainerWidget extends StatelessWidget {
-  LoadingContainerWidget({
+  const LoadingContainerWidget({
     Key? key,
     required this.width,
     required this.height,
