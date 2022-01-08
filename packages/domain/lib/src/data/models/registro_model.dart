@@ -16,8 +16,10 @@ class RegistroModel implements Registro {
               id: doc.id,
               horarioEntrada: DateTime.fromMillisecondsSinceEpoch(
                   doc['horario_entrada'].millisecondsSinceEpoch),
-              horarioSaida: DateTime.fromMillisecondsSinceEpoch(
-                  doc['horario_saida'].millisecondsSinceEpoch),
+              horarioSaida: doc['horario_saida'] != null
+                  ? DateTime.fromMillisecondsSinceEpoch(
+                      doc['horario_saida'].millisecondsSinceEpoch)
+                  : null,
               placa: doc['placa'],
               vagaId: doc['vaga'].id,
             ))

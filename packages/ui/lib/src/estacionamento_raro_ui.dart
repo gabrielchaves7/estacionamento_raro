@@ -1,5 +1,6 @@
 import 'package:domain/estacionamento_raro_domain.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ui/src/pages/home_page.dart';
 
 import 'injection.dart';

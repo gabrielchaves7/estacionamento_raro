@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.1"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -84,7 +91,7 @@ packages:
       path: "packages/domain"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -118,6 +125,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bloc:
+    dependency: transitive
+    description:
+      name: flutter_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.0.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -142,6 +156,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -170,6 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -184,6 +212,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -244,7 +279,7 @@ packages:
       path: "packages/ui"
       relative: true
     source: path
-    version: "1.0.0+1"
+    version: "0.0.0"
   vector_math:
     dependency: transitive
     description:

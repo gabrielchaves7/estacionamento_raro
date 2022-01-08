@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ui/src/bloc/registro_cubit.dart';
+import 'package:ui/src/widgets/registros/registros_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -10,16 +12,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    const Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    RegistrosWidget()
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
@@ -30,23 +40,26 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_car_outlined),
+            label: 'Vagas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.drive_file_rename_outline),
+            label: 'Registros',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
