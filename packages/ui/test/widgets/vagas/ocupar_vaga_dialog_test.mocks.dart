@@ -2,15 +2,17 @@
 // in ui/test/widgets/vagas/ocupar_vaga_dialog_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:domain/estacionamento_raro_entities.dart' as _i7;
-import 'package:domain/src/domain/errors/failure.dart' as _i6;
+import 'package:domain/estacionamento_raro_entities.dart' as _i8;
+import 'package:domain/src/domain/errors/failure.dart' as _i7;
 import 'package:domain/src/domain/repositories/vaga/vaga_repository.dart'
     as _i2;
-import 'package:domain/src/domain/usecases/vaga/close_vaga_usecase.dart' as _i8;
-import 'package:domain/src/domain/usecases/vaga/get_vagas_usecase.dart' as _i4;
+import 'package:domain/src/domain/usecases/registro/create_registro_usecase.dart'
+    as _i4;
+import 'package:domain/src/domain/usecases/vaga/close_vaga_usecase.dart' as _i9;
+import 'package:domain/src/domain/usecases/vaga/get_vagas_usecase.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -26,10 +28,13 @@ class _FakeVagaRepository_0 extends _i1.Fake implements _i2.VagaRepository {}
 
 class _FakeEither_1<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
 
+class _FakeCreateRegistroUseCase_2 extends _i1.Fake
+    implements _i4.CreateRegistroUseCase {}
+
 /// A class which mocks [GetVagasUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetVagasUseCase extends _i1.Mock implements _i4.GetVagasUseCase {
+class MockGetVagasUseCase extends _i1.Mock implements _i5.GetVagasUseCase {
   MockGetVagasUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -39,17 +44,17 @@ class MockGetVagasUseCase extends _i1.Mock implements _i4.GetVagasUseCase {
       (super.noSuchMethod(Invocation.getter(#vagaRepository),
           returnValue: _FakeVagaRepository_0()) as _i2.VagaRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Vaga>>> call() =>
+  _i6.Future<_i3.Either<_i7.Failure, List<_i8.Vaga>>> call() =>
       (super.noSuchMethod(Invocation.method(#call, []),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Vaga>>>.value(
-              _FakeEither_1<_i6.Failure, List<_i7.Vaga>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i7.Vaga>>>);
+          returnValue: Future<_i3.Either<_i7.Failure, List<_i8.Vaga>>>.value(
+              _FakeEither_1<_i7.Failure, List<_i8.Vaga>>())) as _i6
+          .Future<_i3.Either<_i7.Failure, List<_i8.Vaga>>>);
 }
 
 /// A class which mocks [CloseVagaUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCloseVagaUseCase extends _i1.Mock implements _i8.CloseVagaUseCase {
+class MockCloseVagaUseCase extends _i1.Mock implements _i9.CloseVagaUseCase {
   MockCloseVagaUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -59,9 +64,16 @@ class MockCloseVagaUseCase extends _i1.Mock implements _i8.CloseVagaUseCase {
       (super.noSuchMethod(Invocation.getter(#vagaRepository),
           returnValue: _FakeVagaRepository_0()) as _i2.VagaRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.Vaga>> call({String? id}) =>
-      (super.noSuchMethod(Invocation.method(#call, [], {#id: id}),
-              returnValue: Future<_i3.Either<_i6.Failure, _i7.Vaga>>.value(
-                  _FakeEither_1<_i6.Failure, _i7.Vaga>()))
-          as _i5.Future<_i3.Either<_i6.Failure, _i7.Vaga>>);
+  _i4.CreateRegistroUseCase get createRegistroUseCase =>
+      (super.noSuchMethod(Invocation.getter(#createRegistroUseCase),
+              returnValue: _FakeCreateRegistroUseCase_2())
+          as _i4.CreateRegistroUseCase);
+  @override
+  _i6.Future<_i3.Either<_i7.Failure, _i8.Vaga>> call(
+          {String? vagaId, String? placa}) =>
+      (super.noSuchMethod(
+              Invocation.method(#call, [], {#vagaId: vagaId, #placa: placa}),
+              returnValue: Future<_i3.Either<_i7.Failure, _i8.Vaga>>.value(
+                  _FakeEither_1<_i7.Failure, _i8.Vaga>()))
+          as _i6.Future<_i3.Either<_i7.Failure, _i8.Vaga>>);
 }

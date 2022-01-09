@@ -137,7 +137,7 @@ void main() {
         });
 
         testWidgets(
-            'If placa is valid should call UpdateVagaUseCase and then display snakbar message and close the dialog',
+            'If placa is valid should call CloseVagaUseCase and then display snakbar message and close the dialog',
             (WidgetTester tester) async {
           final mockedGetVagasUseCase = MockGetVagasUseCase();
           final mockedCloseVagaUseCase = MockCloseVagaUseCase();
@@ -145,7 +145,8 @@ void main() {
           when(mockedGetVagasUseCase.call())
               .thenAnswer((_) async => Right([vaga]));
 
-          when(mockedCloseVagaUseCase.call(id: 'id')).thenAnswer(
+          when(mockedCloseVagaUseCase.call(vagaId: 'id', placa: 'ABCDEFG'))
+              .thenAnswer(
             (_) async => Right(Vaga(
                 id: 'id',
                 disponivel: false,
@@ -167,14 +168,14 @@ void main() {
           await tester.tap(find.byKey(const Key('open_dialog')));
           await tester.pump();
 
-          await tester.enterText(find.byType(TextFormField), '1234567');
+          await tester.enterText(find.byType(TextFormField), 'ABCDEFG');
           await tester.tap(find.text('confirmar'));
           await tester.pumpAndSettle();
 
           expect(find.text('Marcando a vaga como ocupada...'), findsOneWidget);
           expect(find.byType(OcuparVagaDialog), findsNothing);
 
-          verify(mockedCloseVagaUseCase.call(id: 'id'));
+          verify(mockedCloseVagaUseCase.call(vagaId: 'id', placa: 'ABCDEFG'));
         });
       });
     });
