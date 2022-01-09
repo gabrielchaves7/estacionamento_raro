@@ -10,8 +10,7 @@ import 'package:domain/src/domain/errors/failure.dart' as _i6;
 import 'package:domain/src/domain/repositories/vaga/vaga_repository.dart'
     as _i2;
 import 'package:domain/src/domain/usecases/vaga/get_vagas_usecase.dart' as _i4;
-import 'package:domain/src/domain/usecases/vaga/update_vaga_usecase.dart'
-    as _i8;
+import 'package:domain/src/domain/usecases/vaga/close_vaga_usecase.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values

@@ -16,7 +16,7 @@ import 'package:domain/src/domain/repositories/vaga/vaga_repository.dart'
 import 'package:domain/src/domain/usecases/registro/get_registros_usecase.dart'
     as _i5;
 import 'package:domain/src/domain/usecases/vaga/get_vagas_usecase.dart' as _i9;
-import 'package:domain/src/domain/usecases/vaga/update_vaga_usecase.dart'
+import 'package:domain/src/domain/usecases/vaga/close_vaga_usecase.dart'
     as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 

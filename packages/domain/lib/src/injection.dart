@@ -4,6 +4,7 @@ import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dar
 import 'package:domain/src/data/datasource/vaga/vaga_datasource_impl.dart';
 import 'package:domain/src/domain/repositories/vaga/vaga_repository.dart';
 import 'package:domain/src/domain/usecases/registro/get_registros_usecase.dart';
+import 'package:domain/src/domain/usecases/vaga/open_vaga_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/repositories/registro/registro_repository_impl.dart';
@@ -66,9 +67,16 @@ void configureDependencies() {
     );
   }
 
-  if (!getIt.isRegistered<UpdateVagaUseCase>()) {
-    getIt.registerLazySingleton<UpdateVagaUseCase>(
-      () => UpdateVagaUseCase(vagaRepository: getIt()),
+  if (!getIt.isRegistered<CloseVagaUseCase>()) {
+    getIt.registerLazySingleton<CloseVagaUseCase>(
+      () => CloseVagaUseCase(vagaRepository: getIt()),
+    );
+  }
+
+  if (!getIt.isRegistered<OpenVagaUseCase>()) {
+    getIt.registerLazySingleton<OpenVagaUseCase>(
+      () => OpenVagaUseCase(
+          vagaRepository: getIt(), createRegistroUseCase: getIt()),
     );
   }
 }
