@@ -1,6 +1,7 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/dialogs/desocupar_vaga_dialog.dart';
 import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
 
 class VagaCardWidget extends StatelessWidget {
@@ -16,9 +17,15 @@ class VagaCardWidget extends StatelessWidget {
           context: context,
           barrierDismissible: false, // user must tap button!
           builder: (BuildContext context) {
-            return OcuparVagaDialog(
-              vaga: vaga,
-            );
+            if (vaga.disponivel) {
+              return OcuparVagaDialog(
+                vaga: vaga,
+              );
+            } else {
+              return DesocuparVagaDialog(
+                vaga: vaga,
+              );
+            }
           },
         );
       },

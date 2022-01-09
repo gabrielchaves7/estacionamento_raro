@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
+import 'package:ui/src/dialogs/desocupar_vaga_dialog.dart';
 import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/vagas/vaga_card_widget.dart';
@@ -78,7 +79,8 @@ void main() {
     });
 
     group('When VagaCardWidget is clicked', () {
-      testWidgets('Should open OcuparVagaDialog', (WidgetTester tester) async {
+      testWidgets('If vaga disponiel is true then should open OcuparVagaDialog',
+          (WidgetTester tester) async {
         final mockedGetVagasUseCase = MockGetVagasUseCase();
         final mockedCloseVagaUseCase = MockCloseVagaUseCase();
         final mockedOpenVagaUseCase = MockOpenVagaUseCase();
@@ -101,6 +103,38 @@ void main() {
         await tester.pump();
 
         find.byType(OcuparVagaDialog);
+
+        _getItUnregisterCubit();
+      });
+
+      testWidgets(
+          'If vaga disponiel is false then should open DesocuparVagaDialog',
+          (WidgetTester tester) async {
+        final mockedGetVagasUseCase = MockGetVagasUseCase();
+        final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+        final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+        final VagasCubit vagasCubit = VagasCubit(
+            getVagasUseCase: mockedGetVagasUseCase,
+            closeVagaUseCase: mockedCloseVagaUseCase,
+            openVagaUseCase: mockedOpenVagaUseCase);
+
+        _getItRegisterCubit(
+          vagasCubit: vagasCubit,
+        );
+
+        final Vaga vaga = Vaga(
+            id: 'id',
+            disponivel: false,
+            tipoVaga: TipoVagaEnum.moto,
+            numero: 1);
+
+        await _initWidget(tester, vaga: vaga);
+
+        await tester.tap(find.text('1'));
+        await tester.pump();
+
+        find.byType(DesocuparVagaDialog);
 
         _getItUnregisterCubit();
       });

@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
-import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
+import 'package:ui/src/dialogs/desocupar_vaga_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ui/src/injection.dart';
 
@@ -21,7 +21,7 @@ void _getItUnregisterCubit() {
 }
 
 final Vaga vaga =
-    Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1);
+    Vaga(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.moto, numero: 1);
 
 Future<void> _initWidget(tester) async {
   await tester.pumpWidget(
@@ -36,7 +36,7 @@ Future<void> _initWidget(tester) async {
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
-                    return OcuparVagaDialog(
+                    return DesocuparVagaDialog(
                       vaga: vaga,
                     );
                   },
@@ -56,8 +56,8 @@ void main() {
     _getItUnregisterCubit();
   });
 
-  group('OcuparVagaWidget', () {
-    group('When OcuparVagaWidget is called', () {
+  group('DesocuparVagaDialog', () {
+    group('When DesocuparVagaDialog is called', () {
       testWidgets('Should display title, confirm and cancel button',
           (WidgetTester tester) async {
         final mockedGetVagasUseCase = MockGetVagasUseCase();
@@ -77,67 +77,16 @@ void main() {
         await tester.tap(find.byKey(const Key('open_dialog')));
         await tester.pump();
 
-        expect(find.text('Informe a placa'), findsOneWidget);
+        expect(find.text('Confirmar'), findsOneWidget);
+        expect(
+            find.text('Deseja realmente desocupar a vaga 1?'), findsOneWidget);
         expect(find.text('cancelar'), findsOneWidget);
         expect(find.text('confirmar'), findsOneWidget);
       });
 
       group('When confirm button is clicked', () {
-        testWidgets('If placa is not informed should show display error',
-            (WidgetTester tester) async {
-          final mockedGetVagasUseCase = MockGetVagasUseCase();
-          final mockedCloseVagaUseCase = MockCloseVagaUseCase();
-          final mockedOpenVagaUseCase = MockOpenVagaUseCase();
-
-          final VagasCubit vagasCubit = VagasCubit(
-              getVagasUseCase: mockedGetVagasUseCase,
-              closeVagaUseCase: mockedCloseVagaUseCase,
-              openVagaUseCase: mockedOpenVagaUseCase);
-
-          _getItRegisterCubit(
-            vagasCubit: vagasCubit,
-          );
-
-          await _initWidget(tester);
-          await tester.tap(find.byKey(const Key('open_dialog')));
-          await tester.pump();
-
-          await tester.tap(find.text('confirmar'));
-          await tester.pumpAndSettle();
-
-          expect(
-              find.text('Por favor informe uma placa válida.'), findsOneWidget);
-        });
-
-        testWidgets('If placa is lower than 7 digits should show display error',
-            (WidgetTester tester) async {
-          final mockedGetVagasUseCase = MockGetVagasUseCase();
-          final mockedCloseVagaUseCase = MockCloseVagaUseCase();
-          final mockedOpenVagaUseCase = MockOpenVagaUseCase();
-
-          final VagasCubit vagasCubit = VagasCubit(
-              getVagasUseCase: mockedGetVagasUseCase,
-              closeVagaUseCase: mockedCloseVagaUseCase,
-              openVagaUseCase: mockedOpenVagaUseCase);
-
-          _getItRegisterCubit(
-            vagasCubit: vagasCubit,
-          );
-
-          await _initWidget(tester);
-          await tester.tap(find.byKey(const Key('open_dialog')));
-          await tester.pump();
-
-          await tester.enterText(find.byType(TextFormField), '12345');
-          await tester.tap(find.text('confirmar'));
-          await tester.pumpAndSettle();
-
-          expect(find.text('A placa deve ter no mínimo 7 digítos.'),
-              findsOneWidget);
-        });
-
         testWidgets(
-            'If placa is valid should call CloseVagaUseCase and then display snakbar message and close the dialog',
+            'Should call OpenVagaUseCase and then display snakbar message and close the dialog',
             (WidgetTester tester) async {
           final mockedGetVagasUseCase = MockGetVagasUseCase();
           final mockedCloseVagaUseCase = MockCloseVagaUseCase();
@@ -146,11 +95,10 @@ void main() {
           when(mockedGetVagasUseCase.call())
               .thenAnswer((_) async => Right([vaga]));
 
-          when(mockedCloseVagaUseCase.call(vagaId: 'id', placa: 'ABCDEFG'))
-              .thenAnswer(
+          when(mockedOpenVagaUseCase.call(id: 'id')).thenAnswer(
             (_) async => Right(Vaga(
                 id: 'id',
-                disponivel: false,
+                disponivel: true,
                 tipoVaga: TipoVagaEnum.moto,
                 numero: 1)),
           );
@@ -170,14 +118,13 @@ void main() {
           await tester.tap(find.byKey(const Key('open_dialog')));
           await tester.pump();
 
-          await tester.enterText(find.byType(TextFormField), 'ABCDEFG');
           await tester.tap(find.text('confirmar'));
           await tester.pumpAndSettle();
 
-          expect(find.text('Marcando a vaga como ocupada...'), findsOneWidget);
-          expect(find.byType(OcuparVagaDialog), findsNothing);
+          expect(find.text('Desocupando a vaga 1...'), findsOneWidget);
+          expect(find.byType(DesocuparVagaDialog), findsNothing);
 
-          verify(mockedCloseVagaUseCase.call(vagaId: 'id', placa: 'ABCDEFG'));
+          verify(mockedOpenVagaUseCase.call(id: 'id'));
         });
       });
 
@@ -204,7 +151,7 @@ void main() {
           await tester.tap(find.text('cancelar'));
           await tester.pumpAndSettle();
 
-          expect(find.byType(OcuparVagaDialog), findsNothing);
+          expect(find.byType(DesocuparVagaDialog), findsNothing);
         });
       });
     });
