@@ -76,7 +76,8 @@ void configureDependencies() {
 
   if (!getIt.isRegistered<OpenVagaUseCase>()) {
     getIt.registerLazySingleton<OpenVagaUseCase>(
-      () => OpenVagaUseCase(vagaRepository: getIt()),
+      () => OpenVagaUseCase(
+          vagaRepository: getIt(), updateHorarioSaidaUseCase: getIt()),
     );
   }
 }
