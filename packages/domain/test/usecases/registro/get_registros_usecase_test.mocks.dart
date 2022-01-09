@@ -45,4 +45,11 @@ class MockRegistroRepository extends _i1.Mock
               returnValue: Future<_i2.Either<_i5.Failure, _i6.Registro>>.value(
                   _FakeEither_0<_i5.Failure, _i6.Registro>()))
           as _i4.Future<_i2.Either<_i5.Failure, _i6.Registro>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Registro>> updateHorarioSaida(
+          {String? id}) =>
+      (super.noSuchMethod(Invocation.method(#updateHorarioSaida, [], {#id: id}),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Registro>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Registro>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Registro>>);
 }
