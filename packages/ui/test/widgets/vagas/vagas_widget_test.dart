@@ -44,7 +44,7 @@ final List<Vaga> vagas = [
   Vaga(id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
-@GenerateMocks([GetVagasUseCase, CloseVagaUseCase])
+@GenerateMocks([GetVagasUseCase, CloseVagaUseCase, OpenVagaUseCase])
 void main() {
   tearDown(() async {
     _getItUnregisterCubit();
@@ -56,12 +56,14 @@ void main() {
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -81,12 +83,14 @@ void main() {
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -107,13 +111,15 @@ void main() {
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call())
           .thenAnswer((_) async => Left(UnexpectedFailure()));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -133,6 +139,7 @@ void main() {
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
       when(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: '1234567'))
@@ -142,7 +149,8 @@ void main() {
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -167,12 +175,14 @@ void main() {
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
