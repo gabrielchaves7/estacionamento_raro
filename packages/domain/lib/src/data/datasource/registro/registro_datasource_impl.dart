@@ -37,8 +37,17 @@ class RegistroDataSourceImpl implements RegistroDataSource {
   }
 
   @override
-  Future<RegistroModel> updateHorarioSaida({required String id}) {
-    // TODO: implement updateHorarioSaida
-    throw UnimplementedError();
+  Future<RegistroModel> updateHorarioSaida({required String id}) async {
+    final DocumentReference documentReference =
+        firestore.collection('registros').doc(id);
+
+    await documentReference.update({
+      'horario_saida': Timestamp.fromMillisecondsSinceEpoch(
+          DateTime.now().millisecondsSinceEpoch)
+    });
+
+    final DocumentSnapshot registroSnapshot = await documentReference.get();
+
+    return RegistroModel.fromDocumentSnapshot(registroSnapshot);
   }
 }

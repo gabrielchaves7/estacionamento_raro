@@ -16,6 +16,12 @@ Future<void> insertDocument(CollectionReference registrosCollection) async {
     'placa': 'ABCDEFG',
     'horario_saida': Timestamp.fromMillisecondsSinceEpoch(1641516695000)
   });
+
+  await registrosCollection.doc("id2").set({
+    'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(1641516678000),
+    'placa': 'ABCDEFGH',
+    'horario_saida': null
+  });
 }
 
 void main() {
@@ -39,7 +45,7 @@ void main() {
 
         final result = await registroDataSource.all();
 
-        expect(result!.length, 1);
+        expect(result!.length, 2);
 
         expect(result.first.id, 'id1');
         expect(
@@ -60,6 +66,23 @@ void main() {
         final result = await registroDataSource.create(placa: 'ABCDEFG');
 
         expect(result.placa, 'ABCDEFG');
+      });
+    });
+
+    group('When RegistroDataSource.updateHorarioSaida is called', () {
+      test(
+          'RegistroDataSource should call FirebaseFirestore.collection("registros").update(), and update the registro',
+          () async {
+        final RegistroDataSource registroDataSource =
+            RegistroDataSourceImpl(firestore: mockedFirestore);
+
+        await insertDocument(registrosCollection);
+
+        final result = await registroDataSource.updateHorarioSaida(id: 'id2');
+
+        expect(result.horarioSaida is DateTime, true);
+        expect(result.placa, 'ABCDEFGH');
+        expect(result.horarioEntrada.millisecondsSinceEpoch, 1641516678000);
       });
     });
   });

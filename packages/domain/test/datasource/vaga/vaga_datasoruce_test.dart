@@ -61,6 +61,7 @@ void main() {
 
         expect(vaga.id, 'id1');
         expect(vaga.disponivel, false);
+        expect(vaga.tipoVaga, TipoVagaEnum.moto);
       });
     });
   });
