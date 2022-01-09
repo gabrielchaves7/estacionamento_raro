@@ -12,4 +12,5 @@ class Vaga {
   bool disponivel;
   TipoVagaEnum tipoVaga;
   int numero;
+  String? registroId;
 }

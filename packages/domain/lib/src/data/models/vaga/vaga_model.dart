@@ -7,7 +7,8 @@ class VagaModel implements Vaga {
       {required this.id,
       required this.disponivel,
       required this.tipoVaga,
-      required this.numero});
+      required this.numero,
+      this.registroId});
 
   static List<VagaModel> fromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.docs
@@ -17,11 +18,13 @@ class VagaModel implements Vaga {
 
   static VagaModel fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
     return VagaModel(
-        id: documentSnapshot.id,
-        disponivel: documentSnapshot['disponivel'],
-        tipoVaga: TipoVagaEnum.values.firstWhere((e) =>
-            e.toString().split('.').last == documentSnapshot['tipo_vaga']),
-        numero: documentSnapshot['numero']);
+      id: documentSnapshot.id,
+      disponivel: documentSnapshot['disponivel'],
+      tipoVaga: TipoVagaEnum.values.firstWhere(
+          (e) => e.toString().split('.').last == documentSnapshot['tipo_vaga']),
+      numero: documentSnapshot['numero'],
+      registroId: null,
+    );
   }
 
   @override
@@ -35,4 +38,7 @@ class VagaModel implements Vaga {
 
   @override
   int numero;
+
+  @override
+  String? registroId;
 }
