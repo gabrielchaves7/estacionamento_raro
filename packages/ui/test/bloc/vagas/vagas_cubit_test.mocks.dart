@@ -10,6 +10,8 @@ import 'package:domain/src/domain/errors/failure.dart' as _i6;
 import 'package:domain/src/domain/repositories/vaga/vaga_repository.dart'
     as _i2;
 import 'package:domain/src/domain/usecases/vaga/get_vagas_usecase.dart' as _i4;
+import 'package:domain/src/domain/usecases/vaga/update_vaga_usecase.dart'
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -43,4 +45,26 @@ class MockGetVagasUseCase extends _i1.Mock implements _i4.GetVagasUseCase {
           returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Vaga>>>.value(
               _FakeEither_1<_i6.Failure, List<_i7.Vaga>>())) as _i5
           .Future<_i3.Either<_i6.Failure, List<_i7.Vaga>>>);
+}
+
+/// A class which mocks [UpdateVagaUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUpdateVagaUseCase extends _i1.Mock implements _i8.UpdateVagaUseCase {
+  MockUpdateVagaUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.VagaRepository get vagaRepository =>
+      (super.noSuchMethod(Invocation.getter(#vagaRepository),
+          returnValue: _FakeVagaRepository_0()) as _i2.VagaRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Vaga>> call(
+          {String? id, bool? disponivel}) =>
+      (super.noSuchMethod(
+              Invocation.method(#call, [], {#id: id, #disponivel: disponivel}),
+              returnValue: Future<_i3.Either<_i6.Failure, _i7.Vaga>>.value(
+                  _FakeEither_1<_i6.Failure, _i7.Vaga>()))
+          as _i5.Future<_i3.Either<_i6.Failure, _i7.Vaga>>);
 }

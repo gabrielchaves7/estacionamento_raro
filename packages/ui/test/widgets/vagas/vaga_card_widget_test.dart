@@ -1,9 +1,23 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/estacionamento_raro_enums.dart';
+import 'package:domain/estacionamento_raro_usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
+import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/vagas/vaga_card_widget.dart';
+
+import './vaga_card_widget_test.mocks.dart';
+
+void _getItRegisterCubit({required VagasCubit vagasCubit}) {
+  getIt.registerFactory(() => vagasCubit);
+}
+
+void _getItUnregisterCubit() {
+  getIt.unregister<VagasCubit>();
+}
 
 Future<void> _initWidget(tester, {required Vaga vaga}) async {
   await tester.pumpWidget(
@@ -17,6 +31,7 @@ Future<void> _initWidget(tester, {required Vaga vaga}) async {
   );
 }
 
+@GenerateMocks([GetVagasUseCase, UpdateVagaUseCase])
 void main() {
   group('VagaCardWidget', () {
     group('When VagaCardWidget is called', () {
@@ -64,6 +79,17 @@ void main() {
 
     group('When VagaCardWidget is clicked', () {
       testWidgets('Should open OcuparVagaDialog', (WidgetTester tester) async {
+        final mockedGetVagasUseCase = MockGetVagasUseCase();
+        final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+
+        final VagasCubit vagasCubit = VagasCubit(
+            getVagasUseCase: mockedGetVagasUseCase,
+            updateVagaUseCase: mockedUpdateVagaUseCase);
+
+        _getItRegisterCubit(
+          vagasCubit: vagasCubit,
+        );
+
         final Vaga vaga = Vaga(
             id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1);
 
@@ -73,6 +99,8 @@ void main() {
         await tester.pump();
 
         find.byType(OcuparVagaDialog);
+
+        _getItUnregisterCubit();
       });
     });
   });

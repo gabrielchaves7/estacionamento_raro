@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
+import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_widget.dart';
 
@@ -13,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  final VagasCubit _vagasCubit = getIt<VagasCubit>();
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
@@ -37,7 +41,14 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<VagasCubit>(
+              create: (BuildContext context) => _vagasCubit,
+            ),
+          ],
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

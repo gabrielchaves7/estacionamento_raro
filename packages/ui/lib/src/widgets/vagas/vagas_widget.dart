@@ -29,37 +29,36 @@ class _VagasWidgetState extends State<VagasWidget> {
       linearGradient: shimmerGradient,
       child: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
-        child: BlocProvider(
-          create: (_) => _vagasCubit,
-          child: BlocBuilder<VagasCubit, VagasState>(
-            builder: (context, state) {
-              List<Vaga> vagas = [];
-              bool isLoading = state is VagasInitialState ||
-                  state is VagasLoadingState ||
-                  state is VagasErrorState;
+        child: BlocBuilder<VagasCubit, VagasState>(
+          builder: (context, state) {
+            List<Vaga> vagas = [];
+            bool isLoading = state is VagasInitialState ||
+                state is VagasLoadingState ||
+                state is VagasErrorState;
 
-              if (state is VagasLoadedState) {
-                vagas = state.vagas;
-              }
+            if (state is VagasLoadedState) {
+              vagas = state.vagas;
+            } else if (state is VagaUpdateErrorState) {
+              return Text('Ocorreu um erro ao atualizar a vaga.');
+            }
 
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 160,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 20,
-                ),
-                itemCount: isLoading ? 4 : vagas.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Loading(
-                    isLoading: isLoading,
-                    child: isLoading
-                        ? const VagaCardLoadingWidget()
-                        : VagaCardWidget(vaga: vagas[index]),
-                  );
-                },
-              );
-            },
-          ),
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 160,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 20,
+              ),
+              itemCount: isLoading ? 4 : vagas.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Loading(
+                  isLoading: isLoading,
+                  child: isLoading
+                      ? const VagaCardLoadingWidget()
+                      : VagaCardWidget(vaga: vagas[index]),
+                );
+              },
+            );
+          },
         ),
       ),
     );

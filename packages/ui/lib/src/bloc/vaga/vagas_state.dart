@@ -13,3 +13,11 @@ class VagasLoadedState extends VagasState {
 }
 
 class VagasErrorState extends VagasState {}
+
+class VagaUpdateErrorState extends VagasErrorState {}
+
+class VagasUpdatedState extends VagasState {
+  VagasUpdatedState({required this.vagas});
+
+  final List<Vaga> vagas;
+}

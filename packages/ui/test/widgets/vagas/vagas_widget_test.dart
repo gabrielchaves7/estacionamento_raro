@@ -6,6 +6,7 @@ import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:domain/estacionamento_raro_errors.dart';
 import 'package:domain/estacionamento_raro_usecases.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -24,23 +25,26 @@ void _getItUnregisterCubit() {
   getIt.unregister<VagasCubit>();
 }
 
-Future<void> _initWidget(WidgetTester tester) async {
+Future<void> _initWidget(WidgetTester tester, VagasCubit vagasCubit) async {
   await tester.pumpWidget(
-    const MaterialApp(
+    MaterialApp(
       home: Scaffold(
-        body: VagasWidget(),
+        body: BlocProvider(
+          create: (_) => vagasCubit,
+          child: const VagasWidget(),
+        ),
       ),
     ),
   );
 }
 
 final List<Vaga> vagas = [
-  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
-  Vaga(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
-  Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
+  Vaga(id: 'id1', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
+  Vaga(id: 'id2', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
+  Vaga(id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
-@GenerateMocks([GetVagasUseCase])
+@GenerateMocks([GetVagasUseCase, UpdateVagaUseCase])
 void main() {
   tearDown(() async {
     _getItUnregisterCubit();
@@ -51,17 +55,19 @@ void main() {
         'if state IS VagasLoadedState it should display the correct number of VagaCardWidget and should NOT display any VagaCardLoadingWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
-      final VagasCubit vagasCubit =
-          VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
       );
 
-      await _initWidget(tester);
+      await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
       expect(find.byType(VagaCardWidget), findsNWidgets(3));
@@ -74,17 +80,19 @@ void main() {
         'if state IS VagasLoadingState it should display two VagaCardLoadingWidget and NONE VagaCardWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
-      final VagasCubit vagasCubit =
-          VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
       );
 
-      await _initWidget(tester);
+      await _initWidget(tester, vagasCubit);
 
       vagasCubit.emit(VagasLoadingState());
 
@@ -98,24 +106,61 @@ void main() {
         'if state IS VagasErrorState it should display two VagaCardLoadingWidget and NONE VagaCardWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
 
       when(mockedGetVagasUseCase.call())
           .thenAnswer((_) async => Left(UnexpectedFailure()));
 
-      final VagasCubit vagasCubit =
-          VagasCubit(getVagasUseCase: mockedGetVagasUseCase);
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
       );
 
-      await _initWidget(tester);
+      await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
       expect(find.byType(VagaCardLoadingWidget), findsNWidgets(4));
       expect(find.byType(VagaCardWidget), findsNothing);
 
       verify(mockedGetVagasUseCase.call());
+    });
+
+    testWidgets(
+        'if state IS VagaUpdateErrorState it should display snack bar message',
+        (WidgetTester tester) async {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
+      when(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false))
+          .thenAnswer(
+        (_) async => Left(UnexpectedFailure()),
+      );
+
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
+
+      _getItRegisterCubit(
+        vagasCubit: vagasCubit,
+      );
+
+      await _initWidget(tester, vagasCubit);
+      await tester.pump(const Duration(milliseconds: 1));
+
+      await tester.tap(find.byType(VagaCardWidget).first);
+      await tester.pump(const Duration(milliseconds: 1));
+
+      await tester.enterText(find.byType(TextFormField), '1234567');
+      await tester.tap(find.text('confirmar'));
+      await tester.pump();
+
+      verify(mockedGetVagasUseCase.call());
+      verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false));
+      expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
     });
   });
 }

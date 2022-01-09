@@ -65,4 +65,10 @@ void configureDependencies() {
       () => CreateRegistroUseCase(registroRepository: getIt()),
     );
   }
+
+  if (!getIt.isRegistered<UpdateVagaUseCase>()) {
+    getIt.registerLazySingleton<UpdateVagaUseCase>(
+      () => UpdateVagaUseCase(vagaRepository: getIt()),
+    );
+  }
 }

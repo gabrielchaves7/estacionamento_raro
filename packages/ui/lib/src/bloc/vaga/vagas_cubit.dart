@@ -9,9 +9,11 @@ part 'vagas_state.dart';
 class VagasCubit extends Cubit<VagasState> {
   VagasCubit({
     required this.getVagasUseCase,
+    required this.updateVagaUseCase,
   }) : super(VagasInitialState());
 
   final GetVagasUseCase getVagasUseCase;
+  final UpdateVagaUseCase updateVagaUseCase;
 
   List<Vaga> _vagas = [];
 
@@ -28,6 +30,19 @@ class VagasCubit extends Cubit<VagasState> {
     }, (vagas) {
       _vagas = vagas;
       emit(VagasLoadedState(vagas: vagas));
+    });
+  }
+
+  Future<void> updateVaga(
+      {required bool disponivel, required String id}) async {
+    final Either<Failure, Vaga> result =
+        await updateVagaUseCase(disponivel: disponivel, id: id);
+
+    result.fold((error) {
+      emit(VagaUpdateErrorState());
+    }, (updatedVaga) {
+      _vagas[_vagas.indexWhere((v) => v.id == updatedVaga.id)] = updatedVaga;
+      emit(VagasUpdatedState(vagas: _vagas));
     });
   }
 }

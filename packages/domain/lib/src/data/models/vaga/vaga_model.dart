@@ -16,7 +16,6 @@ class VagaModel implements Vaga {
   }
 
   static VagaModel fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
-    print("a");
     return VagaModel(
         id: documentSnapshot.id,
         disponivel: documentSnapshot['disponivel'],

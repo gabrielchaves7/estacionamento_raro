@@ -1,6 +1,9 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
+import 'package:ui/src/injection.dart';
 
 class OcuparVagaDialog extends StatefulWidget {
   const OcuparVagaDialog({Key? key, required this.vaga}) : super(key: key);
@@ -15,6 +18,7 @@ class OcuparVagaDialog extends StatefulWidget {
 
 class OcuparVagaDialogState extends State<OcuparVagaDialog> {
   final _formKey = GlobalKey<FormState>();
+  final VagasCubit _vagasCubit = getIt<VagasCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,8 @@ class OcuparVagaDialogState extends State<OcuparVagaDialog> {
                   const SnackBar(
                       content: Text('Marcando a vaga como ocupada...')),
                 );
-
+                _vagasCubit.updateVaga(
+                    disponivel: !widget.vaga.disponivel, id: widget.vaga.id);
                 Navigator.of(context).pop();
               }
             },
