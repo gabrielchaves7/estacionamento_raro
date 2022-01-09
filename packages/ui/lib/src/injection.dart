@@ -15,7 +15,7 @@ void configureDependencies() {
 
   if (!getIt.isRegistered<VagasCubit>()) {
     getIt.registerLazySingleton<VagasCubit>(
-      () => VagasCubit(getVagasUseCase: getIt(), updateVagaUseCase: getIt()),
+      () => VagasCubit(getVagasUseCase: getIt(), closeVagaUseCase: getIt()),
     );
   }
 }

@@ -62,7 +62,7 @@ final List<Vaga> vagas = [
   Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
-@GenerateMocks([GetRegistrosUseCase, GetVagasUseCase, UpdateVagaUseCase])
+@GenerateMocks([GetRegistrosUseCase, GetVagasUseCase, CloseVagaUseCase])
 void main() {
   tearDown(() async {
     _getItUnregisterCubit();
@@ -73,7 +73,7 @@ void main() {
         (WidgetTester tester) async {
       final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagasUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetRegistrosUseCase.call())
           .thenAnswer((_) async => Right(registros));
@@ -83,7 +83,7 @@ void main() {
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagasUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       _getItRegisterCubit(registroCubit: registroCubit, vagasCubit: vagasCubit);
 
@@ -100,7 +100,7 @@ void main() {
           (WidgetTester tester) async {
         final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
         final mockedGetVagasUseCase = MockGetVagasUseCase();
-        final mockedUpdateVagasUseCase = MockUpdateVagaUseCase();
+        final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
         when(mockedGetRegistrosUseCase.call())
             .thenAnswer((_) async => Right(registros));
@@ -110,7 +110,7 @@ void main() {
 
         final VagasCubit vagasCubit = VagasCubit(
             getVagasUseCase: mockedGetVagasUseCase,
-            updateVagaUseCase: mockedUpdateVagasUseCase);
+            closeVagaUseCase: mockedCloseVagaUseCase);
 
         _getItRegisterCubit(
             registroCubit: registroCubit, vagasCubit: vagasCubit);
@@ -131,7 +131,7 @@ void main() {
       testWidgets('it should display VagasWidget', (WidgetTester tester) async {
         final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
         final mockedGetVagasUseCase = MockGetVagasUseCase();
-        final mockedUpdateVagasUseCase = MockUpdateVagaUseCase();
+        final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
         when(mockedGetVagasUseCase.call())
             .thenAnswer((_) async => Right(vagas));
@@ -141,7 +141,7 @@ void main() {
 
         final VagasCubit vagasCubit = VagasCubit(
             getVagasUseCase: mockedGetVagasUseCase,
-            updateVagaUseCase: mockedUpdateVagasUseCase);
+            closeVagaUseCase: mockedCloseVagaUseCase);
 
         _getItRegisterCubit(
             registroCubit: registroCubit, vagasCubit: vagasCubit);

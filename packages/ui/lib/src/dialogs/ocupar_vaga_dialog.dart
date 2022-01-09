@@ -57,8 +57,7 @@ class OcuparVagaDialogState extends State<OcuparVagaDialog> {
                   const SnackBar(
                       content: Text('Marcando a vaga como ocupada...')),
                 );
-                _vagasCubit.updateVaga(
-                    disponivel: !widget.vaga.disponivel, id: widget.vaga.id);
+                _vagasCubit.closeVaga(id: widget.vaga.id);
                 Navigator.of(context).pop();
               }
             },

@@ -13,7 +13,7 @@ import './vagas_cubit_test.mocks.dart';
 
 List<Vaga> vagas = [];
 
-@GenerateMocks([GetVagasUseCase, UpdateVagaUseCase])
+@GenerateMocks([GetVagasUseCase, CloseVagaUseCase])
 void main() {
   setUp(() {
     vagas = [
@@ -36,13 +36,13 @@ void main() {
         'when getVagas is called and GetVagasUseCase returns a list of vagas filtered by exibirVagasDisponiveis',
         () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       blocTest(
         'should emit VagasLoadingState and then VagasLoadedState',
@@ -64,7 +64,7 @@ void main() {
 
     group('when getVagas is called and GetVagasUseCase returns a failure', () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call())
           .thenAnswer((_) async => Left(UnexpectedFailure()));
@@ -74,7 +74,7 @@ void main() {
         build: () {
           return VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              updateVagaUseCase: mockedUpdateVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase);
         },
         act: (VagasCubit cubit) {
           cubit.getVagas();
@@ -86,13 +86,12 @@ void main() {
       );
     });
 
-    group('when updateVaga is called and UpdateVagaUseCase returns a vaga', () {
+    group('when closeVaga is called and CloseVagaUseCase returns a vaga', () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
-      when(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false))
-          .thenAnswer(
+      when(mockedCloseVagaUseCase.call(id: 'id1')).thenAnswer(
         (_) async => Right(Vaga(
             id: 'id1',
             disponivel: false,
@@ -101,7 +100,7 @@ void main() {
       );
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       blocTest(
         'should emit VagasUpdatedState with vagas filtered by exibirVagasDisponiveis',
@@ -110,7 +109,7 @@ void main() {
         },
         act: (VagasCubit vagasCubit) async {
           await vagasCubit.getVagas();
-          await vagasCubit.updateVaga(disponivel: false, id: 'id1');
+          await vagasCubit.closeVaga(id: 'id1');
         },
         expect: () => [
           isA<VagasLoadingState>(),
@@ -119,19 +118,18 @@ void main() {
         ],
         verify: (_) {
           final state = vagasCubit.state as VagasUpdatedState;
-          verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false));
+          verify(mockedCloseVagaUseCase.call(id: 'id1'));
           expect(state.vagas.length, 1);
         },
       );
     });
 
-    group('when updateVaga is called and UpdateVagaUseCase returns a failure',
+    group('when closeVaga is called and CloseVagaUseCase returns a failure',
         () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
-      when(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: true))
-          .thenAnswer(
+      when(mockedCloseVagaUseCase.call(id: 'id1')).thenAnswer(
         (_) async => Left(UnexpectedFailure()),
       );
 
@@ -140,29 +138,29 @@ void main() {
         build: () {
           return VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              updateVagaUseCase: mockedUpdateVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase);
         },
         act: (VagasCubit cubit) async {
-          await cubit.updateVaga(disponivel: true, id: 'id1');
+          await cubit.closeVaga(id: 'id1');
         },
         expect: () => [
           isA<VagaUpdateErrorState>(),
         ],
         verify: (_) {
-          verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: true));
+          verify(mockedCloseVagaUseCase.call(id: 'id1'));
         },
       );
     });
 
     group('when changeExibirVagasDisponiveis is called', () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       blocTest(
         'should emit VagasLoadedState filtered by the new exibirVagasDisponiveisValue',

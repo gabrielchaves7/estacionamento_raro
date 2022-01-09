@@ -44,7 +44,7 @@ final List<Vaga> vagas = [
   Vaga(id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
-@GenerateMocks([GetVagasUseCase, UpdateVagaUseCase])
+@GenerateMocks([GetVagasUseCase, CloseVagaUseCase])
 void main() {
   tearDown(() async {
     _getItUnregisterCubit();
@@ -55,13 +55,13 @@ void main() {
         'if state IS VagasLoadedState it should display the correct number of VagaCardWidget filtered by disponiveis and should NOT display any VagaCardLoadingWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -80,13 +80,13 @@ void main() {
         'if state IS VagasLoadingState it should display two VagaCardLoadingWidget and NONE VagaCardWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -106,14 +106,14 @@ void main() {
         'if state IS VagasErrorState it should display two VagaCardLoadingWidget and NONE VagaCardWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call())
           .thenAnswer((_) async => Left(UnexpectedFailure()));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -132,17 +132,16 @@ void main() {
         'if state IS VagaUpdateErrorState it should display error message',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
-      when(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false))
-          .thenAnswer(
+      when(mockedCloseVagaUseCase.call(id: 'id1')).thenAnswer(
         (_) async => Left(UnexpectedFailure()),
       );
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,
@@ -159,20 +158,20 @@ void main() {
       await tester.pump();
 
       verify(mockedGetVagasUseCase.call());
-      verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false));
+      verify(mockedCloseVagaUseCase.call(id: 'id1'));
       expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
     });
 
     testWidgets('And user change filters, should show the cards filtered',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
-      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          updateVagaUseCase: mockedUpdateVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase);
 
       _getItRegisterCubit(
         vagasCubit: vagasCubit,

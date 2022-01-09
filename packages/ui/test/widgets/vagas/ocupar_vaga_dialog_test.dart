@@ -56,7 +56,7 @@ Future<void> _initWidget(tester) async {
   );
 }
 
-@GenerateMocks([GetVagasUseCase, UpdateVagaUseCase])
+@GenerateMocks([GetVagasUseCase, CloseVagaUseCase])
 void main() {
   tearDown(() async {
     _getItUnregisterCubit();
@@ -67,11 +67,11 @@ void main() {
       testWidgets('Should display title, confirm and cancel button',
           (WidgetTester tester) async {
         final mockedGetVagasUseCase = MockGetVagasUseCase();
-        final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+        final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
         final VagasCubit vagasCubit = VagasCubit(
             getVagasUseCase: mockedGetVagasUseCase,
-            updateVagaUseCase: mockedUpdateVagaUseCase);
+            closeVagaUseCase: mockedCloseVagaUseCase);
 
         _getItRegisterCubit(
           vagasCubit: vagasCubit,
@@ -90,11 +90,11 @@ void main() {
         testWidgets('If placa is not informed should show display error',
             (WidgetTester tester) async {
           final mockedGetVagasUseCase = MockGetVagasUseCase();
-          final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+          final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
           final VagasCubit vagasCubit = VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              updateVagaUseCase: mockedUpdateVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase);
 
           _getItRegisterCubit(
             vagasCubit: vagasCubit,
@@ -114,11 +114,11 @@ void main() {
         testWidgets('If placa is lower than 7 digits should show display error',
             (WidgetTester tester) async {
           final mockedGetVagasUseCase = MockGetVagasUseCase();
-          final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+          final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
           final VagasCubit vagasCubit = VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              updateVagaUseCase: mockedUpdateVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase);
 
           _getItRegisterCubit(
             vagasCubit: vagasCubit,
@@ -140,13 +140,12 @@ void main() {
             'If placa is valid should call UpdateVagaUseCase and then display snakbar message and close the dialog',
             (WidgetTester tester) async {
           final mockedGetVagasUseCase = MockGetVagasUseCase();
-          final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+          final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
           when(mockedGetVagasUseCase.call())
               .thenAnswer((_) async => Right([vaga]));
 
-          when(mockedUpdateVagaUseCase.call(id: 'id', disponivel: false))
-              .thenAnswer(
+          when(mockedCloseVagaUseCase.call(id: 'id')).thenAnswer(
             (_) async => Right(Vaga(
                 id: 'id',
                 disponivel: false,
@@ -156,7 +155,7 @@ void main() {
 
           final VagasCubit vagasCubit = VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              updateVagaUseCase: mockedUpdateVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase);
 
           _getItRegisterCubit(
             vagasCubit: vagasCubit,
@@ -175,7 +174,7 @@ void main() {
           expect(find.text('Marcando a vaga como ocupada...'), findsOneWidget);
           expect(find.byType(OcuparVagaDialog), findsNothing);
 
-          verify(mockedUpdateVagaUseCase.call(id: 'id', disponivel: false));
+          verify(mockedCloseVagaUseCase.call(id: 'id'));
         });
       });
     });
