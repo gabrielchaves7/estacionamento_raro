@@ -15,7 +15,7 @@ class CloseVagaUseCase {
 
   Future<Either<Failure, Vaga>> call(
       {required String vagaId, required String placa}) async {
-    final result = await vagaRepository.update(disponivel: true, id: vagaId);
+    final result = await vagaRepository.update(disponivel: false, id: vagaId);
 
     return result.fold((exception) {
       return Left(exception);

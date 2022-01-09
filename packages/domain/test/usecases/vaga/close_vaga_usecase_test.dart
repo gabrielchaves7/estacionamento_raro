@@ -31,7 +31,7 @@ void main() {
               MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.update(disponivel: true, id: 'id'),
+            mockedVagaRepository.update(disponivel: false, id: 'id'),
           ).thenAnswer((_) async => Right(vaga));
 
           when(
@@ -45,7 +45,7 @@ void main() {
 
           final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
 
-          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedVagaRepository.update(disponivel: false, id: 'id'));
           verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isRight(), true);
         });
@@ -60,7 +60,7 @@ void main() {
               MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.update(disponivel: true, id: 'id'),
+            mockedVagaRepository.update(disponivel: false, id: 'id'),
           ).thenAnswer((_) async => Left(UnexpectedFailure()));
 
           when(
@@ -74,7 +74,7 @@ void main() {
 
           final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
 
-          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedVagaRepository.update(disponivel: false, id: 'id'));
           verifyNever(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isLeft(), true);
         });
@@ -87,7 +87,7 @@ void main() {
               MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.update(disponivel: true, id: 'id'),
+            mockedVagaRepository.update(disponivel: false, id: 'id'),
           ).thenAnswer((_) async => Right(vaga));
 
           when(
@@ -100,7 +100,7 @@ void main() {
 
           final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
 
-          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedVagaRepository.update(disponivel: false, id: 'id'));
           verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isLeft(), true);
         });

@@ -11,6 +11,6 @@ class OpenVagaUseCase {
   final VagaRepository vagaRepository;
 
   Future<Either<Failure, Vaga>> call({required String id}) async {
-    return await vagaRepository.update(disponivel: false, id: id);
+    return await vagaRepository.update(disponivel: true, id: id);
   }
 }
