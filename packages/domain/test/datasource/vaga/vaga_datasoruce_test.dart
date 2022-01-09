@@ -32,7 +32,7 @@ Future<void> insertVagas(CollectionReference vagasCollection,
     'disponivel': false,
     'tipo_vaga': 'carro',
     'numero': 2,
-    'registro_id': registrosCollection.doc('registros/registro2')
+    'registro_id': 'registro2'
   });
 }
 
@@ -71,7 +71,7 @@ void main() {
         expect(result.last.disponivel, false);
         expect(result.last.tipoVaga, TipoVagaEnum.carro);
         expect(result.last.numero, 2);
-        expect(result.last.registroId, 'registros/registro2');
+        expect(result.last.registroId, 'registro2');
       });
     });
 
@@ -82,12 +82,13 @@ void main() {
         final VagaDataSource vagaDataSource =
             VagaDataSourceImpl(firestore: mockedFirestore);
 
-        final VagaModel vaga =
-            await vagaDataSource.update(disponivel: false, id: 'id1');
+        final VagaModel vaga = await vagaDataSource.closeVaga(
+            disponivel: false, id: 'id1', registroId: 'registro1');
 
         expect(vaga.id, 'id1');
         expect(vaga.disponivel, false);
         expect(vaga.tipoVaga, TipoVagaEnum.moto);
+        expect(vaga.registroId, 'registro1');
       });
     });
   });

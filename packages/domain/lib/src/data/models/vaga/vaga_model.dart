@@ -23,7 +23,7 @@ class VagaModel implements Vaga {
       tipoVaga: TipoVagaEnum.values.firstWhere(
           (e) => e.toString().split('.').last == documentSnapshot['tipo_vaga']),
       numero: documentSnapshot['numero'],
-      registroId: documentSnapshot['registro_id']?.id,
+      registroId: documentSnapshot['registro_id'],
     );
   }
 
