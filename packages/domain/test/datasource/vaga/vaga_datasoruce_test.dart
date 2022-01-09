@@ -82,7 +82,7 @@ void main() {
         final VagaDataSource vagaDataSource =
             VagaDataSourceImpl(firestore: mockedFirestore);
 
-        final VagaModel vaga = await vagaDataSource.closeVaga(
+        final VagaModel vaga = await vagaDataSource.update(
             disponivel: false, id: 'id1', registroId: 'registro1');
 
         expect(vaga.id, 'id1');

@@ -3,7 +3,7 @@ import 'package:domain/src/data/models/vaga/vaga_model.dart';
 
 abstract class VagaDataSource {
   Future<List<VagaModel>?> all();
-  Future<VagaModel> closeVaga(
+  Future<VagaModel> update(
       {required String id,
       required bool disponivel,
       required String registroId});
@@ -23,7 +23,7 @@ class VagaDataSourceImpl implements VagaDataSource {
   }
 
   @override
-  Future<VagaModel> closeVaga({
+  Future<VagaModel> update({
     required bool disponivel,
     required String id,
     required String? registroId,
