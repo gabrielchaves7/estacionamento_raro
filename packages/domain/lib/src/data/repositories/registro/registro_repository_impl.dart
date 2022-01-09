@@ -16,7 +16,7 @@ class RegistroRepositoryImpl implements RegistroRepository {
     try {
       List<Registro>? registros = await registroDataSource.all();
 
-      if (registros != null && registros.isNotEmpty) {
+      if (registros != null) {
         return Right(registros);
       }
 

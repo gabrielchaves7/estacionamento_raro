@@ -59,7 +59,7 @@ void main() {
 
       group('And RegistroDataSource returns an empty array or null', () {
         test(
-            'RegistroRepository should return the left value with UnexpectedValue',
+            'RegistroRepository should return the right value with an empty array',
             () async {
           final RegistroDataSource mockedRegistroDataSource =
               MockRegistroDataSource();
@@ -67,6 +67,30 @@ void main() {
           when(
             mockedRegistroDataSource.all(),
           ).thenAnswer((_) async => []);
+
+          final RegistroRepository registroRepository = RegistroRepositoryImpl(
+              registroDataSource: mockedRegistroDataSource);
+
+          final result = await registroRepository.all();
+
+          verify(mockedRegistroDataSource.all());
+          expect(result.isRight(), true);
+          result.fold((exception) => {}, (registros) {
+            expect(registros.isEmpty, true);
+          });
+        });
+      });
+
+      group('And RegistroDataSource returns null', () {
+        test(
+            'RegistroRepository should return the left value with UnexpectedValue',
+            () async {
+          final RegistroDataSource mockedRegistroDataSource =
+              MockRegistroDataSource();
+
+          when(
+            mockedRegistroDataSource.all(),
+          ).thenAnswer((_) async => null);
 
           final RegistroRepository registroRepository = RegistroRepositoryImpl(
               registroDataSource: mockedRegistroDataSource);
