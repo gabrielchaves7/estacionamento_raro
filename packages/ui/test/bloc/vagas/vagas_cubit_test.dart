@@ -91,7 +91,8 @@ void main() {
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
-      when(mockedCloseVagaUseCase.call(id: 'id1')).thenAnswer(
+      when(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: 'ABCDEFG'))
+          .thenAnswer(
         (_) async => Right(Vaga(
             id: 'id1',
             disponivel: false,
@@ -109,7 +110,7 @@ void main() {
         },
         act: (VagasCubit vagasCubit) async {
           await vagasCubit.getVagas();
-          await vagasCubit.closeVaga(id: 'id1');
+          await vagasCubit.closeVaga(vagaId: 'id1', placa: 'ABCDEFG');
         },
         expect: () => [
           isA<VagasLoadingState>(),
@@ -118,7 +119,7 @@ void main() {
         ],
         verify: (_) {
           final state = vagasCubit.state as VagaClosedState;
-          verify(mockedCloseVagaUseCase.call(id: 'id1'));
+          verify(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: 'ABCDEFG'));
           expect(state.vagas.length, 1);
         },
       );
@@ -129,7 +130,8 @@ void main() {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
-      when(mockedCloseVagaUseCase.call(id: 'id1')).thenAnswer(
+      when(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: 'ABCDEFG'))
+          .thenAnswer(
         (_) async => Left(UnexpectedFailure()),
       );
 
@@ -141,13 +143,13 @@ void main() {
               closeVagaUseCase: mockedCloseVagaUseCase);
         },
         act: (VagasCubit cubit) async {
-          await cubit.closeVaga(id: 'id1');
+          await cubit.closeVaga(vagaId: 'id1', placa: 'ABCDEFG');
         },
         expect: () => [
           isA<VagaClosedErrorState>(),
         ],
         verify: (_) {
-          verify(mockedCloseVagaUseCase.call(id: 'id1'));
+          verify(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: 'ABCDEFG'));
         },
       );
     });

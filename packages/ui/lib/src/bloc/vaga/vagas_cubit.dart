@@ -33,8 +33,10 @@ class VagasCubit extends Cubit<VagasState> {
     });
   }
 
-  Future<void> closeVaga({required String id}) async {
-    final Either<Failure, Vaga> result = await closeVagaUseCase(id: id);
+  Future<void> closeVaga(
+      {required String vagaId, required String placa}) async {
+    final Either<Failure, Vaga> result =
+        await closeVagaUseCase(vagaId: vagaId, placa: placa);
 
     result.fold((error) {
       emit(VagaClosedErrorState());
