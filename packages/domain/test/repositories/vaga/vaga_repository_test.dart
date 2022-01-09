@@ -19,6 +19,13 @@ final List<VagaModel> mockedVagas = [
       id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
+final VagaModel vagaWithPlaca = VagaModel(
+    id: 'id4',
+    disponivel: false,
+    tipoVaga: TipoVagaEnum.moto,
+    numero: 1,
+    placa: 'ABCDEFG');
+
 @GenerateMocks([VagaDataSource])
 void main() {
   group('VagaReposoritory', () {
@@ -139,20 +146,26 @@ void main() {
 
         when(
           mockedVagaDataSource.update(
-              disponivel: false, id: 'id1', registroId: 'registroId1'),
-        ).thenAnswer((_) async => mockedVagas.first);
+              disponivel: false,
+              id: 'id4',
+              registroId: 'registroId1',
+              placa: 'ABCDEFG'),
+        ).thenAnswer((_) async => vagaWithPlaca);
 
         final VagaRepository vagaRepository =
             VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
 
         final result = await vagaRepository.closeVaga(
-            id: 'id1', registroId: 'registroId1');
+            id: 'id4', registroId: 'registroId1', placa: 'ABCDEFG');
 
         verify(mockedVagaDataSource.update(
-            disponivel: false, id: 'id1', registroId: 'registroId1'));
+            disponivel: false,
+            id: 'id4',
+            registroId: 'registroId1',
+            placa: 'ABCDEFG'));
         expect(result.isRight(), true);
         result.fold((exception) => {}, (vaga) {
-          expect(vaga.id, 'id1');
+          expect(vaga.id, 'id4');
         });
       });
 
@@ -163,17 +176,23 @@ void main() {
 
         when(
           mockedVagaDataSource.update(
-              disponivel: false, id: 'id1', registroId: 'registroId1'),
+              disponivel: false,
+              id: 'id1',
+              registroId: 'registroId1',
+              placa: 'ABCDEFG'),
         ).thenThrow((_) async => Exception());
 
         final VagaRepository vagaRepository =
             VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
 
         final result = await vagaRepository.closeVaga(
-            id: 'id1', registroId: 'registroId1');
+            id: 'id1', registroId: 'registroId1', placa: 'ABCDEFG');
 
         verify(mockedVagaDataSource.update(
-            disponivel: false, id: 'id1', registroId: 'registroId1'));
+            disponivel: false,
+            id: 'id1',
+            registroId: 'registroId1',
+            placa: 'ABCDEFG'));
         expect(result.isLeft(), true);
         result.fold((exception) {
           expect(exception is UnexpectedFailure, true);

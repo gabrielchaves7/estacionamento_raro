@@ -44,10 +44,11 @@ class MockVagaRepository extends _i1.Mock implements _i3.VagaRepository {
           as _i4.Future<_i2.Either<_i5.Failure, _i6.Vaga>>);
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Vaga>> closeVaga(
-          {String? id, String? registroId}) =>
+          {String? id, String? registroId, String? placa}) =>
       (super.noSuchMethod(
-          Invocation.method(#closeVaga, [], {#id: id, #registroId: registroId}),
-          returnValue: Future<_i2.Either<_i5.Failure, _i6.Vaga>>.value(
-              _FakeEither_0<_i5.Failure, _i6.Vaga>())) as _i4
-          .Future<_i2.Either<_i5.Failure, _i6.Vaga>>);
+              Invocation.method(#closeVaga, [],
+                  {#id: id, #registroId: registroId, #placa: placa}),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Vaga>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Vaga>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Vaga>>);
 }

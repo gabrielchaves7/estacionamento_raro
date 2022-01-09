@@ -35,10 +35,14 @@ class MockVagaDataSource extends _i1.Mock implements _i3.VagaDataSource {
           as _i4.Future<List<_i2.VagaModel>?>);
   @override
   _i4.Future<_i2.VagaModel> update(
-          {String? id, bool? disponivel, String? registroId}) =>
+          {String? id, bool? disponivel, String? registroId, String? placa}) =>
       (super.noSuchMethod(
-              Invocation.method(#update, [],
-                  {#id: id, #disponivel: disponivel, #registroId: registroId}),
+              Invocation.method(#update, [], {
+                #id: id,
+                #disponivel: disponivel,
+                #registroId: registroId,
+                #placa: placa
+              }),
               returnValue: Future<_i2.VagaModel>.value(_FakeVagaModel_0()))
           as _i4.Future<_i2.VagaModel>);
 }

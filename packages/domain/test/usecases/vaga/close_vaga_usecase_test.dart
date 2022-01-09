@@ -31,7 +31,8 @@ void main() {
               MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.closeVaga(id: 'id', registroId: 'registroId1'),
+            mockedVagaRepository.closeVaga(
+                id: 'id', registroId: 'registroId1', placa: 'ABC1234'),
           ).thenAnswer((_) async => Right(vaga));
 
           when(
@@ -48,7 +49,7 @@ void main() {
           final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
 
           verify(mockedVagaRepository.closeVaga(
-              id: 'id', registroId: 'registroId1'));
+              id: 'id', registroId: 'registroId1', placa: 'ABC1234'));
           verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isRight(), true);
         });
@@ -62,7 +63,7 @@ void main() {
 
           when(
             mockedVagaRepository.closeVaga(
-                id: 'id1', registroId: 'registroId1'),
+                id: 'id1', registroId: 'registroId1', placa: 'ABC1234'),
           ).thenAnswer((_) async => Left(UnexpectedFailure()));
 
           when(
@@ -80,7 +81,7 @@ void main() {
               await closeVagaUseCase(vagaId: 'id1', placa: 'ABC1234');
 
           verify(mockedVagaRepository.closeVaga(
-              id: 'id1', registroId: 'registroId1'));
+              id: 'id1', registroId: 'registroId1', placa: 'ABC1234'));
           verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isLeft(), true);
         });
@@ -95,7 +96,8 @@ void main() {
               MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.closeVaga(id: 'id', registroId: 'registroId1'),
+            mockedVagaRepository.closeVaga(
+                id: 'id', registroId: 'registroId1', placa: 'ABC1234'),
           ).thenAnswer((_) async => Right(vaga));
 
           when(
@@ -110,7 +112,7 @@ void main() {
 
           verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           verifyNever(mockedVagaRepository.closeVaga(
-              id: 'id', registroId: 'registroId1'));
+              id: 'id', registroId: 'registroId1', placa: 'ABC1234'));
           expect(result.isLeft(), true);
         });
       });

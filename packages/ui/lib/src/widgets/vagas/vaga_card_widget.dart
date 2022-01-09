@@ -47,6 +47,12 @@ class VagaCardWidget extends StatelessWidget {
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Icon(_vagaIcon(vaga.tipoVaga)),
+              if (vaga.placa != null)
+                Text(
+                  vaga.placa!,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                )
             ],
           ),
         ),

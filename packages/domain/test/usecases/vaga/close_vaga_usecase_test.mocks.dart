@@ -53,12 +53,13 @@ class MockVagaRepository extends _i1.Mock implements _i4.VagaRepository {
           as _i5.Future<_i2.Either<_i6.Failure, _i7.Vaga>>);
   @override
   _i5.Future<_i2.Either<_i6.Failure, _i7.Vaga>> closeVaga(
-          {String? id, String? registroId}) =>
+          {String? id, String? registroId, String? placa}) =>
       (super.noSuchMethod(
-          Invocation.method(#closeVaga, [], {#id: id, #registroId: registroId}),
-          returnValue: Future<_i2.Either<_i6.Failure, _i7.Vaga>>.value(
-              _FakeEither_0<_i6.Failure, _i7.Vaga>())) as _i5
-          .Future<_i2.Either<_i6.Failure, _i7.Vaga>>);
+              Invocation.method(#closeVaga, [],
+                  {#id: id, #registroId: registroId, #placa: placa}),
+              returnValue: Future<_i2.Either<_i6.Failure, _i7.Vaga>>.value(
+                  _FakeEither_0<_i6.Failure, _i7.Vaga>()))
+          as _i5.Future<_i2.Either<_i6.Failure, _i7.Vaga>>);
 }
 
 /// A class which mocks [CreateRegistroUseCase].

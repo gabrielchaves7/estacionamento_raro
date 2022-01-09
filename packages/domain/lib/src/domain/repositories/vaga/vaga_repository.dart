@@ -6,5 +6,5 @@ abstract class VagaRepository {
   Future<Either<Failure, List<Vaga>>> all();
   Future<Either<Failure, Vaga>> openVaga({required String id});
   Future<Either<Failure, Vaga>> closeVaga(
-      {required String id, required String registroId});
+      {required String id, required String registroId, required String placa});
 }

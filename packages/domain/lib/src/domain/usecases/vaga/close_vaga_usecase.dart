@@ -19,8 +19,8 @@ class CloseVagaUseCase {
 
     return registroResult.fold((registroException) => Left(registroException),
         (registro) async {
-      final vagaResult =
-          await vagaRepository.closeVaga(id: vagaId, registroId: registro.id);
+      final vagaResult = await vagaRepository.closeVaga(
+          id: vagaId, registroId: registro.id, placa: placa);
 
       return vagaResult.fold((vagaException) => Left(vagaException), (vaga) {
         return Right(vaga);
