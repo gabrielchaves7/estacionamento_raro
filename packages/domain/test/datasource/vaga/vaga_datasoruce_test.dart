@@ -25,14 +25,16 @@ Future<void> insertVagas(CollectionReference vagasCollection,
     'disponivel': true,
     'tipo_vaga': 'moto',
     'numero': 1,
-    'registro_id': null
+    'registro_id': null,
+    'placa': null,
   });
 
   await vagasCollection.doc("id2").set({
     'disponivel': false,
     'tipo_vaga': 'carro',
     'numero': 2,
-    'registro_id': 'registro2'
+    'registro_id': 'registro2',
+    'placa': 'ABCDEFGH'
   });
 }
 
@@ -66,12 +68,14 @@ void main() {
         expect(result.first.tipoVaga, TipoVagaEnum.moto);
         expect(result.first.numero, 1);
         expect(result.first.registroId, null);
+        expect(result.first.placa, null);
 
         expect(result.last.id, 'id2');
         expect(result.last.disponivel, false);
         expect(result.last.tipoVaga, TipoVagaEnum.carro);
         expect(result.last.numero, 2);
         expect(result.last.registroId, 'registro2');
+        expect(result.last.placa, 'ABCDEFGH');
       });
     });
 

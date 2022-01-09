@@ -7,6 +7,7 @@ class Vaga {
     required this.tipoVaga,
     required this.numero,
     this.registroId,
+    this.placa,
   });
 
   String id;
@@ -14,4 +15,5 @@ class Vaga {
   TipoVagaEnum tipoVaga;
   int numero;
   String? registroId;
+  String? placa;
 }
