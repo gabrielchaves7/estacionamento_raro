@@ -13,7 +13,7 @@ import './vagas_cubit_test.mocks.dart';
 
 List<Vaga> vagas = [];
 
-@GenerateMocks([GetVagasUseCase, CloseVagaUseCase])
+@GenerateMocks([GetVagasUseCase, CloseVagaUseCase, OpenVagaUseCase])
 void main() {
   setUp(() {
     vagas = [
@@ -37,12 +37,14 @@ void main() {
         () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       blocTest(
         'should emit VagasLoadingState and then VagasLoadedState',
@@ -65,6 +67,7 @@ void main() {
     group('when getVagas is called and GetVagasUseCase returns a failure', () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call())
           .thenAnswer((_) async => Left(UnexpectedFailure()));
@@ -74,7 +77,8 @@ void main() {
         build: () {
           return VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              closeVagaUseCase: mockedCloseVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase,
+              openVagaUseCase: mockedOpenVagaUseCase);
         },
         act: (VagasCubit cubit) {
           cubit.getVagas();
@@ -89,6 +93,7 @@ void main() {
     group('when closeVaga is called and CloseVagaUseCase returns a vaga', () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
       when(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: 'ABCDEFG'))
@@ -101,7 +106,8 @@ void main() {
       );
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       blocTest(
         'should emit VagaClosedState with vagas filtered by exibirVagasDisponiveis',
@@ -129,6 +135,7 @@ void main() {
         () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: 'ABCDEFG'))
           .thenAnswer(
@@ -140,7 +147,8 @@ void main() {
         build: () {
           return VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
-              closeVagaUseCase: mockedCloseVagaUseCase);
+              closeVagaUseCase: mockedCloseVagaUseCase,
+              openVagaUseCase: mockedOpenVagaUseCase);
         },
         act: (VagasCubit cubit) async {
           await cubit.closeVaga(vagaId: 'id1', placa: 'ABCDEFG');
@@ -157,12 +165,14 @@ void main() {
     group('when changeExibirVagasDisponiveis is called', () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
-          closeVagaUseCase: mockedCloseVagaUseCase);
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
 
       blocTest(
         'should emit VagasLoadedState filtered by the new exibirVagasDisponiveisValue',
@@ -182,6 +192,74 @@ void main() {
         verify: (_) {
           final state = vagasCubit.state as VagasLoadedState;
           expect(state.vagas.length, 1);
+        },
+      );
+    });
+
+    group('when openVagas is called ', () {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
+      when(mockedOpenVagaUseCase.call(id: 'id2')).thenAnswer((_) async => Right(
+          Vaga(
+              id: 'id2',
+              disponivel: true,
+              tipoVaga: TipoVagaEnum.carro,
+              numero: 2)));
+
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
+
+      blocTest(
+        'should emit VagaOpenedState with vagas filtered by exibirVagasDisponiveis',
+        build: () {
+          return vagasCubit;
+        },
+        act: (VagasCubit vagasCubit) async {
+          await vagasCubit.getVagas();
+          await vagasCubit.openVaga(vagaId: 'id2');
+        },
+        expect: () => [
+          isA<VagasLoadingState>(),
+          isA<VagasLoadedState>(),
+          isA<VagaOpenedState>(),
+        ],
+        verify: (_) {
+          final state = vagasCubit.state as VagaOpenedState;
+          expect(state.vagas.length, 3);
+        },
+      );
+    });
+
+    group('when openVagas is called and OpenVagaUseCase returns a failure', () {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+      when(mockedOpenVagaUseCase.call(id: 'id1')).thenAnswer(
+        (_) async => Left(UnexpectedFailure()),
+      );
+
+      blocTest(
+        'should emit VagaOpenedErrorState',
+        build: () {
+          return VagasCubit(
+              getVagasUseCase: mockedGetVagasUseCase,
+              closeVagaUseCase: mockedCloseVagaUseCase,
+              openVagaUseCase: mockedOpenVagaUseCase);
+        },
+        act: (VagasCubit cubit) async {
+          await cubit.openVaga(vagaId: 'id1');
+        },
+        expect: () => [
+          isA<VagaOpenedErrorState>(),
+        ],
+        verify: (_) {
+          verify(mockedOpenVagaUseCase.call(id: 'id1'));
         },
       );
     });

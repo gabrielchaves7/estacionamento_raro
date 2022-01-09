@@ -10,10 +10,12 @@ class VagasCubit extends Cubit<VagasState> {
   VagasCubit({
     required this.getVagasUseCase,
     required this.closeVagaUseCase,
+    required this.openVagaUseCase,
   }) : super(VagasInitialState());
 
   final GetVagasUseCase getVagasUseCase;
   final CloseVagaUseCase closeVagaUseCase;
+  final OpenVagaUseCase openVagaUseCase;
 
   bool _exibirVagasdisponiveis = true;
   List<Vaga> _vagas = [];
@@ -43,6 +45,17 @@ class VagasCubit extends Cubit<VagasState> {
     }, (updatedVaga) {
       _vagas[_vagas.indexWhere((v) => v.id == updatedVaga.id)] = updatedVaga;
       emit(VagaClosedState(_vagas, _exibirVagasdisponiveis));
+    });
+  }
+
+  Future<void> openVaga({required String vagaId}) async {
+    final Either<Failure, Vaga> result = await openVagaUseCase(id: vagaId);
+
+    result.fold((error) {
+      emit(VagaOpenedErrorState());
+    }, (updatedVaga) {
+      _vagas[_vagas.indexWhere((v) => v.id == updatedVaga.id)] = updatedVaga;
+      emit(VagaOpenedState(_vagas, _exibirVagasdisponiveis));
     });
   }
 

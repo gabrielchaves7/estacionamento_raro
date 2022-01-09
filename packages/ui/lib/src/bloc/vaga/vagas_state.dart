@@ -24,3 +24,10 @@ class VagaClosedState extends VagasLoadedState {
 }
 
 class VagaClosedErrorState extends VagasErrorState {}
+
+class VagaOpenedState extends VagasLoadedState {
+  VagaOpenedState(vagas, exibirVagasDisponiveis)
+      : super(vagas, exibirVagasDisponiveis);
+}
+
+class VagaOpenedErrorState extends VagasErrorState {}
