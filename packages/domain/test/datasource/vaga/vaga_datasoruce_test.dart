@@ -5,24 +5,48 @@ import 'package:domain/src/enum/tipo_vaga_enum.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> createVagasCollection(CollectionReference vagasCollection) async {
-  await vagasCollection
-      .doc("id1")
-      .set({'disponivel': true, 'tipo_vaga': 'moto', 'numero': 1});
+Future<void> insertRegistros(CollectionReference registrosCollection) async {
+  await registrosCollection.doc("registro1").set({
+    'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(1641516678000),
+    'placa': 'ABCDEFG',
+    'horario_saida': Timestamp.fromMillisecondsSinceEpoch(1641516695000)
+  });
 
-  await vagasCollection
-      .doc("id2")
-      .set({'disponivel': false, 'tipo_vaga': 'carro', 'numero': 2});
+  await registrosCollection.doc("registro2").set({
+    'horario_entrada': Timestamp.fromMillisecondsSinceEpoch(1641516678000),
+    'placa': 'ABCDEFGH',
+    'horario_saida': null
+  });
+}
+
+Future<void> insertVagas(CollectionReference vagasCollection,
+    CollectionReference registrosCollection) async {
+  await vagasCollection.doc("id1").set({
+    'disponivel': true,
+    'tipo_vaga': 'moto',
+    'numero': 1,
+    'registro_id': null
+  });
+
+  await vagasCollection.doc("id2").set({
+    'disponivel': false,
+    'tipo_vaga': 'carro',
+    'numero': 2,
+    'registro_id': registrosCollection.doc('registros/registro2')
+  });
 }
 
 void main() {
   late FirebaseFirestore mockedFirestore;
   late CollectionReference vagasCollection;
+  late CollectionReference registrosCollection;
 
   setUpAll(() async {
     mockedFirestore = FakeFirebaseFirestore();
+    registrosCollection = mockedFirestore.collection('registros');
     vagasCollection = mockedFirestore.collection('vagas');
-    await createVagasCollection(vagasCollection);
+    await insertRegistros(registrosCollection);
+    await insertVagas(vagasCollection, registrosCollection);
   });
 
   group('VagaDataSource', () {
@@ -41,11 +65,13 @@ void main() {
         expect(result.first.disponivel, true);
         expect(result.first.tipoVaga, TipoVagaEnum.moto);
         expect(result.first.numero, 1);
+        expect(result.first.registroId, null);
 
         expect(result.last.id, 'id2');
         expect(result.last.disponivel, false);
         expect(result.last.tipoVaga, TipoVagaEnum.carro);
         expect(result.last.numero, 2);
+        expect(result.last.registroId, 'registros/registro2');
       });
     });
 

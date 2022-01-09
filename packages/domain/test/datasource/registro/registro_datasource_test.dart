@@ -2,13 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/src/data/datasource/registro/registro_datasource_impl.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-/*
-Future<void> createVagasCollection(FirebaseFirestore mockedFirestore) async {
-  await mockedFirestore
-      .collection("vagas")
-      .doc("123lkmsa")
-      .set({'disponivel': true, 'tipo_vaga': 'carro'});
-}*/
 
 Future<void> insertDocument(CollectionReference registrosCollection) async {
   await registrosCollection.doc("id1").set({
