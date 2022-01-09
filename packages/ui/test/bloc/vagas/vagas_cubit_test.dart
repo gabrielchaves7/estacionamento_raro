@@ -22,6 +22,7 @@ void main() {
           id: 'id2',
           disponivel: false,
           tipoVaga: TipoVagaEnum.carro,
+          registroId: 'registroId1',
           numero: 2),
       Vaga(
           id: 'id3',
@@ -102,6 +103,7 @@ void main() {
             id: 'id1',
             disponivel: false,
             tipoVaga: TipoVagaEnum.moto,
+            registroId: 'registroId1',
             numero: 1)),
       );
       final VagasCubit vagasCubit = VagasCubit(

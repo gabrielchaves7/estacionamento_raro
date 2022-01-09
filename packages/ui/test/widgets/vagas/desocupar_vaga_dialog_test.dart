@@ -20,8 +20,12 @@ void _getItUnregisterCubit() {
   getIt.unregister<VagasCubit>();
 }
 
-final Vaga vaga =
-    Vaga(id: 'id', disponivel: false, tipoVaga: TipoVagaEnum.moto, numero: 1);
+final Vaga vaga = Vaga(
+    id: 'id',
+    disponivel: false,
+    tipoVaga: TipoVagaEnum.moto,
+    numero: 1,
+    registroId: 'registroId1');
 
 Future<void> _initWidget(tester) async {
   await tester.pumpWidget(
@@ -95,7 +99,9 @@ void main() {
           when(mockedGetVagasUseCase.call())
               .thenAnswer((_) async => Right([vaga]));
 
-          when(mockedOpenVagaUseCase.call(id: 'id')).thenAnswer(
+          when(mockedOpenVagaUseCase.call(
+                  vagaId: 'id', registroId: 'registroId1'))
+              .thenAnswer(
             (_) async => Right(Vaga(
                 id: 'id',
                 disponivel: true,
@@ -124,7 +130,8 @@ void main() {
           expect(find.text('Desocupando a vaga 1...'), findsOneWidget);
           expect(find.byType(DesocuparVagaDialog), findsNothing);
 
-          verify(mockedOpenVagaUseCase.call(id: 'id'));
+          verify(mockedOpenVagaUseCase.call(
+              vagaId: 'id', registroId: 'registroId1'));
         });
       });
 

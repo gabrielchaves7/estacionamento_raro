@@ -6,6 +6,7 @@ class Vaga {
     required this.disponivel,
     required this.tipoVaga,
     required this.numero,
+    this.registroId,
   });
 
   String id;

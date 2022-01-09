@@ -80,4 +80,10 @@ void configureDependencies() {
           vagaRepository: getIt(), updateHorarioSaidaUseCase: getIt()),
     );
   }
+
+  if (!getIt.isRegistered<UpdateHorarioSaidaUseCase>()) {
+    getIt.registerLazySingleton<UpdateHorarioSaidaUseCase>(
+      () => UpdateHorarioSaidaUseCase(registroRepository: getIt()),
+    );
+  }
 }
