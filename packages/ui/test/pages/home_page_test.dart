@@ -70,12 +70,14 @@ void main() {
   });
 
   group('When HomePage is called', () {
-    testWidgets('it should display Home, Vagas and Registros at bottom menu',
+    testWidgets('it should display Vagas and Registros at bottom menu',
         (WidgetTester tester) async {
       final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
       final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
       final RegistroCubit registroCubit =
           RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);
@@ -90,7 +92,6 @@ void main() {
       await _initWidget(tester);
       await tester.pump(const Duration(milliseconds: 1));
 
-      expect(find.text('Home'), findsOneWidget);
       expect(find.text('Vagas'), findsOneWidget);
       expect(find.text('Registros'), findsOneWidget);
     });
@@ -102,6 +103,9 @@ void main() {
         final mockedGetVagasUseCase = MockGetVagasUseCase();
         final mockedCloseVagaUseCase = MockCloseVagaUseCase();
         final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+        when(mockedGetVagasUseCase.call())
+            .thenAnswer((_) async => Right(vagas));
 
         when(mockedGetRegistrosUseCase.call())
             .thenAnswer((_) async => Right(registros));
@@ -129,7 +133,7 @@ void main() {
       });
     });
 
-    group('When Vagas option at menu is clicked', () {
+    group('When Vagas option at menu is opened', () {
       testWidgets('it should display VagasWidget', (WidgetTester tester) async {
         final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
         final mockedGetVagasUseCase = MockGetVagasUseCase();
@@ -152,11 +156,6 @@ void main() {
 
         await _initWidget(tester);
         await tester.pump(const Duration(milliseconds: 1));
-
-        expect(find.byType(VagasWidget), findsNothing);
-
-        await tester.tap(find.text('Vagas'));
-        await tester.pump();
 
         expect(find.byType(VagasWidget), findsOneWidget);
       });

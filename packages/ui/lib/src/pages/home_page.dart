@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
+import 'package:ui/src/widgets/home/home_widget.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_widget.dart';
 
@@ -17,13 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final VagasCubit _vagasCubit = getIt<VagasCubit>();
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
     const VagasWidget(),
     const RegistrosWidget()
   ];
@@ -32,6 +27,11 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -52,10 +52,6 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_car_outlined),
             label: 'Vagas',
