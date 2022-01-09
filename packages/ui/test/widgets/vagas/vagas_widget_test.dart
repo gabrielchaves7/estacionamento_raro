@@ -135,7 +135,8 @@ void main() {
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
-      when(mockedCloseVagaUseCase.call(id: 'id1')).thenAnswer(
+      when(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: '1234567'))
+          .thenAnswer(
         (_) async => Left(UnexpectedFailure()),
       );
 
@@ -158,7 +159,7 @@ void main() {
       await tester.pump();
 
       verify(mockedGetVagasUseCase.call());
-      verify(mockedCloseVagaUseCase.call(id: 'id1'));
+      verify(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: '1234567'));
       expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
     });
 
