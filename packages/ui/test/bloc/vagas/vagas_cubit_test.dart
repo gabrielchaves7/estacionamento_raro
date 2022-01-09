@@ -11,16 +11,29 @@ import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 
 import './vagas_cubit_test.mocks.dart';
 
-final List<Vaga> vagas = [
-  Vaga(id: 'id1', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
-  Vaga(id: 'id2', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
-  Vaga(id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
-];
+List<Vaga> vagas = [];
 
 @GenerateMocks([GetVagasUseCase, UpdateVagaUseCase])
 void main() {
+  setUp(() {
+    vagas = [
+      Vaga(id: 'id1', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
+      Vaga(
+          id: 'id2',
+          disponivel: false,
+          tipoVaga: TipoVagaEnum.carro,
+          numero: 2),
+      Vaga(
+          id: 'id3',
+          disponivel: true,
+          tipoVaga: TipoVagaEnum.caminhao,
+          numero: 3),
+    ];
+  });
+
   group('VagasCubit', () {
-    group('when getVagas is called and GetVagasUseCase returns a list of vagas',
+    group(
+        'when getVagas is called and GetVagasUseCase returns a list of vagas filtered by exibirVagasDisponiveis',
         () {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
@@ -36,14 +49,15 @@ void main() {
         build: () {
           return vagasCubit;
         },
-        act: (VagasCubit cubit) {
+        act: (VagasCubit cubit) async {
           cubit.getVagas();
         },
         expect: () => [isA<VagasLoadingState>(), isA<VagasLoadedState>()],
         verify: (_) {
-          verify(mockedGetVagasUseCase.call());
+          final state = vagasCubit.state as VagasLoadedState;
 
-          expect(vagasCubit.vagasDisponiveis.length, 2);
+          verify(mockedGetVagasUseCase.call());
+          expect(state.vagas.length, equals(2));
         },
       );
     });
@@ -85,17 +99,18 @@ void main() {
             tipoVaga: TipoVagaEnum.moto,
             numero: 1)),
       );
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
 
       blocTest(
-        'should emit VagasUpdatedState',
+        'should emit VagasUpdatedState with vagas filtered by exibirVagasDisponiveis',
         build: () {
-          return VagasCubit(
-              getVagasUseCase: mockedGetVagasUseCase,
-              updateVagaUseCase: mockedUpdateVagaUseCase);
+          return vagasCubit;
         },
-        act: (VagasCubit cubit) async {
-          await cubit.getVagas();
-          await cubit.updateVaga(disponivel: false, id: 'id1');
+        act: (VagasCubit vagasCubit) async {
+          await vagasCubit.getVagas();
+          await vagasCubit.updateVaga(disponivel: false, id: 'id1');
         },
         expect: () => [
           isA<VagasLoadingState>(),
@@ -103,7 +118,9 @@ void main() {
           isA<VagasUpdatedState>()
         ],
         verify: (_) {
+          final state = vagasCubit.state as VagasUpdatedState;
           verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false));
+          expect(state.vagas.length, 1);
         },
       );
     });
@@ -119,7 +136,7 @@ void main() {
       );
 
       blocTest(
-        'should emit VagasUpdatedState',
+        'should emit VagaUpdateErrorState',
         build: () {
           return VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
@@ -133,6 +150,38 @@ void main() {
         ],
         verify: (_) {
           verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: true));
+        },
+      );
+    });
+
+    group('when changeExibirVagasDisponiveis is called', () {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
+
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
+
+      blocTest(
+        'should emit VagasLoadedState filtered by the new exibirVagasDisponiveisValue',
+        build: () {
+          return vagasCubit;
+        },
+        act: (VagasCubit vagasCubit) async {
+          await vagasCubit.getVagas();
+          await vagasCubit.changeExibirVagasDisponiveis(
+              exibirVagasDisponiveis: false);
+        },
+        expect: () => [
+          isA<VagasLoadingState>(),
+          isA<VagasLoadedState>(),
+          isA<VagasLoadedState>(),
+        ],
+        verify: (_) {
+          final state = vagasCubit.state as VagasLoadedState;
+          expect(state.vagas.length, 1);
         },
       );
     });

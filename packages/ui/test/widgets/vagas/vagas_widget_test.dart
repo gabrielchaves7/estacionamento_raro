@@ -52,7 +52,7 @@ void main() {
 
   group('When VagasWidget is called', () {
     testWidgets(
-        'if state IS VagasLoadedState it should display the correct number of VagaCardWidget and should NOT display any VagaCardLoadingWidget',
+        'if state IS VagasLoadedState it should display the correct number of VagaCardWidget filtered by disponiveis and should NOT display any VagaCardLoadingWidget',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
@@ -70,7 +70,7 @@ void main() {
       await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
-      expect(find.byType(VagaCardWidget), findsNWidgets(3));
+      expect(find.byType(VagaCardWidget), findsNWidgets(2));
       expect(find.byType(VagaCardLoadingWidget), findsNothing);
 
       verify(mockedGetVagasUseCase.call());
@@ -129,7 +129,7 @@ void main() {
     });
 
     testWidgets(
-        'if state IS VagaUpdateErrorState it should display snack bar message',
+        'if state IS VagaUpdateErrorState it should display error message',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
@@ -161,6 +161,37 @@ void main() {
       verify(mockedGetVagasUseCase.call());
       verify(mockedUpdateVagaUseCase.call(id: 'id1', disponivel: false));
       expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
+    });
+
+    testWidgets('And user change filters, should show the cards filtered',
+        (WidgetTester tester) async {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedUpdateVagaUseCase = MockUpdateVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
+
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          updateVagaUseCase: mockedUpdateVagaUseCase);
+
+      _getItRegisterCubit(
+        vagasCubit: vagasCubit,
+      );
+
+      await _initWidget(tester, vagasCubit);
+      await tester.pump(const Duration(milliseconds: 1));
+
+      expect(find.byType(VagaCardWidget), findsNWidgets(2));
+
+      await tester.tap(find.text('Indisponíveis'));
+      await tester.pump(const Duration(milliseconds: 1));
+
+      expect(find.byType(VagaCardWidget), findsNWidgets(1));
+
+      await tester.tap(find.text('Disponíveis'));
+      await tester.pump(const Duration(milliseconds: 1));
+
+      expect(find.byType(VagaCardWidget), findsNWidgets(2));
     });
   });
 }

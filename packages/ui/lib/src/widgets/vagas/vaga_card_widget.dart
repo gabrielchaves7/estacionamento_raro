@@ -23,6 +23,10 @@ class VagaCardWidget extends StatelessWidget {
         );
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: vaga.disponivel ? Colors.green : Colors.red, width: 2.0),
+            borderRadius: BorderRadius.circular(4.0)),
         elevation: 3,
         child: Padding(
           padding:

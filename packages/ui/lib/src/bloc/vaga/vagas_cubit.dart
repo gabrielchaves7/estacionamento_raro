@@ -15,10 +15,10 @@ class VagasCubit extends Cubit<VagasState> {
   final GetVagasUseCase getVagasUseCase;
   final UpdateVagaUseCase updateVagaUseCase;
 
+  bool _exibirVagasdisponiveis = true;
   List<Vaga> _vagas = [];
 
-  List<Vaga> get vagasDisponiveis =>
-      _vagas.where((vaga) => vaga.disponivel == true).toList();
+  get exibirVagasDisponiveis => _exibirVagasdisponiveis;
 
   Future<void> getVagas() async {
     emit(VagasLoadingState());
@@ -29,7 +29,7 @@ class VagasCubit extends Cubit<VagasState> {
       emit(VagasErrorState());
     }, (vagas) {
       _vagas = vagas;
-      emit(VagasLoadedState(vagas: vagas));
+      emit(VagasLoadedState(_vagas, _exibirVagasdisponiveis));
     });
   }
 
@@ -42,7 +42,13 @@ class VagasCubit extends Cubit<VagasState> {
       emit(VagaUpdateErrorState());
     }, (updatedVaga) {
       _vagas[_vagas.indexWhere((v) => v.id == updatedVaga.id)] = updatedVaga;
-      emit(VagasUpdatedState(vagas: _vagas));
+      emit(VagasUpdatedState(_vagas, _exibirVagasdisponiveis));
     });
+  }
+
+  Future<void> changeExibirVagasDisponiveis(
+      {required bool exibirVagasDisponiveis}) async {
+    _exibirVagasdisponiveis = exibirVagasDisponiveis;
+    emit(VagasLoadedState(_vagas, _exibirVagasdisponiveis));
   }
 }
