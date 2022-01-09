@@ -7,21 +7,10 @@ import 'package:ui/src/widgets/loading/loading_area_widget.dart';
 import 'package:ui/src/widgets/loading/loading_widget.dart';
 import 'package:ui/src/widgets/registros/registro_card_widget.dart';
 
-class RegistrosWidget extends StatefulWidget {
-  const RegistrosWidget({Key? key}) : super(key: key);
+class RegistrosWidget extends StatelessWidget {
+  RegistrosWidget({Key? key}) : super(key: key);
 
-  @override
-  State<RegistrosWidget> createState() => _RegistrosWidgetState();
-}
-
-class _RegistrosWidgetState extends State<RegistrosWidget> {
   final RegistroCubit _registroCubit = getIt<RegistroCubit>();
-
-  @override
-  void initState() {
-    super.initState();
-    _registroCubit.getRegistros();
-  }
 
   @override
   Widget build(BuildContext context) {

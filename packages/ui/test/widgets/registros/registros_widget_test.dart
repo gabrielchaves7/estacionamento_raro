@@ -27,12 +27,14 @@ void _getItUnregisterCubit() {
 
 Future<void> _initWidget(
     WidgetTester tester, RegistroCubit registroCubit) async {
+  await registroCubit.getRegistros();
+
   await tester.pumpWidget(
     MaterialApp(
       home: Scaffold(
         body: BlocProvider(
           create: (_) => registroCubit,
-          child: const RegistrosWidget(),
+          child: RegistrosWidget(),
         ),
       ),
     ),

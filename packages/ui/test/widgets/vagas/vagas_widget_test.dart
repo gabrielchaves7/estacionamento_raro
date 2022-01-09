@@ -31,7 +31,7 @@ Future<void> _initWidget(WidgetTester tester, VagasCubit vagasCubit) async {
       home: Scaffold(
         body: BlocProvider(
           create: (_) => vagasCubit,
-          child: const VagasWidget(),
+          child: VagasWidget(),
         ),
       ),
     ),
@@ -69,6 +69,7 @@ void main() {
         vagasCubit: vagasCubit,
       );
 
+      await vagasCubit.getVagas();
       await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
@@ -125,6 +126,7 @@ void main() {
         vagasCubit: vagasCubit,
       );
 
+      await vagasCubit.getVagas();
       await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
@@ -156,6 +158,7 @@ void main() {
         vagasCubit: vagasCubit,
       );
 
+      await vagasCubit.getVagas();
       await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
@@ -188,6 +191,7 @@ void main() {
         vagasCubit: vagasCubit,
       );
 
+      await vagasCubit.getVagas();
       await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 

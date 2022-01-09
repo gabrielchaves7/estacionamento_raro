@@ -8,21 +8,8 @@ import 'package:ui/src/widgets/loading/loading_widget.dart';
 import 'package:ui/src/widgets/vagas/vaga_card_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_filtro_widget.dart';
 
-class VagasWidget extends StatefulWidget {
-  const VagasWidget({Key? key}) : super(key: key);
-
-  @override
-  State<VagasWidget> createState() => _VagasWidgetState();
-}
-
-class _VagasWidgetState extends State<VagasWidget> {
+class VagasWidget extends StatelessWidget {
   final VagasCubit _vagasCubit = getIt<VagasCubit>();
-
-  @override
-  void initState() {
-    super.initState();
-    _vagasCubit.getVagas();
-  }
 
   @override
   Widget build(BuildContext context) {
