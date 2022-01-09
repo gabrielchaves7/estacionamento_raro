@@ -202,8 +202,8 @@ void main() {
       final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
-      when(mockedOpenVagaUseCase.call(id: 'id2')).thenAnswer((_) async => Right(
-          Vaga(
+      when(mockedOpenVagaUseCase.call(vagaId: 'id2', registroId: 'registroId1'))
+          .thenAnswer((_) async => Right(Vaga(
               id: 'id2',
               disponivel: true,
               tipoVaga: TipoVagaEnum.carro,
@@ -221,7 +221,7 @@ void main() {
         },
         act: (VagasCubit vagasCubit) async {
           await vagasCubit.getVagas();
-          await vagasCubit.openVaga(vagaId: 'id2');
+          await vagasCubit.openVaga(vagaId: 'id2', registroId: 'registroId1');
         },
         expect: () => [
           isA<VagasLoadingState>(),
@@ -231,6 +231,8 @@ void main() {
         verify: (_) {
           final state = vagasCubit.state as VagaOpenedState;
           expect(state.vagas.length, 3);
+          verify(mockedOpenVagaUseCase.call(
+              vagaId: 'id2', registroId: 'registroId1'));
         },
       );
     });
@@ -240,7 +242,8 @@ void main() {
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
       final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
-      when(mockedOpenVagaUseCase.call(id: 'id1')).thenAnswer(
+      when(mockedOpenVagaUseCase.call(vagaId: 'id1', registroId: 'registroId1'))
+          .thenAnswer(
         (_) async => Left(UnexpectedFailure()),
       );
 
@@ -253,13 +256,14 @@ void main() {
               openVagaUseCase: mockedOpenVagaUseCase);
         },
         act: (VagasCubit cubit) async {
-          await cubit.openVaga(vagaId: 'id1');
+          await cubit.openVaga(vagaId: 'id1', registroId: 'registroId1');
         },
         expect: () => [
           isA<VagaOpenedErrorState>(),
         ],
         verify: (_) {
-          verify(mockedOpenVagaUseCase.call(id: 'id1'));
+          verify(mockedOpenVagaUseCase.call(
+              vagaId: 'id1', registroId: 'registroId1'));
         },
       );
     });

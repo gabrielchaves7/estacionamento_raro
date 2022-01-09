@@ -39,7 +39,7 @@ class DesocuparVagaDialog extends StatelessWidget {
                 duration: const Duration(seconds: 2),
               ),
             );
-            _vagasCubit.openVaga(vagaId: vaga.id);
+            _vagasCubit.openVaga(vagaId: vaga.id, registroId: vaga.registroId!);
             Navigator.of(context).pop();
           },
           child: const Text('confirmar'),
