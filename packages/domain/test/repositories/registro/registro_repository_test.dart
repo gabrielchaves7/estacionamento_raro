@@ -156,5 +156,63 @@ void main() {
         });
       });
     });
+
+    group('When RegistroRepository.updateHorarioSaida is called', () {
+      //Horario entrada: 08/01/2022 17:13
+      final DateTime horarioEntrada =
+          DateTime.fromMillisecondsSinceEpoch(1641672790000);
+
+      //Horario saida: 08/01/2022 23:22
+      final DateTime horarioSaida =
+          DateTime.fromMillisecondsSinceEpoch(1641694940000);
+      group('And RegistroDataSource returns a RegistroModel', () {
+        test(
+            'RegistroRepository should call registroDataSource.updateHorarioSaida and return the right value',
+            () async {
+          final RegistroDataSource mockedRegistroDataSource =
+              MockRegistroDataSource();
+
+          when(
+            mockedRegistroDataSource.updateHorarioSaida(id: 'id1'),
+          ).thenAnswer((_) async => RegistroModel(
+              id: 'id1',
+              horarioEntrada: horarioEntrada,
+              placa: 'ABC123',
+              horarioSaida: horarioSaida));
+
+          final RegistroRepository registroRepository = RegistroRepositoryImpl(
+              registroDataSource: mockedRegistroDataSource);
+
+          final result = await registroRepository.updateHorarioSaida(id: 'id1');
+
+          verify(mockedRegistroDataSource.updateHorarioSaida(id: 'id1'));
+          expect(result.isRight(), true);
+        });
+      });
+
+      group('And RegistroDataSource throws an exception', () {
+        test(
+            'RegistroRepository should return the left value with UnexpectedFailure',
+            () async {
+          final RegistroDataSource mockedRegistroDataSource =
+              MockRegistroDataSource();
+
+          when(
+            mockedRegistroDataSource.updateHorarioSaida(id: 'id1'),
+          ).thenThrow((_) async => Exception());
+
+          final RegistroRepository registroRepository = RegistroRepositoryImpl(
+              registroDataSource: mockedRegistroDataSource);
+
+          final result = await registroRepository.updateHorarioSaida(id: 'id1');
+
+          verify(mockedRegistroDataSource.updateHorarioSaida(id: 'id1'));
+          expect(result.isLeft(), true);
+          result.fold(
+              (exception) => {expect(exception is UnexpectedFailure, true)},
+              (registros) => {});
+        });
+      });
+    });
   });
 }

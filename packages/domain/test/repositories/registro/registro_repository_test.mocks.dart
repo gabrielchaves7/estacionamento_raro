@@ -39,4 +39,10 @@ class MockRegistroDataSource extends _i1.Mock
           Invocation.method(#create, [], {#placa: placa}),
           returnValue: Future<_i2.RegistroModel>.value(_FakeRegistroModel_0()))
       as _i4.Future<_i2.RegistroModel>);
+  @override
+  _i4.Future<_i2.RegistroModel> updateHorarioSaida({String? id}) =>
+      (super.noSuchMethod(Invocation.method(#updateHorarioSaida, [], {#id: id}),
+              returnValue:
+                  Future<_i2.RegistroModel>.value(_FakeRegistroModel_0()))
+          as _i4.Future<_i2.RegistroModel>);
 }

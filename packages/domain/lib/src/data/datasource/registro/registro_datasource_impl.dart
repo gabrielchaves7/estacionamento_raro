@@ -4,6 +4,7 @@ import 'package:domain/src/data/models/registro/registro_model.dart';
 abstract class RegistroDataSource {
   Future<List<RegistroModel>?> all();
   Future<RegistroModel> create({required String placa});
+  Future<RegistroModel> updateHorarioSaida({required String id});
 }
 
 class RegistroDataSourceImpl implements RegistroDataSource {
@@ -33,5 +34,11 @@ class RegistroDataSourceImpl implements RegistroDataSource {
     final DocumentSnapshot registroSnapshot = await documentReference.get();
 
     return RegistroModel.fromDocumentSnapshot(registroSnapshot);
+  }
+
+  @override
+  Future<RegistroModel> updateHorarioSaida({required String id}) {
+    // TODO: implement updateHorarioSaida
+    throw UnimplementedError();
   }
 }
