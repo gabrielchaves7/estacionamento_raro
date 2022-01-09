@@ -8,8 +8,6 @@ class VagasLoadingState extends VagasState {}
 
 class VagasErrorState extends VagasState {}
 
-class VagaUpdateErrorState extends VagasErrorState {}
-
 class VagasLoadedState extends VagasState {
   VagasLoadedState(this._vagas, this._exibirVagasDisponiveis);
 
@@ -20,7 +18,9 @@ class VagasLoadedState extends VagasState {
       _vagas.where((it) => it.disponivel == _exibirVagasDisponiveis).toList();
 }
 
-class VagasUpdatedState extends VagasLoadedState {
-  VagasUpdatedState(vagas, exibirVagasDisponiveis)
+class VagaClosedState extends VagasLoadedState {
+  VagaClosedState(vagas, exibirVagasDisponiveis)
       : super(vagas, exibirVagasDisponiveis);
 }
+
+class VagaClosedErrorState extends VagasErrorState {}

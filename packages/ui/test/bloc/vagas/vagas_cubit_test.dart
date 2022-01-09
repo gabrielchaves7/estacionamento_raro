@@ -103,7 +103,7 @@ void main() {
           closeVagaUseCase: mockedCloseVagaUseCase);
 
       blocTest(
-        'should emit VagasUpdatedState with vagas filtered by exibirVagasDisponiveis',
+        'should emit VagaClosedState with vagas filtered by exibirVagasDisponiveis',
         build: () {
           return vagasCubit;
         },
@@ -114,10 +114,10 @@ void main() {
         expect: () => [
           isA<VagasLoadingState>(),
           isA<VagasLoadedState>(),
-          isA<VagasUpdatedState>()
+          isA<VagaClosedState>()
         ],
         verify: (_) {
-          final state = vagasCubit.state as VagasUpdatedState;
+          final state = vagasCubit.state as VagaClosedState;
           verify(mockedCloseVagaUseCase.call(id: 'id1'));
           expect(state.vagas.length, 1);
         },
@@ -134,7 +134,7 @@ void main() {
       );
 
       blocTest(
-        'should emit VagaUpdateErrorState',
+        'should emit VagaClosedErrorState',
         build: () {
           return VagasCubit(
               getVagasUseCase: mockedGetVagasUseCase,
@@ -144,7 +144,7 @@ void main() {
           await cubit.closeVaga(id: 'id1');
         },
         expect: () => [
-          isA<VagaUpdateErrorState>(),
+          isA<VagaClosedErrorState>(),
         ],
         verify: (_) {
           verify(mockedCloseVagaUseCase.call(id: 'id1'));

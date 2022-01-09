@@ -37,10 +37,10 @@ class VagasCubit extends Cubit<VagasState> {
     final Either<Failure, Vaga> result = await closeVagaUseCase(id: id);
 
     result.fold((error) {
-      emit(VagaUpdateErrorState());
+      emit(VagaClosedErrorState());
     }, (updatedVaga) {
       _vagas[_vagas.indexWhere((v) => v.id == updatedVaga.id)] = updatedVaga;
-      emit(VagasUpdatedState(_vagas, _exibirVagasdisponiveis));
+      emit(VagaClosedState(_vagas, _exibirVagasdisponiveis));
     });
   }
 

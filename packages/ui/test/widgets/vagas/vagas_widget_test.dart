@@ -129,7 +129,7 @@ void main() {
     });
 
     testWidgets(
-        'if state IS VagaUpdateErrorState it should display error message',
+        'if state IS VagaClosedErrorState it should display error message',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
