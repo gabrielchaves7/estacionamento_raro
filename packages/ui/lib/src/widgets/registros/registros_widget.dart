@@ -14,33 +14,36 @@ class RegistrosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoadingArea(
-      linearGradient: shimmerGradient,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
-        child: BlocBuilder<RegistroCubit, RegistroState>(
-          builder: (context, state) {
-            List<Registro> registros = [];
-            bool isLoading = state is RegistroInitialState ||
-                state is RegistroLoadingState ||
-                state is RegistroErrorState;
+    return RefreshIndicator(
+      onRefresh: () => _registroCubit.getRegistros(),
+      child: LoadingArea(
+        linearGradient: shimmerGradient,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
+          child: BlocBuilder<RegistroCubit, RegistroState>(
+            builder: (context, state) {
+              List<Registro> registros = [];
+              bool isLoading = state is RegistroInitialState ||
+                  state is RegistroLoadingState ||
+                  state is RegistroErrorState;
 
-            if (state is RegistroLoadedState) {
-              registros = state.registros;
-            }
+              if (state is RegistroLoadedState) {
+                registros = state.registros;
+              }
 
-            return ListView.builder(
-              itemCount: isLoading ? 2 : registros.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Loading(
-                  isLoading: isLoading,
-                  child: isLoading
-                      ? const RegistroCardLoadingWidget()
-                      : RegistroCardWidget(registro: registros[index]),
-                );
-              },
-            );
-          },
+              return ListView.builder(
+                itemCount: isLoading ? 2 : registros.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Loading(
+                    isLoading: isLoading,
+                    child: isLoading
+                        ? const RegistroCardLoadingWidget()
+                        : RegistroCardWidget(registro: registros[index]),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
