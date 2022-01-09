@@ -24,7 +24,7 @@ void main() {
           final VagaRepository mockedVagaRepository = MockVagaRepository();
 
           when(
-            mockedVagaRepository.update(disponivel: true, id: 'id'),
+            mockedVagaRepository.openVaga(id: 'id'),
           ).thenAnswer((_) async => Right(vaga));
 
           final OpenVagaUseCase openVagaUseCase =
@@ -32,7 +32,7 @@ void main() {
 
           final result = await openVagaUseCase(id: 'id');
 
-          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedVagaRepository.openVaga(id: 'id'));
           expect(result.isRight(), true);
           result.fold((exception) => {}, (vaga) => {expect(vaga.id, 'id')});
         });
@@ -43,7 +43,7 @@ void main() {
           final VagaRepository mockedVagaRepository = MockVagaRepository();
 
           when(
-            mockedVagaRepository.update(disponivel: true, id: 'id'),
+            mockedVagaRepository.openVaga(id: 'id'),
           ).thenAnswer((_) async => Left(UnexpectedFailure()));
 
           final OpenVagaUseCase openVagaUseCase =
@@ -51,7 +51,7 @@ void main() {
 
           final result = await openVagaUseCase(id: 'id');
 
-          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedVagaRepository.openVaga(id: 'id'));
           expect(result.isLeft(), true);
         });
       });

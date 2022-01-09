@@ -15,14 +15,16 @@ class CloseVagaUseCase {
 
   Future<Either<Failure, Vaga>> call(
       {required String vagaId, required String placa}) async {
-    final result = await vagaRepository.update(disponivel: false, id: vagaId);
+    final registroResult = await createRegistroUseCase.call(placa: placa);
 
-    return result.fold((exception) {
-      return Left(exception);
-    }, (vaga) async {
-      final registroResult = await createRegistroUseCase.call(placa: placa);
+    return registroResult.fold((registroException) => Left(registroException),
+        (registro) async {
+      final vagaResult =
+          await vagaRepository.closeVaga(id: vagaId, registroId: registro.id);
 
-      return registroResult.fold((l) => Left(l), (r) => Right(vaga));
+      return vagaResult.fold((vagaException) => Left(vagaException), (vaga) {
+        return Right(vaga);
+      });
     });
   }
 }

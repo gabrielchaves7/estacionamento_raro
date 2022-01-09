@@ -89,23 +89,22 @@ void main() {
       });
     });
 
-    group('When VagaReposoritory.update is called', () {
+    group('When VagaReposoritory.openVaga is called', () {
       test(
           'And VagaDataSource returns a VagaModel, VagaReposoritory should return a VagaEntity',
           () async {
         final VagaDataSource mockedVagaDataSource = MockVagaDataSource();
 
         when(
-          mockedVagaDataSource.update(disponivel: false, id: 'id1'),
+          mockedVagaDataSource.update(disponivel: true, id: 'id1'),
         ).thenAnswer((_) async => mockedVagas.first);
 
         final VagaRepository vagaRepository =
             VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
 
-        final result =
-            await vagaRepository.update(disponivel: false, id: 'id1');
+        final result = await vagaRepository.openVaga(id: 'id1');
 
-        verify(mockedVagaDataSource.update(disponivel: false, id: 'id1'));
+        verify(mockedVagaDataSource.update(disponivel: true, id: 'id1'));
         expect(result.isRight(), true);
         result.fold((exception) => {}, (vaga) => {expect(vaga.id, 'id1')});
       });
@@ -116,20 +115,69 @@ void main() {
         final VagaDataSource mockedVagaDataSource = MockVagaDataSource();
 
         when(
-          mockedVagaDataSource.update(disponivel: false, id: 'id1'),
+          mockedVagaDataSource.update(disponivel: true, id: 'id1'),
         ).thenThrow((_) async => Exception());
 
         final VagaRepository vagaRepository =
             VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
 
-        final result =
-            await vagaRepository.update(disponivel: false, id: 'id1');
+        final result = await vagaRepository.openVaga(id: 'id1');
 
-        verify(mockedVagaDataSource.update(disponivel: false, id: 'id1'));
+        verify(mockedVagaDataSource.update(disponivel: true, id: 'id1'));
         expect(result.isLeft(), true);
         result.fold(
             (exception) => {expect(exception is UnexpectedFailure, true)},
             (registros) => {});
+      });
+    });
+
+    group('When VagaReposoritory.closeVaga is called', () {
+      test(
+          'And VagaDataSource returns a VagaModel, VagaReposoritory should return a VagaEntity',
+          () async {
+        final VagaDataSource mockedVagaDataSource = MockVagaDataSource();
+
+        when(
+          mockedVagaDataSource.update(
+              disponivel: false, id: 'id1', registroId: 'registroId1'),
+        ).thenAnswer((_) async => mockedVagas.first);
+
+        final VagaRepository vagaRepository =
+            VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
+
+        final result = await vagaRepository.closeVaga(
+            id: 'id1', registroId: 'registroId1');
+
+        verify(mockedVagaDataSource.update(
+            disponivel: false, id: 'id1', registroId: 'registroId1'));
+        expect(result.isRight(), true);
+        result.fold((exception) => {}, (vaga) {
+          expect(vaga.id, 'id1');
+        });
+      });
+
+      test(
+          'And VagaDataSource throws an exception VagaReposoritory should return the left value with UnexpectedFailure',
+          () async {
+        final VagaDataSource mockedVagaDataSource = MockVagaDataSource();
+
+        when(
+          mockedVagaDataSource.update(
+              disponivel: false, id: 'id1', registroId: 'registroId1'),
+        ).thenThrow((_) async => Exception());
+
+        final VagaRepository vagaRepository =
+            VagaRepositoryImpl(vagaDataSource: mockedVagaDataSource);
+
+        final result = await vagaRepository.closeVaga(
+            id: 'id1', registroId: 'registroId1');
+
+        verify(mockedVagaDataSource.update(
+            disponivel: false, id: 'id1', registroId: 'registroId1'));
+        expect(result.isLeft(), true);
+        result.fold((exception) {
+          expect(exception is UnexpectedFailure, true);
+        }, (registros) => {});
       });
     });
   });
