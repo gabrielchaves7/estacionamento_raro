@@ -87,12 +87,16 @@ void main() {
             VagaDataSourceImpl(firestore: mockedFirestore);
 
         final VagaModel vaga = await vagaDataSource.update(
-            disponivel: false, id: 'id1', registroId: 'registro1');
+            disponivel: false,
+            id: 'id1',
+            registroId: 'registro1',
+            placa: 'ABCDEFG');
 
         expect(vaga.id, 'id1');
         expect(vaga.disponivel, false);
         expect(vaga.tipoVaga, TipoVagaEnum.moto);
         expect(vaga.registroId, 'registro1');
+        expect(vaga.placa, 'ABCDEFG');
       });
     });
   });

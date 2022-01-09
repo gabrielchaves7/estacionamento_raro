@@ -4,7 +4,10 @@ import 'package:domain/src/data/models/vaga/vaga_model.dart';
 abstract class VagaDataSource {
   Future<List<VagaModel>?> all();
   Future<VagaModel> update(
-      {required String id, required bool disponivel, String? registroId});
+      {required String id,
+      required bool disponivel,
+      String? registroId,
+      String? placa});
 }
 
 class VagaDataSourceImpl implements VagaDataSource {
@@ -25,12 +28,13 @@ class VagaDataSourceImpl implements VagaDataSource {
     required bool disponivel,
     required String id,
     String? registroId,
+    String? placa,
   }) async {
     final DocumentReference documentReference =
         firestore.collection('vagas').doc(id);
 
-    await documentReference
-        .update({'disponivel': disponivel, 'registro_id': registroId});
+    await documentReference.update(
+        {'disponivel': disponivel, 'registro_id': registroId, 'placa': placa});
 
     final DocumentSnapshot vagaSnapshot = await documentReference.get();
 
