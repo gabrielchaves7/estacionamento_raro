@@ -18,6 +18,13 @@ class OcuparVagaDialog extends StatefulWidget {
 class OcuparVagaDialogState extends State<OcuparVagaDialog> {
   final _formKey = GlobalKey<FormState>();
   final VagasCubit _vagasCubit = getIt<VagasCubit>();
+  final placaController = TextEditingController();
+
+  @override
+  void dispose() {
+    placaController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +37,7 @@ class OcuparVagaDialogState extends State<OcuparVagaDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                controller: placaController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor informe uma placa válida.';
@@ -57,7 +65,8 @@ class OcuparVagaDialogState extends State<OcuparVagaDialog> {
                   const SnackBar(
                       content: Text('Marcando a vaga como ocupada...')),
                 );
-                _vagasCubit.closeVaga(id: widget.vaga.id);
+                _vagasCubit.closeVaga(
+                    vagaId: widget.vaga.id, placa: placaController.text);
                 Navigator.of(context).pop();
               }
             },
