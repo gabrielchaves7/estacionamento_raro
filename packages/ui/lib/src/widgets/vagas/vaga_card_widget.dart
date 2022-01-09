@@ -43,15 +43,13 @@ class VagaCardWidget extends StatelessWidget {
             children: [
               Text(
                 vaga.numero.toString(),
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.subtitle1,
               ),
               Icon(_vagaIcon(vaga.tipoVaga)),
               if (vaga.placa != null)
                 Text(
                   vaga.placa!,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyText2,
                 )
             ],
           ),

@@ -48,31 +48,38 @@ class OcuparVagaDialogState extends State<OcuparVagaDialog> {
                   return null;
                 },
               ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    child: const Text('cancelar'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Marcando a vaga como ocupada...')),
+                        );
+                        _vagasCubit.closeVaga(
+                            vagaId: widget.vaga.id,
+                            placa: placaController.text);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: const Text('confirmar'),
+                  ),
+                ],
+              )
             ],
           ),
         ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('cancelar'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Marcando a vaga como ocupada...')),
-                );
-                _vagasCubit.closeVaga(
-                    vagaId: widget.vaga.id, placa: placaController.text);
-                Navigator.of(context).pop();
-              }
-            },
-            child: const Text('confirmar'),
-          ),
-        ],
       ),
     );
   }

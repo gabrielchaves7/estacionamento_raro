@@ -20,8 +20,9 @@ class RegistroCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _cardInfo("Placa", registro.placa),
+                  _cardInfo(context, "Placa", registro.placa),
                   _cardInfo(
+                      context,
                       "Entrada",
                       DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
                           .format(registro.horarioEntrada)),
@@ -33,10 +34,12 @@ class RegistroCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _cardInfo(
+                      context,
                       "Permanência",
                       _calcularTempoDePermanencia(
                           registro.horarioEntrada, registro.horarioSaida)),
                   _cardInfo(
+                      context,
                       "Saída",
                       registro.horarioSaida != null
                           ? DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
@@ -51,7 +54,7 @@ class RegistroCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _cardInfo(String title, String subtitle) {
+  Widget _cardInfo(BuildContext context, String title, String subtitle) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, right: 16),
       child: Column(
@@ -59,11 +62,9 @@ class RegistroCardWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: Theme.of(context).textTheme.subtitle1,
           ),
-          Text(subtitle,
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+          Text(subtitle, style: Theme.of(context).textTheme.bodyText2),
         ],
       ),
     );

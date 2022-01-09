@@ -18,33 +18,43 @@ class DesocuparVagaDialog extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Deseja realmente desocupar a vaga ${vaga.numero}?"),
+            Text(
+              "Deseja realmente desocupar a vaga ${vaga.numero}?",
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  child: const Text('cancelar'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Desocupando a vaga ${vaga.numero}...',
+                        ),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                    _vagasCubit.openVaga(
+                        vagaId: vaga.id, registroId: vaga.registroId!);
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('confirmar'),
+                ),
+              ],
+            )
           ],
         ),
       ),
-      actions: <Widget>[
-        TextButton(
-          child: const Text('cancelar'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Desocupando a vaga ${vaga.numero}...',
-                ),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-            _vagasCubit.openVaga(vagaId: vaga.id, registroId: vaga.registroId!);
-            Navigator.of(context).pop();
-          },
-          child: const Text('confirmar'),
-        ),
-      ],
     );
   }
 }

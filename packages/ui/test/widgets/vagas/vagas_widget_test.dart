@@ -103,7 +103,7 @@ void main() {
 
       await tester.pump(const Duration(milliseconds: 1));
 
-      expect(find.byType(VagaCardLoadingWidget), findsNWidgets(4));
+      expect(find.byType(VagaCardLoadingWidget), findsNWidgets(2));
       expect(find.byType(VagaCardWidget), findsNothing);
     });
 
@@ -130,7 +130,7 @@ void main() {
       await _initWidget(tester, vagasCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
-      expect(find.byType(VagaCardLoadingWidget), findsNWidgets(4));
+      expect(find.byType(VagaCardLoadingWidget), findsNWidgets(2));
       expect(find.byType(VagaCardWidget), findsNothing);
 
       verify(mockedGetVagasUseCase.call());
