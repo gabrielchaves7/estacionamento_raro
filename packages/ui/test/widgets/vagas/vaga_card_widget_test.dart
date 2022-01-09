@@ -31,7 +31,7 @@ Future<void> _initWidget(tester, {required Vaga vaga}) async {
   );
 }
 
-@GenerateMocks([GetVagasUseCase, CloseVagaUseCase])
+@GenerateMocks([GetVagasUseCase, CloseVagaUseCase, OpenVagaUseCase])
 void main() {
   group('VagaCardWidget', () {
     group('When VagaCardWidget is called', () {
@@ -81,10 +81,12 @@ void main() {
       testWidgets('Should open OcuparVagaDialog', (WidgetTester tester) async {
         final mockedGetVagasUseCase = MockGetVagasUseCase();
         final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+        final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
         final VagasCubit vagasCubit = VagasCubit(
             getVagasUseCase: mockedGetVagasUseCase,
-            closeVagaUseCase: mockedCloseVagaUseCase);
+            closeVagaUseCase: mockedCloseVagaUseCase,
+            openVagaUseCase: mockedOpenVagaUseCase);
 
         _getItRegisterCubit(
           vagasCubit: vagasCubit,
