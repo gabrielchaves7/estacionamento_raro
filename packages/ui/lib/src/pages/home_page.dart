@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/bloc/registro_cubit.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
-import 'package:ui/src/widgets/home/home_widget.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_widget.dart';
 
@@ -18,6 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final VagasCubit _vagasCubit = getIt<VagasCubit>();
+  final RegistroCubit _registroCubit = getIt<RegistroCubit>();
+
   static final List<Widget> _widgetOptions = <Widget>[
     const VagasWidget(),
     const RegistrosWidget()
@@ -45,6 +47,9 @@ class _HomePageState extends State<HomePage> {
           providers: [
             BlocProvider<VagasCubit>(
               create: (BuildContext context) => _vagasCubit,
+            ),
+            BlocProvider<RegistroCubit>(
+              create: (BuildContext context) => _registroCubit,
             ),
           ],
           child: _widgetOptions.elementAt(_selectedIndex),

@@ -8,7 +8,7 @@ final getIt = GetIt.instance;
 void configureDependencies() {
   //cubit
   if (!getIt.isRegistered<RegistroCubit>()) {
-    getIt.registerFactory<RegistroCubit>(
+    getIt.registerLazySingleton<RegistroCubit>(
       () => RegistroCubit(getRegistrosUseCase: getIt()),
     );
   }

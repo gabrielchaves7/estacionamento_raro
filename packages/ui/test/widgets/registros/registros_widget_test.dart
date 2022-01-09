@@ -5,6 +5,7 @@ import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/estacionamento_raro_errors.dart';
 import 'package:domain/estacionamento_raro_usecases.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -24,11 +25,15 @@ void _getItUnregisterCubit() {
   getIt.unregister<RegistroCubit>();
 }
 
-Future<void> _initWidget(WidgetTester tester) async {
+Future<void> _initWidget(
+    WidgetTester tester, RegistroCubit registroCubit) async {
   await tester.pumpWidget(
-    const MaterialApp(
+    MaterialApp(
       home: Scaffold(
-        body: RegistrosWidget(),
+        body: BlocProvider(
+          create: (_) => registroCubit,
+          child: const RegistrosWidget(),
+        ),
       ),
     ),
   );
@@ -76,7 +81,7 @@ void main() {
         registroCubit: registroCubit,
       );
 
-      await _initWidget(tester);
+      await _initWidget(tester, registroCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
       expect(find.byType(RegistroCardWidget), findsNWidgets(3));
@@ -100,7 +105,7 @@ void main() {
         registroCubit: registroCubit,
       );
 
-      await _initWidget(tester);
+      await _initWidget(tester, registroCubit);
 
       registroCubit.emit(RegistroLoadingState());
 
@@ -125,7 +130,7 @@ void main() {
         registroCubit: registroCubit,
       );
 
-      await _initWidget(tester);
+      await _initWidget(tester, registroCubit);
       await tester.pump(const Duration(milliseconds: 1));
 
       expect(find.byType(RegistroCardLoadingWidget), findsNWidgets(2));
