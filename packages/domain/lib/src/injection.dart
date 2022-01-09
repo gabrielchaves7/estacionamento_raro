@@ -69,14 +69,14 @@ void configureDependencies() {
 
   if (!getIt.isRegistered<CloseVagaUseCase>()) {
     getIt.registerLazySingleton<CloseVagaUseCase>(
-      () => CloseVagaUseCase(vagaRepository: getIt()),
+      () => CloseVagaUseCase(
+          vagaRepository: getIt(), createRegistroUseCase: getIt()),
     );
   }
 
   if (!getIt.isRegistered<OpenVagaUseCase>()) {
     getIt.registerLazySingleton<OpenVagaUseCase>(
-      () => OpenVagaUseCase(
-          vagaRepository: getIt(), createRegistroUseCase: getIt()),
+      () => OpenVagaUseCase(vagaRepository: getIt()),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:domain/src/domain/errors/failure.dart';
 import 'package:domain/src/domain/repositories/vaga/vaga_repository.dart';
+import 'package:domain/src/domain/usecases/registro/create_registro_usecase.dart';
 import 'package:domain/src/domain/usecases/vaga/close_vaga_usecase.dart';
 import 'package:domain/src/enum/tipo_vaga_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +14,11 @@ import './close_vaga_usecase_test.mocks.dart';
 final Vaga vaga =
     Vaga(id: 'id', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1);
 
-@GenerateMocks([VagaRepository])
+//Horario entrada: 08/01/2022 17:13
+final DateTime horarioEntrada =
+    DateTime.fromMillisecondsSinceEpoch(1641672790000);
+
+@GenerateMocks([VagaRepository, CreateRegistroUseCase])
 void main() {
   group('CloseVagaUseCase', () {
     group('When CloseVagaUseCase is called', () {
@@ -22,36 +27,81 @@ void main() {
             'CloseVagaUseCase should call vagaRepository.update() and return the updated vaga',
             () async {
           final VagaRepository mockedVagaRepository = MockVagaRepository();
+          final CreateRegistroUseCase mockedCreateRegistroUseCase =
+              MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.update(disponivel: false, id: 'id'),
+            mockedVagaRepository.update(disponivel: true, id: 'id'),
           ).thenAnswer((_) async => Right(vaga));
 
-          final CloseVagaUseCase closeVagaUseCase =
-              CloseVagaUseCase(vagaRepository: mockedVagaRepository);
+          when(
+            mockedCreateRegistroUseCase.call(placa: 'ABC1234'),
+          ).thenAnswer((_) async => Right(Registro(
+              id: 'id', placa: 'ABC1234', horarioEntrada: horarioEntrada)));
 
-          final result = await closeVagaUseCase(id: 'id');
+          final CloseVagaUseCase closeVagaUseCase = CloseVagaUseCase(
+              vagaRepository: mockedVagaRepository,
+              createRegistroUseCase: mockedCreateRegistroUseCase);
 
-          verify(mockedVagaRepository.update(disponivel: false, id: 'id'));
+          final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
+
+          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isRight(), true);
-          result.fold((exception) => {}, (vaga) => {expect(vaga.id, 'id')});
         });
       });
 
-      group('And VagaRepository returns a failure', () {
-        test('CloseVagaUseCase should return the left value', () async {
+      group('And VagaRepository.update returns a failure', () {
+        test(
+            'CloseVagaUseCase should return the left value and should not call CreateRegistroUseCase',
+            () async {
           final VagaRepository mockedVagaRepository = MockVagaRepository();
+          final CreateRegistroUseCase mockedCreateRegistroUseCase =
+              MockCreateRegistroUseCase();
 
           when(
-            mockedVagaRepository.update(disponivel: false, id: 'id'),
+            mockedVagaRepository.update(disponivel: true, id: 'id'),
           ).thenAnswer((_) async => Left(UnexpectedFailure()));
 
-          final CloseVagaUseCase closeVagaUseCase =
-              CloseVagaUseCase(vagaRepository: mockedVagaRepository);
+          when(
+            mockedCreateRegistroUseCase.call(placa: 'ABC1234'),
+          ).thenAnswer((_) async => Right(Registro(
+              id: 'id1', placa: 'ABC1234', horarioEntrada: horarioEntrada)));
 
-          final result = await closeVagaUseCase(id: 'id');
+          final CloseVagaUseCase closeVagaUseCase = CloseVagaUseCase(
+              vagaRepository: mockedVagaRepository,
+              createRegistroUseCase: mockedCreateRegistroUseCase);
 
-          verify(mockedVagaRepository.update(disponivel: false, id: 'id'));
+          final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
+
+          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verifyNever(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
+          expect(result.isLeft(), true);
+        });
+      });
+
+      group('And CreateRegistroUseCase returns a failure', () {
+        test('CloseVagaUseCase should return the left value', () async {
+          final VagaRepository mockedVagaRepository = MockVagaRepository();
+          final CreateRegistroUseCase mockedCreateRegistroUseCase =
+              MockCreateRegistroUseCase();
+
+          when(
+            mockedVagaRepository.update(disponivel: true, id: 'id'),
+          ).thenAnswer((_) async => Right(vaga));
+
+          when(
+            mockedCreateRegistroUseCase.call(placa: 'ABC1234'),
+          ).thenAnswer((_) async => Left(UnexpectedFailure()));
+
+          final CloseVagaUseCase closeVagaUseCase = CloseVagaUseCase(
+              vagaRepository: mockedVagaRepository,
+              createRegistroUseCase: mockedCreateRegistroUseCase);
+
+          final result = await closeVagaUseCase(vagaId: 'id', placa: 'ABC1234');
+
+          verify(mockedVagaRepository.update(disponivel: true, id: 'id'));
+          verify(mockedCreateRegistroUseCase.call(placa: 'ABC1234'));
           expect(result.isLeft(), true);
         });
       });
