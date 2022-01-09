@@ -13,6 +13,7 @@ import 'package:domain/src/domain/usecases/registro/create_registro_usecase.dart
     as _i4;
 import 'package:domain/src/domain/usecases/vaga/close_vaga_usecase.dart' as _i9;
 import 'package:domain/src/domain/usecases/vaga/get_vagas_usecase.dart' as _i5;
+import 'package:domain/src/domain/usecases/vaga/open_vaga_usecase.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -73,6 +74,26 @@ class MockCloseVagaUseCase extends _i1.Mock implements _i9.CloseVagaUseCase {
           {String? vagaId, String? placa}) =>
       (super.noSuchMethod(
               Invocation.method(#call, [], {#vagaId: vagaId, #placa: placa}),
+              returnValue: Future<_i3.Either<_i7.Failure, _i8.Vaga>>.value(
+                  _FakeEither_1<_i7.Failure, _i8.Vaga>()))
+          as _i6.Future<_i3.Either<_i7.Failure, _i8.Vaga>>);
+}
+
+/// A class which mocks [OpenVagaUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockOpenVagaUseCase extends _i1.Mock implements _i10.OpenVagaUseCase {
+  MockOpenVagaUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.VagaRepository get vagaRepository =>
+      (super.noSuchMethod(Invocation.getter(#vagaRepository),
+          returnValue: _FakeVagaRepository_0()) as _i2.VagaRepository);
+  @override
+  _i6.Future<_i3.Either<_i7.Failure, _i8.Vaga>> call({String? id}) =>
+      (super.noSuchMethod(Invocation.method(#call, [], {#id: id}),
               returnValue: Future<_i3.Either<_i7.Failure, _i8.Vaga>>.value(
                   _FakeEither_1<_i7.Failure, _i8.Vaga>()))
           as _i6.Future<_i3.Either<_i7.Failure, _i8.Vaga>>);
