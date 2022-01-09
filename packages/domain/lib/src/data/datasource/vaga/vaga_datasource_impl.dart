@@ -25,7 +25,7 @@ class VagaDataSourceImpl implements VagaDataSource {
     required String id,
   }) async {
     final DocumentReference documentReference =
-        await firestore.collection('vagas').doc(id);
+        firestore.collection('vagas').doc(id);
 
     await documentReference.update({'disponivel': disponivel});
 

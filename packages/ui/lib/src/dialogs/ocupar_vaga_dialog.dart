@@ -1,7 +1,6 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
 

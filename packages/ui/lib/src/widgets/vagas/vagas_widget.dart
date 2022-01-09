@@ -39,7 +39,7 @@ class _VagasWidgetState extends State<VagasWidget> {
             if (state is VagasLoadedState) {
               vagas = state.vagas;
             } else if (state is VagaUpdateErrorState) {
-              return Text('Ocorreu um erro ao atualizar a vaga.');
+              return const Text('Ocorreu um erro ao atualizar a vaga.');
             }
 
             return GridView.builder(
