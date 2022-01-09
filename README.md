@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Teste de integração
+flutter drive   --driver=test_driver/integration_test.dart   --target=integration_test/app_test.dart --flavor dev
+
