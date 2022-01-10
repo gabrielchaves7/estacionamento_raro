@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
+import 'package:ui/src/widgets/components/filter_button.dart';
 
 class VagasFiltroWidget extends StatelessWidget {
   VagasFiltroWidget({Key? key}) : super(key: key);
@@ -14,38 +15,19 @@ class VagasFiltroWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    _vagasCubit.exibirVagasDisponiveis
-                        ? Colors.blue
-                        : Colors.white)),
-            child: const Text(
-              'Disponíveis',
-              style: TextStyle(color: Colors.black),
-            ),
-            onPressed: () {
-              _vagasCubit.changeExibirVagasDisponiveis(
-                  exibirVagasDisponiveis: true);
-            },
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    !_vagasCubit.exibirVagasDisponiveis
-                        ? Colors.blue
-                        : Colors.white)),
-            child: const Text(
-              'Indisponíveis',
-              style: TextStyle(color: Colors.black),
-            ),
-            onPressed: () {
-              _vagasCubit.changeExibirVagasDisponiveis(
-                  exibirVagasDisponiveis: false);
-            },
-          ),
+          _vagaFilterButton('Disponíveis', true),
+          _vagaFilterButton('Indisponíveis', false),
         ],
       ),
+    );
+  }
+
+  _vagaFilterButton(String text, bool exibirVagasDisponiveis) {
+    return FilterButton(
+      onPressedCallback: () => _vagasCubit.changeExibirVagasDisponiveis(
+          exibirVagasDisponiveis: exibirVagasDisponiveis),
+      text: text,
+      selected: _vagasCubit.exibirVagasDisponiveis == exibirVagasDisponiveis,
     );
   }
 }

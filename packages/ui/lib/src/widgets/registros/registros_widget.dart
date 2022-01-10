@@ -1,8 +1,10 @@
 import 'package:domain/estacionamento_raro_entities.dart';
+import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/injection.dart';
+import 'package:ui/src/widgets/components/filter_button.dart';
 import 'package:ui/src/widgets/loading/loading_area_widget.dart';
 import 'package:ui/src/widgets/loading/loading_widget.dart';
 import 'package:ui/src/widgets/registros/registro_card_widget.dart';
@@ -37,6 +39,15 @@ class RegistrosWidget extends StatelessWidget {
                     title: 'Ocorreu um erro ao buscar os registros.',
                     subtitle: 'Deslize para baixo para atualizar.',
                   ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _registroFilterButton(DateFilterEnum.oneDay, '1 D'),
+                    _registroFilterButton(DateFilterEnum.threeDays, '3 D'),
+                    _registroFilterButton(DateFilterEnum.sevenDays, '7 D'),
+                    _registroFilterButton(DateFilterEnum.thirtyDays, '30 D'),
+                  ],
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
@@ -59,5 +70,12 @@ class RegistrosWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _registroFilterButton(DateFilterEnum dateFilter, String text) {
+    return FilterButton(
+        selected: _registroCubit.dateFilter == dateFilter,
+        onPressedCallback: () => _registroCubit.updateFilterDate(dateFilter),
+        text: text);
   }
 }

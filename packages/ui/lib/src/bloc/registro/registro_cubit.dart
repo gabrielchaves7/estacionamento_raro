@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/estacionamento_raro_entities.dart';
+import 'package:domain/estacionamento_raro_enums.dart';
 import 'package:domain/estacionamento_raro_usecases.dart';
 import 'package:domain/estacionamento_raro_errors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,9 @@ class RegistroCubit extends Cubit<RegistroState> {
 
   final GetRegistrosUseCase getRegistrosUseCase;
 
+  DateFilterEnum dateFilter = DateFilterEnum.oneDay;
+  List<Registro> _registros = [];
+
   Future<void> getRegistros() async {
     emit(RegistroLoadingState());
 
@@ -21,6 +25,14 @@ class RegistroCubit extends Cubit<RegistroState> {
 
     registros.fold((error) {
       emit(RegistroErrorState());
-    }, (registros) => emit(RegistroLoadedState(registros: registros)));
+    }, (registros) {
+      _registros = registros;
+      emit(RegistroLoadedState(registros, dateFilter));
+    });
+  }
+
+  Future<void> updateFilterDate(DateFilterEnum dateFilterEnum) async {
+    dateFilter = dateFilterEnum;
+    emit(RegistroLoadedState(_registros, dateFilter));
   }
 }
