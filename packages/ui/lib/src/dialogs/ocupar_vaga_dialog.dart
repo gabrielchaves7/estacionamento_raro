@@ -69,7 +69,7 @@ class OcuparVagaDialogState extends State<OcuparVagaDialog> {
                         );
                         _vagasCubit.closeVaga(
                             vagaId: widget.vaga.id,
-                            placa: placaController.text);
+                            placa: placaController.text.toUpperCase());
                         Navigator.of(context).pop();
                       }
                     },

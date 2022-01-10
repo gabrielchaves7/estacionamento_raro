@@ -34,7 +34,7 @@ Future<void> _initWidget(
       home: Scaffold(
         body: BlocProvider(
           create: (_) => registroCubit,
-          child: RegistrosWidget(),
+          child: const RegistrosWidget(),
         ),
       ),
     ),

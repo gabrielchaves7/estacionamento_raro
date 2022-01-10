@@ -268,7 +268,8 @@ void main() {
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
       final mockedOpenVagaUseCase = MockOpenVagaUseCase();
 
-      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right([]));
+      when(mockedGetVagasUseCase.call())
+          .thenAnswer((_) async => const Right([]));
 
       final VagasCubit vagasCubit = VagasCubit(
           getVagasUseCase: mockedGetVagasUseCase,
