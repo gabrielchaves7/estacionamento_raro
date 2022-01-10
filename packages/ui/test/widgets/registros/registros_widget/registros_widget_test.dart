@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:ui/src/bloc/registro_cubit.dart';
+import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/registros/registro_card_widget.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';

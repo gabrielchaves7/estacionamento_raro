@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:ui/src/bloc/registro_cubit.dart';
+import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/pages/home_page.dart';

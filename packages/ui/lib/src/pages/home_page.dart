@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ui/src/bloc/registro_cubit.dart';
+import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';

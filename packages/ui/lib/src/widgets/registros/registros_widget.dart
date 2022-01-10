@@ -1,7 +1,7 @@
 import 'package:domain/estacionamento_raro_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ui/src/bloc/registro_cubit.dart';
+import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/loading/loading_area_widget.dart';
 import 'package:ui/src/widgets/loading/loading_widget.dart';

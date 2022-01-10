@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 
-import 'bloc/registro_cubit.dart';
+import 'bloc/registro/registro_cubit.dart';
 
 final getIt = GetIt.instance;
 
