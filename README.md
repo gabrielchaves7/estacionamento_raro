@@ -28,6 +28,15 @@ No pacote de domain estão expostas apenas as use cases e entidades, de modo que
 
 
 ## Continuous Integration e Continuoues Delivery
+No repositório do github eu criei uma action simples para poder rodar os testes de ui e domain a cada commit na main. Além disso ela também procura por warnings e
+erros de compilação.
+Um dos motivos para eu ter usado o firebase foi pensando em utilizar o remote config para implementar features toggles e também o test lab. Porém o tempo não consegui
+a tempo.
+
+### Melhorias
+1- Criar use cases para filtros (Hoje a lógica para filtrar as vagas e os registros está na UI.);
+2- lazy loading (As listas de vagas e registros ainda não estão com lazy loading);
+3- empty state (Implementar mensagem para quando não existe nenhuma vaga ou registro para ser exibido);
 
 
 #### Contato
