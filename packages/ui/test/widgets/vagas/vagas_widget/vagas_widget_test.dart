@@ -260,5 +260,36 @@ void main() {
       expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
       expect(find.text('Tente novamente mais tarde.'), findsOneWidget);
     });
+
+    testWidgets(
+        'if state IS VagasLoadedState but vagas is empty it should display the warning message',
+        (WidgetTester tester) async {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right([]));
+
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
+
+      _getItRegisterCubit(
+        vagasCubit: vagasCubit,
+      );
+
+      await vagasCubit.getVagas();
+      await _initWidget(tester, vagasCubit);
+      await tester.pump(const Duration(milliseconds: 1));
+
+      expect(find.byType(VagaCardWidget), findsNothing);
+      expect(
+          find.text(
+              'No momento não temos vagas disponíveis para serem exibidas.'),
+          findsOneWidget);
+
+      verify(mockedGetVagasUseCase.call());
+    });
   });
 }

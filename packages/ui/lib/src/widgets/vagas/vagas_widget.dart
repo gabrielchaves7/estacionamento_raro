@@ -23,12 +23,14 @@ class VagasWidget extends StatelessWidget {
         child: BlocBuilder<VagasCubit, VagasState>(
           builder: (context, state) {
             List<Vaga> vagas = [];
+            bool showEmptyWarning = false;
             bool isLoading = state is VagasInitialState ||
                 state is VagasLoadingState ||
                 state is VagasErrorState;
 
             if (state is VagasLoadedState) {
               vagas = state.vagas;
+              showEmptyWarning = vagas.isEmpty;
             }
 
             return Column(
@@ -43,6 +45,11 @@ class VagasWidget extends StatelessWidget {
                   const WarningMessageWidget(
                     title: 'Ocorreu um erro ao buscar as vagas.',
                     subtitle: 'Deslize para baixo para atualizar.',
+                  )
+                else if (showEmptyWarning)
+                  WarningMessageWidget(
+                    title:
+                        'No momento não temos vagas ${_vagasCubit.exibirVagasDisponiveis ? "disponíveis" : "indisponíveis"} para serem exibidas.',
                   ),
                 VagasFiltroWidget(),
                 Expanded(

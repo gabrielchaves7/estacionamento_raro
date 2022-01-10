@@ -225,5 +225,32 @@ void main() {
 
       expect(find.byType(RegistroCardWidget), findsNWidgets(5));
     });
+
+    testWidgets(
+        'if state IS RegistroLoadedState but the list is empty it should display the empty warning message',
+        (WidgetTester tester) async {
+      final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
+
+      when(mockedGetRegistrosUseCase.call())
+          .thenAnswer((_) async => const Right([]));
+
+      final RegistroCubit registroCubit =
+          RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);
+
+      _getItRegisterCubit(
+        registroCubit: registroCubit,
+      );
+
+      await _initWidget(tester, registroCubit);
+      await tester.pump(const Duration(milliseconds: 1));
+
+      expect(find.byType(RegistroCardWidget), findsNothing);
+      expect(
+          find.text('Não temos registros para serem exibidos'), findsOneWidget);
+      expect(find.text('Tente marcar uma vaga como indisponível.'),
+          findsOneWidget);
+
+      verify(mockedGetRegistrosUseCase.call());
+    });
   });
 }

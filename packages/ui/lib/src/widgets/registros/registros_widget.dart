@@ -35,12 +35,14 @@ class _RegistrosWidgetState extends State<RegistrosWidget> {
         child: BlocBuilder<RegistroCubit, RegistroState>(
           builder: (context, state) {
             List<Registro> registros = [];
+            bool showEmptyWarning = false;
             bool isLoading = state is RegistroInitialState ||
                 state is RegistroLoadingState ||
                 state is RegistroErrorState;
 
             if (state is RegistroLoadedState) {
               registros = state.registros;
+              showEmptyWarning = registros.isEmpty;
             }
 
             return Column(
@@ -49,6 +51,11 @@ class _RegistrosWidgetState extends State<RegistrosWidget> {
                   const WarningMessageWidget(
                     title: 'Ocorreu um erro ao buscar os registros.',
                     subtitle: 'Deslize para baixo para atualizar.',
+                  )
+                else if (showEmptyWarning)
+                  const WarningMessageWidget(
+                    title: 'Não temos registros para serem exibidos',
+                    subtitle: 'Tente marcar uma vaga como indisponível.',
                   ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
