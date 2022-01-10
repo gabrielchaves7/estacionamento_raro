@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/injection.dart';
-import 'package:ui/src/widgets/components/filter_button.dart';
-import 'package:ui/src/widgets/loading/loading_area_widget.dart';
-import 'package:ui/src/widgets/loading/loading_widget.dart';
+import 'package:ui/src/widgets/components/buttons/filter_button.dart';
+import 'package:ui/src/widgets/components/loading/loading_area_widget.dart';
+import 'package:ui/src/widgets/components/loading/loading_widget.dart';
 import 'package:ui/src/widgets/registros/registro_card_widget.dart';
 import 'package:ui/src/widgets/warning/warning_message_widget.dart';
 

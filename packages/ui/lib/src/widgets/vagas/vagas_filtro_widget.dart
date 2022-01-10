@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui/src/bloc/vaga/vagas_cubit.dart';
 import 'package:ui/src/injection.dart';
-import 'package:ui/src/widgets/components/filter_button.dart';
+import 'package:ui/src/widgets/components/buttons/filter_button.dart';
 
 class VagasFiltroWidget extends StatelessWidget {
   VagasFiltroWidget({Key? key}) : super(key: key);
