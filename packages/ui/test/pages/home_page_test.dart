@@ -14,7 +14,6 @@ import 'package:ui/src/injection.dart';
 import 'package:ui/src/pages/home_page.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_widget.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import './home_page_test.mocks.dart';
 
@@ -66,8 +65,6 @@ final List<Vaga> vagas = [
 @GenerateMocks(
     [GetRegistrosUseCase, GetVagasUseCase, CloseVagaUseCase, OpenVagaUseCase])
 void main() {
-  setUpAll(() => initializeDateFormatting('pt_BR', null));
-
   tearDown(() async {
     _getItUnregisterCubit();
   });

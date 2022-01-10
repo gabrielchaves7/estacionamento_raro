@@ -14,7 +14,6 @@ import 'package:ui/src/bloc/registro/registro_cubit.dart';
 import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/registros/registro_card_widget.dart';
 import 'package:ui/src/widgets/registros/registros_widget.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import 'registros_widget_test.mocks.dart';
 
@@ -79,8 +78,6 @@ List<Registro> registros = [
 
 @GenerateMocks([GetRegistrosUseCase])
 void main() {
-  setUpAll(() async => await initializeDateFormatting('pt_BR', null));
-
   tearDown(() async {
     _getItUnregisterCubit();
   });

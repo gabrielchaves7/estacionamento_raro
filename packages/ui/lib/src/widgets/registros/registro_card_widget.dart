@@ -24,7 +24,7 @@ class RegistroCardWidget extends StatelessWidget {
                   _cardInfo(
                       context,
                       "Entrada",
-                      DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
+                      DateFormat('dd/MM/yyyy HH:mm')
                           .format(registro.horarioEntrada)),
                 ],
               ),
@@ -42,7 +42,7 @@ class RegistroCardWidget extends StatelessWidget {
                       context,
                       "Saída",
                       registro.horarioSaida != null
-                          ? DateFormat('dd/MM/yyyy HH:mm', 'pt_BR')
+                          ? DateFormat('dd/MM/yyyy HH:mm')
                               .format(registro.horarioSaida!)
                           : "Aguardando"),
                 ],
