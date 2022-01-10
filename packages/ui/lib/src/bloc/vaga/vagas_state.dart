@@ -23,11 +23,11 @@ class VagaClosedState extends VagasLoadedState {
       : super(vagas, exibirVagasDisponiveis);
 }
 
-class VagaClosedErrorState extends VagasErrorState {}
+class VagaClosedErrorState extends VagasState {}
 
 class VagaOpenedState extends VagasLoadedState {
   VagaOpenedState(vagas, exibirVagasDisponiveis)
       : super(vagas, exibirVagasDisponiveis);
 }
 
-class VagaOpenedErrorState extends VagasErrorState {}
+class VagaOpenedErrorState extends VagasState {}

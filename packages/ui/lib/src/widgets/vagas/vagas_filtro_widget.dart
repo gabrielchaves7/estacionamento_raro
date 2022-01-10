@@ -9,40 +9,43 @@ class VagasFiltroWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                  _vagasCubit.exibirVagasDisponiveis
-                      ? Colors.blue
-                      : Colors.white)),
-          child: const Text(
-            'Disponíveis',
-            style: TextStyle(color: Colors.black),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    _vagasCubit.exibirVagasDisponiveis
+                        ? Colors.blue
+                        : Colors.white)),
+            child: const Text(
+              'Disponíveis',
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              _vagasCubit.changeExibirVagasDisponiveis(
+                  exibirVagasDisponiveis: true);
+            },
           ),
-          onPressed: () {
-            _vagasCubit.changeExibirVagasDisponiveis(
-                exibirVagasDisponiveis: true);
-          },
-        ),
-        ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                  !_vagasCubit.exibirVagasDisponiveis
-                      ? Colors.blue
-                      : Colors.white)),
-          child: const Text(
-            'Indisponíveis',
-            style: TextStyle(color: Colors.black),
+          ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    !_vagasCubit.exibirVagasDisponiveis
+                        ? Colors.blue
+                        : Colors.white)),
+            child: const Text(
+              'Indisponíveis',
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              _vagasCubit.changeExibirVagasDisponiveis(
+                  exibirVagasDisponiveis: false);
+            },
           ),
-          onPressed: () {
-            _vagasCubit.changeExibirVagasDisponiveis(
-                exibirVagasDisponiveis: false);
-          },
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

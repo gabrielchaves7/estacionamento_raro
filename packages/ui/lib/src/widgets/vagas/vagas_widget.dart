@@ -7,6 +7,7 @@ import 'package:ui/src/widgets/loading/loading_area_widget.dart';
 import 'package:ui/src/widgets/loading/loading_widget.dart';
 import 'package:ui/src/widgets/vagas/vaga_card_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_filtro_widget.dart';
+import 'package:ui/src/widgets/warning/warning_message_widget.dart';
 
 class VagasWidget extends StatelessWidget {
   VagasWidget({Key? key}) : super(key: key);
@@ -19,25 +20,34 @@ class VagasWidget extends StatelessWidget {
       onRefresh: () => _vagasCubit.getVagas(),
       child: LoadingArea(
         linearGradient: shimmerGradient,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
-          child: BlocBuilder<VagasCubit, VagasState>(
-            builder: (context, state) {
-              List<Vaga> vagas = [];
-              bool isLoading = state is VagasInitialState ||
-                  state is VagasLoadingState ||
-                  state is VagasErrorState;
+        child: BlocBuilder<VagasCubit, VagasState>(
+          builder: (context, state) {
+            List<Vaga> vagas = [];
+            bool isLoading = state is VagasInitialState ||
+                state is VagasLoadingState ||
+                state is VagasErrorState;
 
-              if (state is VagasLoadedState) {
-                vagas = state.vagas;
-              } else if (state is VagaClosedErrorState) {
-                return const Text('Ocorreu um erro ao atualizar a vaga.');
-              }
+            if (state is VagasLoadedState) {
+              vagas = state.vagas;
+            }
 
-              return Column(
-                children: [
-                  VagasFiltroWidget(),
-                  Expanded(
+            return Column(
+              children: [
+                if (state is VagaClosedErrorState ||
+                    state is VagaOpenedErrorState)
+                  const WarningMessageWidget(
+                    title: 'Ocorreu um erro ao atualizar a vaga.',
+                    subtitle: 'Tente novamente mais tarde.',
+                  )
+                else if (state is VagasErrorState)
+                  const WarningMessageWidget(
+                    title: 'Ocorreu um erro ao buscar as vagas.',
+                    subtitle: 'Deslize para baixo para atualizar.',
+                  ),
+                VagasFiltroWidget(),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8),
                     child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -55,11 +65,11 @@ class VagasWidget extends StatelessWidget {
                         );
                       },
                     ),
-                  )
-                ],
-              );
-            },
-          ),
+                  ),
+                )
+              ],
+            );
+          },
         ),
       ),
     );

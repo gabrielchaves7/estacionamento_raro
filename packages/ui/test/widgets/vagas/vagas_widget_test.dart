@@ -40,7 +40,13 @@ Future<void> _initWidget(WidgetTester tester, VagasCubit vagasCubit) async {
 
 final List<Vaga> vagas = [
   Vaga(id: 'id1', disponivel: true, tipoVaga: TipoVagaEnum.moto, numero: 1),
-  Vaga(id: 'id2', disponivel: false, tipoVaga: TipoVagaEnum.carro, numero: 2),
+  Vaga(
+      id: 'id2',
+      disponivel: false,
+      tipoVaga: TipoVagaEnum.carro,
+      numero: 2,
+      registroId: 'registroId',
+      placa: 'ABCDEFG'),
   Vaga(id: 'id3', disponivel: true, tipoVaga: TipoVagaEnum.caminhao, numero: 3),
 ];
 
@@ -108,7 +114,7 @@ void main() {
     });
 
     testWidgets(
-        'if state IS VagasErrorState it should display two VagaCardLoadingWidget and NONE VagaCardWidget',
+        'if state IS VagasErrorState it should display two VagaCardLoadingWidget and NONE VagaCardWidget and error message',
         (WidgetTester tester) async {
       final mockedGetVagasUseCase = MockGetVagasUseCase();
       final mockedCloseVagaUseCase = MockCloseVagaUseCase();
@@ -132,6 +138,8 @@ void main() {
 
       expect(find.byType(VagaCardLoadingWidget), findsNWidgets(2));
       expect(find.byType(VagaCardWidget), findsNothing);
+      expect(find.text('Ocorreu um erro ao buscar as vagas.'), findsOneWidget);
+      expect(find.text('Deslize para baixo para atualizar.'), findsOneWidget);
 
       verify(mockedGetVagasUseCase.call());
     });
@@ -171,7 +179,9 @@ void main() {
 
       verify(mockedGetVagasUseCase.call());
       verify(mockedCloseVagaUseCase.call(vagaId: 'id1', placa: '1234567'));
+
       expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
+      expect(find.text('Tente novamente mais tarde.'), findsOneWidget);
     });
 
     testWidgets('And user change filters, should show the cards filtered',
@@ -206,6 +216,49 @@ void main() {
       await tester.pump(const Duration(milliseconds: 1));
 
       expect(find.byType(VagaCardWidget), findsNWidgets(2));
+    });
+
+    testWidgets(
+        'if state IS VagaOpenedErrorState it should display error message',
+        (WidgetTester tester) async {
+      final mockedGetVagasUseCase = MockGetVagasUseCase();
+      final mockedCloseVagaUseCase = MockCloseVagaUseCase();
+      final mockedOpenVagaUseCase = MockOpenVagaUseCase();
+
+      when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
+      when(mockedOpenVagaUseCase.call(vagaId: 'id2', registroId: 'registroId'))
+          .thenAnswer(
+        (_) async => Left(UnexpectedFailure()),
+      );
+
+      final VagasCubit vagasCubit = VagasCubit(
+          getVagasUseCase: mockedGetVagasUseCase,
+          closeVagaUseCase: mockedCloseVagaUseCase,
+          openVagaUseCase: mockedOpenVagaUseCase);
+
+      _getItRegisterCubit(
+        vagasCubit: vagasCubit,
+      );
+
+      await vagasCubit.getVagas();
+      await _initWidget(tester, vagasCubit);
+      await tester.pump(const Duration(milliseconds: 1));
+
+      await tester.tap(find.text('Indisponíveis'));
+      await tester.pump(const Duration(milliseconds: 1));
+
+      await tester.tap(find.text('2'));
+      await tester.pump();
+
+      await tester.tap(find.text('confirmar'));
+      await tester.pump();
+
+      verify(mockedGetVagasUseCase.call());
+      verify(
+          mockedOpenVagaUseCase.call(vagaId: 'id2', registroId: 'registroId'));
+
+      expect(find.text('Ocorreu um erro ao atualizar a vaga.'), findsOneWidget);
+      expect(find.text('Tente novamente mais tarde.'), findsOneWidget);
     });
   });
 }

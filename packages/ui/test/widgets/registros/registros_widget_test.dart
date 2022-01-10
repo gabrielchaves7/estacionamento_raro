@@ -118,7 +118,7 @@ void main() {
     });
 
     testWidgets(
-        'if state IS RegistroErrorState it should display two RegistroCardLoadingWidget and NONE RegistroCardWidget',
+        'if state IS RegistroErrorState it should display two RegistroCardLoadingWidget and NONE RegistroCardWidget and should display error message',
         (WidgetTester tester) async {
       final mockedGetRegistrosUseCase = MockGetRegistrosUseCase();
 
@@ -137,6 +137,9 @@ void main() {
 
       expect(find.byType(RegistroCardLoadingWidget), findsNWidgets(2));
       expect(find.byType(RegistroCardWidget), findsNothing);
+      expect(
+          find.text('Ocorreu um erro ao buscar os registros.'), findsOneWidget);
+      expect(find.text('Deslize para baixo para atualizar.'), findsOneWidget);
 
       verify(mockedGetRegistrosUseCase.call());
     });
