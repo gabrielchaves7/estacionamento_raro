@@ -50,9 +50,6 @@ jobs:
       - name: Running UI test
         run: flutter test    
         working-directory: packages/ui
-      
-      - name: Running Project test
-        run: flutter test    
         
 
     
