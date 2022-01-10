@@ -2,7 +2,7 @@
 Este projeto foi desenvolvido apenas para Android (infelizmente eu não tenho um Mac).
 
 ## Como rodar os testes de integração
-Primeiro abra um emulador e depois execute o comando abaixo:
+Primeiro, esteja na pasta raiz do projeto (a mesma onde está o folder integration_test), abra um emulador e depois execute o comando abaixo:
 
 **flutter drive   --driver=test_driver/integration_test.dart   --target=integration_test/app_test.dart --flavor dev**
 

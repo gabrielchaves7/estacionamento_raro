@@ -12,11 +12,8 @@ void main() {
         'and then if user tap on vaga card and fill the placa, the card should not show anymore',
         (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
-
-      //Clica no menu das vagas
-      await tester.tap(find.text('Vagas'));
-      await tester.pump(const Duration(seconds: 2));
+      await tester.pump();
+      await tester.pump();
 
       //Acha o card de uma vaga disponível e marca ela como indisponível
       await tester.tap(find.text('1'));
@@ -29,8 +26,8 @@ void main() {
 
       //Clica em indisponíveis
       await tester.tap(find.text('Indisponíveis'));
-      await tester.pump(const Duration(seconds: 1));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pump();
+      await tester.pump();
 
       //Confirma se a placa realmente foi para a página de indisponíveis
       expect(find.text('ABCDEFG'), findsOneWidget);
