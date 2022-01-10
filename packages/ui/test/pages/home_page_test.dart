@@ -79,9 +79,6 @@ void main() {
 
       when(mockedGetVagasUseCase.call()).thenAnswer((_) async => Right(vagas));
 
-      when(mockedGetRegistrosUseCase.call())
-          .thenAnswer((_) async => Right(registros));
-
       final RegistroCubit registroCubit =
           RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);
 
@@ -145,9 +142,6 @@ void main() {
 
         when(mockedGetVagasUseCase.call())
             .thenAnswer((_) async => Right(vagas));
-
-        when(mockedGetRegistrosUseCase.call())
-            .thenAnswer((_) async => Right(registros));
 
         final RegistroCubit registroCubit =
             RegistroCubit(getRegistrosUseCase: mockedGetRegistrosUseCase);

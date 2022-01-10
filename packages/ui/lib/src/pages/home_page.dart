@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     VagasWidget(),
-    RegistrosWidget()
+    const RegistrosWidget()
   ];
 
   void _onItemTapped(int index) {
@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _vagasCubit.getVagas();
-    _registroCubit.getRegistros();
     super.initState();
   }
 

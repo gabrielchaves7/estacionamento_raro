@@ -36,7 +36,7 @@ class RegistroCardWidget extends StatelessWidget {
                   _cardInfo(
                       context,
                       "Permanência",
-                      _calcularTempoDePermanencia(
+                      _getPermanencia(
                           registro.horarioEntrada, registro.horarioSaida)),
                   _cardInfo(
                       context,
@@ -70,25 +70,24 @@ class RegistroCardWidget extends StatelessWidget {
     );
   }
 
-  String _calcularTempoDePermanencia(
-      DateTime horarioEntrada, DateTime? horarioSaida) {
+  String _getPermanencia(DateTime horarioEntrada, DateTime? horarioSaida) {
     horarioSaida = horarioSaida ?? DateTime.now();
 
-    return _formatarDurationParaData(horarioSaida.difference(horarioEntrada));
+    return _formatDurationToDate(horarioSaida.difference(horarioEntrada));
   }
 
-  String _formatarDurationParaData(Duration duration) {
-    String tempoPermanencia = '${duration.inMinutes} minuto (s).';
+  String _formatDurationToDate(Duration duration) {
+    String permanencia = '${duration.inMinutes} minuto (s).';
 
     if (duration.inHours < 24 && duration.inHours > 0) {
-      tempoPermanencia = '${duration.inHours} hora (s).';
+      permanencia = '${duration.inHours} hora (s).';
     } else if (duration.inDays > 0) {
       int days = duration.inDays;
       int hours = duration.inHours - (days * 24);
-      tempoPermanencia = '$days dia (s) e $hours hora (s).';
+      permanencia = '$days dia (s) e $hours hora (s).';
     }
 
-    return tempoPermanencia;
+    return permanencia;
   }
 }
 
