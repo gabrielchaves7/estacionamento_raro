@@ -17,6 +17,7 @@ class VagaRepositoryImpl implements VagaRepository {
       List<Vaga>? vagas = await vagaDataSource.all();
 
       if (vagas != null && vagas.isNotEmpty) {
+        vagas.sort((a, b) => a.numero.compareTo(b.numero));
         return Right(vagas);
       }
 

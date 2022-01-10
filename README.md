@@ -37,6 +37,8 @@ a tempo.
 2- lazy loading (As listas de vagas e registros ainda não estão com lazy loading);
 3- Corrigir o teste do registro_card_widget (O teste que verifica se o horario entrada e o horario de saida do card de registro está sendo exibido coretamente não funciona quando executado no pipeline devido ao timezone ser diferente)
 4- Melhorar transições de estados (As transições de estados estão muito fortes, sem animações de fade in por exemplo)
+5- Utilizar o analytics do firebase que já está instalado para mapear mais eventos;
+6- Configurar o app check do firebase em prod;
 
 
 #### Contato

@@ -11,12 +11,27 @@ class RegistroRepositoryImpl implements RegistroRepository {
 
   final RegistroDataSource registroDataSource;
 
+  int _compareHorarioSaida(DateTime? a, DateTime? b) {
+    if (a == null) {
+      return -1;
+    } else if (b == null) {
+      return 1;
+    } else if (a.isAfter(b)) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
   @override
   Future<Either<Failure, List<Registro>>> all() async {
     try {
       List<Registro>? registros = await registroDataSource.all();
 
       if (registros != null) {
+        registros.sort(
+            (a, b) => _compareHorarioSaida(a.horarioSaida, b.horarioSaida));
+
         return Right(registros);
       }
 
