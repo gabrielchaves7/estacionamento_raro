@@ -10,7 +10,7 @@ import 'package:ui/src/dialogs/ocupar_vaga_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ui/src/injection.dart';
 
-import './ocupar_vaga_dialog_test.mocks.dart';
+import 'ocupar_vaga_dialog_test.mocks.dart';
 
 void _getItRegisterCubit({required VagasCubit vagasCubit}) {
   getIt.registerFactory(() => vagasCubit);

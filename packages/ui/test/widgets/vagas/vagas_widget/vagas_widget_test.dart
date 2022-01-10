@@ -15,7 +15,7 @@ import 'package:ui/src/injection.dart';
 import 'package:ui/src/widgets/vagas/vaga_card_widget.dart';
 import 'package:ui/src/widgets/vagas/vagas_widget.dart';
 
-import './vagas_widget_test.mocks.dart';
+import 'vagas_widget_test.mocks.dart';
 
 void _getItRegisterCubit({required VagasCubit vagasCubit}) {
   getIt.registerFactory(() => vagasCubit);
